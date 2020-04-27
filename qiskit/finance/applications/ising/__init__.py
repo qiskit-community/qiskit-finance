@@ -11,27 +11,24 @@
 # Any modifications or derivative works of this code must retain this
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
+
+
 """
-==========================================================
-Finance application stack for Aqua (:mod:`qiskit.finance`)
-==========================================================
-This is the finance domain logic....
+=======================================================
+Ising Models (:mod:`qiskit.finance.applications.ising`)
+=======================================================
+Ising models for finance problems
 
-.. currentmodule:: qiskit.finance
+.. currentmodule:: qiskit.finance.applications.ising
 
-Submodules
-==========
+Ising Models
+============
 
 .. autosummary::
-   :toctree:
+   :toctree: ../stubs/
+   :nosignatures:
 
-   components
-   data_providers
+   portfolio
+   portfolio_diversification
 
 """
-
-from ._logging import (get_qiskit_finance_logging,
-                       set_qiskit_finance_logging)
-
-__all__ = ['get_qiskit_finance_logging',
-           'set_qiskit_finance_logging']
