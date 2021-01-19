@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2020.
+# (C) Copyright IBM 2019, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -20,7 +20,7 @@ from enum import Enum
 import numpy as np
 import fastdtw
 
-from qiskit.aqua import aqua_globals
+from qiskit.utils import aqua_globals
 from ..exceptions import QiskitFinanceError
 
 logger = logging.getLogger(__name__)
@@ -40,7 +40,7 @@ class BaseDataProvider(ABC):
     Doing so requires that the required driver interface is implemented.
 
     To use the subclasses, please see
-    https://github.com/Qiskit/qiskit-tutorials/blob/master/legacy_tutorials/aqua/finance/data_providers/time_series.ipynb
+    https://github.com/Qiskit/qiskit-tutorials/blob/master/tutorials/finance/11_time_series.ipynb
 
     """
 

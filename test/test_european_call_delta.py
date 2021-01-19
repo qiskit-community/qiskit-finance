@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020.
+# (C) Copyright IBM 2020, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -13,17 +13,16 @@
 """ Test European Call Expected Value uncertainty problem """
 
 import unittest
-from test.finance import QiskitFinanceTestCase
+from test import QiskitFinanceTestCase
 
 import numpy as np
 
-from qiskit import Aer
 from qiskit.circuit.library import IntegerComparator, LogNormalDistribution
 from qiskit.quantum_info import Operator
 
-from qiskit.aqua import QuantumInstance
-from qiskit.aqua.algorithms import IterativeAmplitudeEstimation
-from qiskit.finance.applications import EuropeanCallDelta
+from qiskit.utils import QuantumInstance
+from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
+from qiskit_finance.applications import EuropeanCallDelta
 
 
 class TestEuropeanCallDelta(QiskitFinanceTestCase):
@@ -37,7 +36,9 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         num_qubits = 3
         strike_price = 0.5
         bounds = (0, 2)
-        ecd = EuropeanCallDelta(num_qubits, strike_price, bounds)
+        ecd = EuropeanCallDelta(num_state_qubits=num_qubits,
+                                strike_price=strike_price,
+                                bounds=bounds)
 
         # map strike_price to a basis state
         x = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (2 ** num_qubits - 1)
@@ -47,6 +48,12 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
 
     def test_application(self):
         """Test an end-to-end application."""
+        try:
+            from qiskit import Aer  # pylint: disable=unused-import,import-outside-toplevel
+        except ImportError as ex:  # pylint: disable=broad-except
+            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
+            return
+
         num_qubits = 3
 
         # parameters for considered random distribution
@@ -76,18 +83,24 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         strike_price = 1.896
 
         # create amplitude function
-        european_call_delta = EuropeanCallDelta(num_qubits, strike_price, bounds)
+        european_call_delta = EuropeanCallDelta(num_state_qubits=num_qubits,
+                                                strike_price=strike_price,
+                                                bounds=bounds)
 
         # create state preparation
         state_preparation = european_call_delta.compose(uncertainty_model, front=True)
 
-        # run amplitude estimation
-        iae = IterativeAmplitudeEstimation(0.01, 0.05, state_preparation=state_preparation,
-                                           objective_qubits=[num_qubits])
+        problem = EstimationProblem(state_preparation=state_preparation,
+                                    objective_qubits=[num_qubits],
+                                    post_processing=european_call_delta.post_processing)
 
-        backend = QuantumInstance(Aer.get_backend('qasm_simulator'),
-                                  seed_simulator=125, seed_transpiler=80)
-        result = iae.run(backend)
+        # run amplitude estimation
+        q_i = QuantumInstance(Aer.get_backend('qasm_simulator'),
+                              seed_simulator=125, seed_transpiler=80)
+        iae = IterativeAmplitudeEstimation(epsilon_target=0.01,
+                                           alpha=0.05,
+                                           quantum_instance=q_i)
+        result = iae.estimate(problem)
         self.assertAlmostEqual(result.estimation, 0.8079816552117238)
 
 

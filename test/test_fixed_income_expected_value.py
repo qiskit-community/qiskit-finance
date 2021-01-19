@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020.
+# (C) Copyright IBM 2020, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -13,16 +13,16 @@
 """ Test European Call Expected Value uncertainty problem """
 
 import unittest
-from test.finance import QiskitFinanceTestCase
+from test import QiskitFinanceTestCase
 
 import numpy as np
 
-from qiskit import QuantumCircuit, Aer
-from qiskit.aqua import QuantumInstance
-from qiskit.aqua.algorithms import IterativeAmplitudeEstimation
+from qiskit import QuantumCircuit
+from qiskit.utils import QuantumInstance
+from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import NormalDistribution
-from qiskit.finance.applications import FixedIncomeExpectedValue
 from qiskit.quantum_info import Operator
+from qiskit_finance.applications import FixedIncomeExpectedValue
 
 
 class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
@@ -51,6 +51,12 @@ class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
 
     def test_application(self):
         """Test an end-to-end application."""
+        try:
+            from qiskit import Aer  # pylint: disable=unused-import,import-outside-toplevel
+        except ImportError as ex:  # pylint: disable=broad-except
+            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
+            return
+
         a_n = np.eye(2)
         b = np.zeros(2)
 
@@ -79,13 +85,17 @@ class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
         # build state preparation operator
         state_preparation = fixed_income.compose(dist, front=True)
 
+        problem = EstimationProblem(state_preparation=state_preparation,
+                                    objective_qubits=[3],
+                                    post_processing=fixed_income.post_processing)
+
         # run simulation
-        iae = IterativeAmplitudeEstimation(epsilon=0.01, alpha=0.05,
-                                           state_preparation=state_preparation,
-                                           post_processing=fixed_income.post_processing)
-        backend = QuantumInstance(Aer.get_backend('qasm_simulator'),
-                                  seed_simulator=2, seed_transpiler=2)
-        result = iae.run(backend)
+        q_i = QuantumInstance(Aer.get_backend('qasm_simulator'),
+                              seed_simulator=2, seed_transpiler=2)
+        iae = IterativeAmplitudeEstimation(epsilon_target=0.01,
+                                           alpha=0.05,
+                                           quantum_instance=q_i)
+        result = iae.estimate(problem)
 
         # compare to precomputed solution
         self.assertAlmostEqual(result.estimation, 2.3389012822103044)

@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2018, 2020.
+# (C) Copyright IBM 2018, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -13,20 +13,17 @@
 """ Test Amplitude Estimation """
 
 import unittest
-import warnings
-from test.finance import QiskitFinanceTestCase
+from test import QiskitFinanceTestCase
 import numpy as np
 from ddt import ddt, idata, unpack
 from qiskit import BasicAer
-from qiskit.aqua import QuantumInstance
-from qiskit.aqua.components.uncertainty_models import (LogNormalDistribution,
-                                                       MultivariateNormalDistribution)
-from qiskit.finance.components.uncertainty_problems import (EuropeanCallDelta,
-                                                            FixedIncomeExpectedValue)
-from qiskit.aqua.components.uncertainty_problems import \
-    UnivariatePiecewiseLinearObjective as PwlObjective
-from qiskit.aqua.components.uncertainty_problems import UnivariateProblem
-from qiskit.aqua.algorithms import AmplitudeEstimation, MaximumLikelihoodAmplitudeEstimation
+from qiskit.utils import QuantumInstance
+from qiskit.algorithms import (AmplitudeEstimation,
+                               MaximumLikelihoodAmplitudeEstimation,
+                               EstimationProblem)
+from qiskit_finance.applications import (EuropeanCallDelta,
+                                         FixedIncomeExpectedValue,
+                                         EuropeanCallExpectedValue)
 
 
 @ddt
@@ -57,47 +54,22 @@ class TestEuropeanCallOption(QiskitFinanceTestCase):
         low = np.maximum(0, mean - 3 * stddev)
         high = mean + 3 * stddev
 
-        # construct circuit factory for uncertainty model
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        uncertainty_model = LogNormalDistribution(num_uncertainty_qubits,
-                                                  mu=m_u, sigma=sigma, low=low, high=high)
-
         # set the strike price (should be within the low and the high value of the uncertainty)
         strike_price = 1.896
 
         # set the approximation scaling for the payoff function
         c_approx = 0.1
 
-        # setup piecewise linear objective function
-        breakpoints = [uncertainty_model.low, strike_price]
-        slopes = [0, 1]
-        offsets = [0, 0]
-        f_min = 0
-        f_max = uncertainty_model.high - strike_price
-        european_call_objective = PwlObjective(
-            uncertainty_model.num_target_qubits,
-            uncertainty_model.low,
-            uncertainty_model.high,
-            breakpoints,
-            slopes,
-            offsets,
-            f_min,
-            f_max,
-            c_approx
-        )
+        # construct circuit factory for payoff function
+        self.european_call = EuropeanCallExpectedValue(num_state_qubits=num_uncertainty_qubits,
+                                                       strike_price=strike_price,
+                                                       rescaling_factor=c_approx,
+                                                       bounds=(low, high))
 
         # construct circuit factory for payoff function
-        self.european_call = UnivariateProblem(
-            uncertainty_model,
-            european_call_objective
-        )
-
-        # construct circuit factory for payoff function
-        self.european_call_delta = EuropeanCallDelta(
-            uncertainty_model,
-            strike_price=strike_price,
-        )
-        warnings.filterwarnings('always', category=DeprecationWarning)
+        self.european_call_delta = EuropeanCallDelta(num_state_qubits=num_uncertainty_qubits,
+                                                     strike_price=strike_price,
+                                                     bounds=(low, high))
 
         self._statevector = QuantumInstance(backend=BasicAer.get_backend('statevector_simulator'),
                                             seed_simulator=2,
@@ -118,13 +90,12 @@ class TestEuropeanCallOption(QiskitFinanceTestCase):
     @unpack
     def test_expected_value(self, simulator, a_e, expect):
         """ expected value test """
-        # set A factory for amplitude estimation
-        with warnings.catch_warnings():
-            warnings.filterwarnings('ignore', category=DeprecationWarning)
-            a_e.a_factory = self.european_call
-
+        problem = EstimationProblem(state_preparation=self.european_call,
+                                    objective_qubits=[3],
+                                    post_processing=self.european_call.post_processing)
         # run simulation
-        result = a_e.run(self._qasm if simulator == 'qasm' else self._statevector)
+        a_e.quantum_instance = self._qasm if simulator == 'qasm' else self._statevector
+        result = a_e.estimate(problem)
 
         # compare to precomputed solution
         for key, value in expect.items():
@@ -144,13 +115,12 @@ class TestEuropeanCallOption(QiskitFinanceTestCase):
     @unpack
     def test_delta(self, simulator, a_e, expect):
         """ delta test """
-        # set A factory for amplitude estimation
-        with warnings.catch_warnings():
-            warnings.filterwarnings('ignore', category=DeprecationWarning)
-            a_e.a_factory = self.european_call_delta
-
+        problem = EstimationProblem(state_preparation=self.european_call_delta,
+                                    objective_qubits=[3],
+                                    post_processing=self.european_call_delta.post_processing)
         # run simulation
-        result = a_e.run(self._qasm if simulator == 'qasm' else self._statevector)
+        a_e.quantum_instance = self._qasm if simulator == 'qasm' else self._statevector
+        result = a_e.estimate(problem)
 
         # compare to precomputed solution
         for key, value in expect.items():
@@ -164,8 +134,6 @@ class TestFixedIncomeAssets(QiskitFinanceTestCase):
 
     def setUp(self):
         super().setUp()
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-
         self._statevector = QuantumInstance(backend=BasicAer.get_backend('statevector_simulator'),
                                             seed_simulator=2,
                                             seed_transpiler=2)
@@ -173,10 +141,6 @@ class TestFixedIncomeAssets(QiskitFinanceTestCase):
                                      shots=100,
                                      seed_simulator=2,
                                      seed_transpiler=2)
-
-    def tearDown(self):
-        super().tearDown()
-        warnings.filterwarnings('always', category=DeprecationWarning)
 
     @idata([
         ['statevector', AmplitudeEstimation(5),
@@ -196,33 +160,20 @@ class TestFixedIncomeAssets(QiskitFinanceTestCase):
         a_n = np.eye(2)
         b = np.zeros(2)
 
-        # specify the number of qubits that are used to represent
-        # the different dimensions of the uncertainty model
-        num_qubits = [2, 2]
+        # get fixed income circuit
+        fixed_income = FixedIncomeExpectedValue(num_qubits=[2, 2],
+                                                pca_matrix=a_n,
+                                                initial_interests=b,
+                                                cash_flow=[1.0, 2.0],
+                                                rescaling_factor=0.125,
+                                                bounds=[(0., 0.12), (0., 0.24)])
 
-        # specify the lower and upper bounds for the different dimension
-        low = [0, 0]
-        high = [0.12, 0.24]
-        m_u = [0.12, 0.24]
-        sigma = 0.01 * np.eye(2)
-
-        # construct corresponding distribution
-        mund = MultivariateNormalDistribution(num_qubits, low, high, m_u, sigma)
-
-        # specify cash flow
-        c_f = [1.0, 2.0]
-
-        # specify approximation factor
-        c_approx = 0.125
-
-        # get fixed income circuit appfactory
-        with warnings.catch_warnings():
-            warnings.filterwarnings('ignore', category=DeprecationWarning)
-            fixed_income = FixedIncomeExpectedValue(mund, a_n, b, c_f, c_approx)
-            a_e.a_factory = fixed_income
-
+        problem = EstimationProblem(state_preparation=fixed_income,
+                                    objective_qubits=[3],
+                                    post_processing=fixed_income.post_processing)
         # run simulation
-        result = a_e.run(self._qasm if simulator == 'qasm' else self._statevector)
+        a_e.quantum_instance = self._qasm if simulator == 'qasm' else self._statevector
+        result = a_e.estimate(problem)
 
         # compare to precomputed solution
         for key, value in expect.items():

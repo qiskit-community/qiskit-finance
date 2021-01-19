@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020.
+# (C) Copyright IBM 2020, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -13,17 +13,16 @@
 """ Test European Call Expected Value uncertainty problem """
 
 import unittest
-from test.finance import QiskitFinanceTestCase
+from test import QiskitFinanceTestCase
 
 import numpy as np
 
-from qiskit import Aer
 from qiskit.circuit.library import TwoLocal, NormalDistribution
-from qiskit.aqua import aqua_globals, QuantumInstance
-from qiskit.aqua.algorithms import IterativeAmplitudeEstimation
+from qiskit.utils import aqua_globals, QuantumInstance
+from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import LinearAmplitudeFunction
-from qiskit.finance.applications import EuropeanCallExpectedValue
 from qiskit.quantum_info import Operator
+from qiskit_finance.applications import EuropeanCallExpectedValue
 
 
 class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
@@ -63,6 +62,12 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
 
     def test_application(self):
         """Test an end-to-end application."""
+        try:
+            from qiskit import Aer  # pylint: disable=unused-import,import-outside-toplevel
+        except ImportError as ex:  # pylint: disable=broad-except
+            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
+            return
+
         bounds = np.array([0., 7.])
         num_qubits = 3
 
@@ -78,19 +83,24 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
         # create the European call expected value
         strike_price = 2
         rescaling_factor = 0.25
-        european_call = EuropeanCallExpectedValue(num_qubits, strike_price, rescaling_factor,
-                                                  bounds)
+        european_call = EuropeanCallExpectedValue(num_state_qubits=num_qubits,
+                                                  strike_price=strike_price,
+                                                  rescaling_factor=rescaling_factor,
+                                                  bounds=bounds)
 
         # create the state preparation circuit
         state_preparation = european_call.compose(dist, front=True)
 
-        iae = IterativeAmplitudeEstimation(0.01, 0.05, state_preparation=state_preparation,
-                                           objective_qubits=[num_qubits],
-                                           post_processing=european_call.post_processing)
+        problem = EstimationProblem(state_preparation=state_preparation,
+                                    objective_qubits=[num_qubits],
+                                    post_processing=european_call.post_processing)
 
-        backend = QuantumInstance(Aer.get_backend('qasm_simulator'),
-                                  seed_simulator=125, seed_transpiler=80)
-        result = iae.run(backend)
+        q_i = QuantumInstance(Aer.get_backend('qasm_simulator'),
+                              seed_simulator=125, seed_transpiler=80)
+        iae = IterativeAmplitudeEstimation(epsilon_target=0.01,
+                                           alpha=0.05,
+                                           quantum_instance=q_i)
+        result = iae.estimate(problem)
         self.assertAlmostEqual(result.estimation, 1.0127253837345427)
 
 

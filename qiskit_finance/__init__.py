@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2020.
+# (C) Copyright IBM 2019, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -11,15 +11,14 @@
 # that they have been altered from the originals.
 """
 ===============================================
-Qiskit's finance module (:mod:`qiskit.finance`)
+Qiskit's finance module (:mod:`qiskit_finance`)
 ===============================================
 
-.. currentmodule:: qiskit.finance
+.. currentmodule:: qiskit_finance
 
 This is the Qiskit`s finance module. There is an initial set of function here that
 will be built out over time. At present it has applications in the form of
-Ising Hamiltonians. Some financial uncertainty problem components and data providers
-which supply a source of financial data.
+Ising Hamiltonians and data providers which supply a source of financial data.
 
 .. autosummary::
    :toctree: ../stubs/
@@ -37,15 +36,10 @@ Submodules
    :toctree:
 
    applications
-   components
    data_providers
 
 """
 
 from .exceptions import QiskitFinanceError
-from ._logging import (get_qiskit_finance_logging,
-                       set_qiskit_finance_logging)
 
-__all__ = ['QiskitFinanceError',
-           'get_qiskit_finance_logging',
-           'set_qiskit_finance_logging']
+__all__ = ['QiskitFinanceError']

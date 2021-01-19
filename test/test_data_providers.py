@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2020.
+# (C) Copyright IBM 2019, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -15,12 +15,11 @@
 import unittest
 import os
 import datetime
-from test.finance import QiskitFinanceTestCase
-import warnings
+from test import QiskitFinanceTestCase
 import numpy as np
-from qiskit.aqua import MissingOptionalLibraryError
-from qiskit.finance import QiskitFinanceError
-from qiskit.finance.data_providers import (RandomDataProvider,
+from qiskit.exceptions import MissingOptionalLibraryError
+from qiskit_finance import QiskitFinanceError
+from qiskit_finance.data_providers import (RandomDataProvider,
                                            WikipediaDataProvider,
                                            YahooDataProvider,
                                            StockMarket,
@@ -35,13 +34,8 @@ class TestDataProviders(QiskitFinanceTestCase):
 
     def setUp(self):
         super().setUp()
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         self._quandl_token = os.getenv('QUANDL_TOKEN') if os.getenv('QUANDL_TOKEN') else ''
         self._on_demand_token = os.getenv('ON_DEMAND_TOKEN') if os.getenv('ON_DEMAND_TOKEN') else ''
-
-    def tearDown(self):
-        super().tearDown()
-        warnings.filterwarnings(action="always", message="unclosed", category=ResourceWarning)
 
     def test_random_wrong_use(self):
         """ Random wrong use test """

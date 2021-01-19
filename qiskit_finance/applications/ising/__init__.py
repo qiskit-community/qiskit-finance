@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2020.
+# (C) Copyright IBM 2019, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -12,12 +12,12 @@
 
 
 """
-Ising Models (:mod:`qiskit.finance.applications.ising`)
+Ising Models (:mod:`qiskit_finance.applications.ising`)
 =======================================================
 
 Ising models for finance problems
 
-.. currentmodule:: qiskit.finance.applications.ising
+.. currentmodule:: qiskit_finance.applications.ising
 
 Ising Models
 ============

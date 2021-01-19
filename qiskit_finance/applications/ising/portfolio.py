@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2018, 2020.
+# (C) Copyright IBM 2018, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -14,12 +14,13 @@
 Convert portfolio optimization instances into Pauli list
 """
 
+from typing import Tuple
 import numpy as np
 from sklearn.datasets import make_spd_matrix
 from qiskit.quantum_info import Pauli
 
-from qiskit.aqua import aqua_globals
-from qiskit.aqua.operators import WeightedPauliOperator
+from qiskit.utils import aqua_globals
+from qiskit.opflow import PauliSumOp
 
 
 def random_model(n, seed=None):
@@ -45,10 +46,16 @@ def random_model(n, seed=None):
 
     return m_u, sigma
 
+# pylint: disable=invalid-name
 
-def get_operator(mu, sigma, q, budget, penalty):  # pylint: disable=invalid-name
+
+def get_operator(mu,
+                 sigma,
+                 q,
+                 budget,
+                 penalty) \
+        -> Tuple[PauliSumOp, float]:
     """ get qubit op """
-    # pylint: disable=invalid-name
     # get problem dimension
     n = len(mu)
     e = np.ones(n)
@@ -81,7 +88,8 @@ def get_operator(mu, sigma, q, budget, penalty):  # pylint: disable=invalid-name
                 pauli_list.append([2 * sigma_z[i_, j_], Pauli(zp, xp)])
         offset += sigma_z[i_, i_]
 
-    return WeightedPauliOperator(paulis=pauli_list), offset
+    opflow_list = [(pauli[1].to_label(), pauli[0]) for pauli in pauli_list]
+    return PauliSumOp.from_list(opflow_list), offset
 
 
 def portfolio_value(x, mu, sigma, q, budget, penalty):  # pylint: disable=invalid-name

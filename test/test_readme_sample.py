@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020.
+# (C) Copyright IBM 2020, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -18,7 +18,7 @@ the issue then ensure changes are made to readme too.
 
 import unittest
 
-from test.finance import QiskitFinanceTestCase
+from test import QiskitFinanceTestCase
 
 
 class TestReadmeSample(QiskitFinanceTestCase):
@@ -37,9 +37,9 @@ class TestReadmeSample(QiskitFinanceTestCase):
 
         import numpy as np
         from qiskit import BasicAer
-        from qiskit.aqua.algorithms import AmplitudeEstimation
+        from qiskit.algorithms import AmplitudeEstimation, EstimationProblem
         from qiskit.circuit.library import NormalDistribution
-        from qiskit.finance.applications import FixedIncomeExpectedValue
+        from qiskit_finance.applications import FixedIncomeExpectedValue
 
         # Create a suitable multivariate distribution
         num_qubits = [2, 2]
@@ -54,28 +54,33 @@ class TestReadmeSample(QiskitFinanceTestCase):
                                                 bounds=bounds)
 
         # the FixedIncomeExpectedValue provides us with the necessary rescalings
-        post_processing = fixed_income.post_processing
 
         # create the A operator for amplitude estimation by prepending the
         # normal distribution to the function mapping
         state_preparation = fixed_income.compose(mvnd, front=True)
 
+        problem = EstimationProblem(state_preparation=state_preparation,
+                                    objective_qubits=[2],
+                                    post_processing=fixed_income.post_processing)
+
         # Set number of evaluation qubits (samples)
         num_eval_qubits = 5
 
         # Construct and run amplitude estimation
-        backend = BasicAer.get_backend('statevector_simulator')
-        algo = AmplitudeEstimation(num_eval_qubits, state_preparation,
-                                   post_processing=post_processing)
-        result = algo.run(backend)
+        q_i = BasicAer.get_backend('statevector_simulator')
+        algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits,
+                                   quantum_instance=q_i)
+        result = algo.estimate(problem)
 
         print('Estimated value:\t%.4f' % result.estimation)
         print('Probability:    \t%.4f' % result.max_probability)
 
         # ----------------------------------------------------------------------
 
-        self.assertAlmostEqual(result.estimation, 2.46, places=4)
-        self.assertAlmostEqual(result.max_probability, 0.8487, places=4)
+        with self.subTest('test estimation'):
+            self.assertAlmostEqual(result.estimation, 2.46, places=4)
+        with self.subTest('test max.probability'):
+            self.assertAlmostEqual(result.max_probability, 0.8487, places=4)
 
 
 if __name__ == '__main__':

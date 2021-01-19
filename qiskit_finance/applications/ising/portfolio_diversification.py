@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2020
+# (C) Copyright IBM 2019, 2021
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -15,13 +15,15 @@
 import numpy as np
 from qiskit.quantum_info import Pauli
 
-from qiskit.aqua.algorithms import MinimumEigensolverResult
-from qiskit.aqua.operators import WeightedPauliOperator, StateFn
+from qiskit.algorithms import MinimumEigensolverResult
+from qiskit.opflow import PauliSumOp, StateFn
 
 # pylint: disable=invalid-name
 
 
-def get_operator(rho: np.ndarray, n: int, q: int) -> WeightedPauliOperator:
+def get_operator(rho: np.ndarray,
+                 n: int,
+                 q: int) -> PauliSumOp:
     """Converts an instance of portfolio optimization into a list of Paulis.
 
     Args:
@@ -122,7 +124,8 @@ def get_operator(rho: np.ndarray, n: int, q: int) -> WeightedPauliOperator:
                 pauli_list.append((2 * Qz[i, j], Pauli(vp, wp)))
 
     pauli_list.append((cz, Pauli(np.zeros(N), np.zeros(N))))
-    return WeightedPauliOperator(paulis=pauli_list)
+    opflow_list = [(pauli[1].to_label(), pauli[0]) for pauli in pauli_list]
+    return PauliSumOp.from_list(opflow_list)
 
 
 def get_portfoliodiversification_solution(rho: np.ndarray,

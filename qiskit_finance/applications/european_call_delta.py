@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2018, 2020.
+# (C) Copyright IBM 2018, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -20,7 +20,6 @@ from qiskit.circuit.library import IntegerComparator
 
 class EuropeanCallDelta(QuantumCircuit):
     """The European Call Option Delta.
-
     Evaluates the variance for a European call option given an uncertainty model.
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.
     """
@@ -50,10 +49,8 @@ class EuropeanCallDelta(QuantumCircuit):
 
     def post_processing(self, scaled_value: float) -> float:
         """Map the scaled value back to the original domain.
-
         Args:
             scaled_value: The scaled value.
-
         Returns:
             The scaled value mapped back to the original domain.
         """

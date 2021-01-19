@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2020.
+# (C) Copyright IBM 2019, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -16,7 +16,7 @@ from typing import Union, List
 import datetime
 import logging
 
-from qiskit.aqua import MissingOptionalLibraryError
+from qiskit.exceptions import MissingOptionalLibraryError
 from ._base_data_provider import BaseDataProvider, StockMarket
 from ..exceptions import QiskitFinanceError
 
@@ -33,7 +33,7 @@ class ExchangeDataProvider(BaseDataProvider):
     """Exchange data provider.
 
     Please see:
-    https://github.com/Qiskit/qiskit-tutorials/blob/master/legacy_tutorials/aqua/finance/data_providers/time_series.ipynb
+    https://github.com/Qiskit/qiskit-tutorials/blob/master/tutorials/finance/11_time_series.ipynb
     for instructions on use, which involve obtaining a Quandl access token.
     """
 

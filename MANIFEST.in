@@ -1,0 +1,5 @@
+recursive-include qiskit_finance
+graft test
+prune docs
+prune tools
+global-exclude *.py[co] .DS_Store
