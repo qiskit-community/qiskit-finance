@@ -169,7 +169,7 @@ class TestFixedIncomeAssets(QiskitFinanceTestCase):
                                                 bounds=[(0., 0.12), (0., 0.24)])
 
         problem = EstimationProblem(state_preparation=fixed_income,
-                                    objective_qubits=[3],
+                                    objective_qubits=[4],
                                     post_processing=fixed_income.post_processing)
         # run simulation
         a_e.quantum_instance = self._qasm if simulator == 'qasm' else self._statevector

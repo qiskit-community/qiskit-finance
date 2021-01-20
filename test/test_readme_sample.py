@@ -60,7 +60,7 @@ class TestReadmeSample(QiskitFinanceTestCase):
         state_preparation = fixed_income.compose(mvnd, front=True)
 
         problem = EstimationProblem(state_preparation=state_preparation,
-                                    objective_qubits=[2],
+                                    objective_qubits=[4],
                                     post_processing=fixed_income.post_processing)
 
         # Set number of evaluation qubits (samples)
@@ -72,13 +72,13 @@ class TestReadmeSample(QiskitFinanceTestCase):
                                    quantum_instance=q_i)
         result = algo.estimate(problem)
 
-        print('Estimated value:\t%.4f' % result.estimation)
+        print('Estimated value:\t%.4f' % result.estimation_processed)
         print('Probability:    \t%.4f' % result.max_probability)
 
         # ----------------------------------------------------------------------
 
         with self.subTest('test estimation'):
-            self.assertAlmostEqual(result.estimation, 2.46, places=4)
+            self.assertAlmostEqual(result.estimation_processed, 2.46, places=4)
         with self.subTest('test max.probability'):
             self.assertAlmostEqual(result.max_probability, 0.8487, places=4)
 

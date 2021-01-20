@@ -101,7 +101,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
                                            alpha=0.05,
                                            quantum_instance=q_i)
         result = iae.estimate(problem)
-        self.assertAlmostEqual(result.estimation, 0.8079816552117238)
+        self.assertAlmostEqual(result.estimation_processed, 0.8079816552117238)
 
 
 if __name__ == '__main__':

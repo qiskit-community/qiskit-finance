@@ -101,7 +101,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
                                            alpha=0.05,
                                            quantum_instance=q_i)
         result = iae.estimate(problem)
-        self.assertAlmostEqual(result.estimation, 1.0127253837345427)
+        self.assertAlmostEqual(result.estimation_processed, 1.0127253837345427)
 
 
 if __name__ == '__main__':

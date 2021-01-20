@@ -86,7 +86,7 @@ class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
         state_preparation = fixed_income.compose(dist, front=True)
 
         problem = EstimationProblem(state_preparation=state_preparation,
-                                    objective_qubits=[3],
+                                    objective_qubits=[4],
                                     post_processing=fixed_income.post_processing)
 
         # run simulation
@@ -98,7 +98,7 @@ class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
         result = iae.estimate(problem)
 
         # compare to precomputed solution
-        self.assertAlmostEqual(result.estimation, 2.3389012822103044)
+        self.assertAlmostEqual(result.estimation_processed, 2.3389012822103044)
 
 
 if __name__ == '__main__':
