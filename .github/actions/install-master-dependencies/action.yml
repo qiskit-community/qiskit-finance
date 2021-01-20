@@ -10,7 +10,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-name: 'Install Qiskit Aqua Master Dependencies'
+name: 'Install Qiskit Finance Master Dependencies'
 description: 'Installs Python dependencies from Master'
 
 runs:
@@ -18,7 +18,6 @@ runs:
   steps: 
     - run : |
         pip install https://github.com/Qiskit/qiskit-terra/archive/master.zip
-        pip install https://github.com/Qiskit/qiskit-ignis/archive/master.zip
         pip install https://github.com/Qiskit/qiskit-ibmq-provider/archive/master.zip
         pip install https://github.com/Qiskit/qiskit-optimization/archive/master.zip
         sudo apt-get -y install g++-7

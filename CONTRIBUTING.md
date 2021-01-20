@@ -10,11 +10,11 @@ https://qiskit.org/documentation/contributing_to_qiskit.html
 ## Contributing to Qiskit Finance
 
 In addition to the general guidelines above there are specific details for
-contributing to Finance, these are documented below.
+contributing to Qiskit Finance, these are documented below.
 
 ### Project Code Style.
 
-Code in Finance should conform to PEP8 and style/lint checks are run to validate
+Code in Qiskit Finance should conform to PEP8 and style/lint checks are run to validate
 this.  Line length must be limited to no more than 100 characters. Docstrings
 should be written using the Google docstring format.
 
@@ -74,12 +74,12 @@ please ensure that:
    date will be checked by CI build. The format of the date(s) is _year of creation,
    last year changed_. So for example:
    
-   > \# (C) Copyright IBM 2018, 2020.
+   > \# (C) Copyright IBM 2018, 2021.
 
    If the _year of creation_ is the same as _last year changed_ then only
    one date is needed, for example:
 
-   > \# (C) Copyright IBM 2020.
+   > \# (C) Copyright IBM 2021.
                                                                                                                                                                                                  
    If code is changed in a file make sure the copyright includes the current year.
    If there is just one date and it's a prior year then add the current year as the 2nd date, 
@@ -232,10 +232,10 @@ particular will be located at `docs/_build/html/release_notes.html`
 ## Installing Qiskit Finance from source
 
 Please see the [Installing Qiskit Finance from
-Source](https://qiskit.org/documentation/contributing_to_qiskit.html#installing-finance-from-source)
+Source](https://github.com/Qiskit/qiskit-finance#installatione)
 section of the Qiskit documentation.
 
-Note: Finance depends on Ignis and Terra, and has optional dependence on Aer and IBM Q Provider, so
+Note: Finance depends on Terra, and has optional dependence on Aer and IBM Q Provider, so
 these should be installed too. The master branch of Finance is kept working with those other element
 master branches so these should be installed from source too following the instructions at 
 the same location

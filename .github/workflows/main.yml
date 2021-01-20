@@ -132,7 +132,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -161,7 +161,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.7, 3.8, 3.9]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -194,18 +194,18 @@ jobs:
       - name: Coverage combine
         run: |
           coverage3 combine
-          mv .coverage ./o${{ matrix.python-version }}/finance.dat
+          mv .coverage ./f${{ matrix.python-version }}/finance.dat
         if: ${{ matrix.python-version == 3.7 }}
         shell: bash
       - uses: actions/upload-artifact@v2
         with:
-          name: finance{{ matrix.python-version }}
+          name: finance${{ matrix.python-version }}
           path: ./f${{ matrix.python-version }}/*
   Tutorials:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6, 3.8]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -288,10 +288,6 @@ jobs:
             ${{ runner.os }}-
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.6
-          path: /tmp/f36
-      - uses: actions/download-artifact@v2
-        with:
           name: finance3.7
           path: /tmp/f37
       - uses: actions/download-artifact@v2
@@ -307,7 +303,7 @@ jobs:
         shell: bash
       - name: Combined Deprecation Messages
         run: |
-          sort -f -u /tmp/f36/finance.dep /tmp/f37/finance.dep /tmp/f38/finance.dep /tmp/f39/finance.dep || true
+          sort -f -u /tmp/f37/finance.dep /tmp/f38/finance.dep /tmp/f39/finance.dep || true
         shell: bash
       - name: Coverage combine
         run: coverage3 combine /tmp/f37/finance.dat
