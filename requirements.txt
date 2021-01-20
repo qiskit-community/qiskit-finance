@@ -9,4 +9,3 @@ setuptools>=40.1.0
 pandas
 quandl
 yfinance
-retworkx>=0.5.0
