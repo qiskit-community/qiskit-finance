@@ -76,7 +76,7 @@ def get_operator(mu,
             xp = np.zeros(n, dtype=np.bool)
             zp = np.zeros(n, dtype=np.bool)
             zp[i_] = True
-            pauli_list.append([mu_z[i_], Pauli(zp, xp)])
+            pauli_list.append([mu_z[i_], Pauli((zp, xp))])
         for j in range(i):
             j_ = j
             # j_ = n-j-1
@@ -85,7 +85,7 @@ def get_operator(mu,
                 zp = np.zeros(n, dtype=np.bool)
                 zp[i_] = True
                 zp[j_] = True
-                pauli_list.append([2 * sigma_z[i_, j_], Pauli(zp, xp)])
+                pauli_list.append([2 * sigma_z[i_, j_], Pauli((zp, xp))])
         offset += sigma_z[i_, i_]
 
     opflow_list = [(pauli[1].to_label(), pauli[0]) for pauli in pauli_list]

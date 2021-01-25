@@ -22,7 +22,4 @@ runs:
     - run : |
         pip install -U pip
         pip install -U setuptools wheel
-        if [ "${{ inputs.python-version }}" == "3.7" ]; then
-          pip install cplex
-        fi
       shell: bash

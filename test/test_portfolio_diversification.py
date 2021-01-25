@@ -142,64 +142,64 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         """ simple1 test """
         # Compares the output in terms of Paulis.
         paulis = [
-            (-249.5, Pauli(
-                z=[True, False, False, False, False, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (-249.60000000000002, Pauli(
-                z=[False, True, False, False, False, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (-249.60000000000002, Pauli(
-                z=[False, False, True, False, False, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (-249.5, Pauli(
-                z=[False, False, False, True, False, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (500.0, Pauli(
-                z=[False, False, False, False, True, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (500.0, Pauli(
-                z=[False, False, False, False, False, True],
-                x=[False, False, False, False, False, False]
-            )),
-            (500.0, Pauli(
-                z=[True, True, False, False, False, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (500.0, Pauli(
-                z=[False, False, True, True, False, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (-750.0, Pauli(
-                z=[True, False, False, False, True, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (-250.0, Pauli(
-                z=[False, False, True, False, True, False],
-                x=[False, False, False, False, False, False]
-            )),
-            (-250.0, Pauli(
-                z=[False, True, False, False, False, True],
-                x=[False, False, False, False, False, False]
-            )),
-            (-750.0, Pauli(
-                z=[False, False, False, True, False, True],
-                x=[False, False, False, False, False, False]
-            )),
-            (500.0, Pauli(
-                z=[False, False, False, False, True, True],
-                x=[False, False, False, False, False, False]
-            )),
-            (3498.2, Pauli(
-                z=[False, False, False, False, False, False],
-                x=[False, False, False, False, False, False]
-            ))
+            (-249.5, Pauli((
+                [True, False, False, False, False, False],
+                [False, False, False, False, False, False]
+            ))),
+            (-249.60000000000002, Pauli((
+                [False, True, False, False, False, False],
+                [False, False, False, False, False, False]
+            ))),
+            (-249.60000000000002, Pauli((
+                [False, False, True, False, False, False],
+                [False, False, False, False, False, False]
+            ))),
+            (-249.5, Pauli((
+                [False, False, False, True, False, False],
+                [False, False, False, False, False, False]
+            ))),
+            (500.0, Pauli((
+                [False, False, False, False, True, False],
+                [False, False, False, False, False, False]
+            ))),
+            (500.0, Pauli((
+                [False, False, False, False, False, True],
+                [False, False, False, False, False, False]
+            ))),
+            (500.0, Pauli((
+                [True, True, False, False, False, False],
+                [False, False, False, False, False, False]
+            ))),
+            (500.0, Pauli((
+                [False, False, True, True, False, False],
+                [False, False, False, False, False, False]
+            ))),
+            (-750.0, Pauli((
+                [True, False, False, False, True, False],
+                [False, False, False, False, False, False]
+            ))),
+            (-250.0, Pauli((
+                [False, False, True, False, True, False],
+                [False, False, False, False, False, False]
+            ))),
+            (-250.0, Pauli((
+                [False, True, False, False, False, True],
+                [False, False, False, False, False, False]
+            ))),
+            (-750.0, Pauli((
+                [False, False, False, True, False, True],
+                [False, False, False, False, False, False]
+            ))),
+            (500.0, Pauli((
+                [False, False, False, False, True, True],
+                [False, False, False, False, False, False]
+            ))),
+            (3498.2, Pauli((
+                [False, False, False, False, False, False],
+                [False, False, False, False, False, False]
+            )))
         ]
-        opflow_list = [(pauli[1], Pauli.from_label(pauli[0]))
+        opflow_list = [(pauli[1], Pauli(pauli[0]))
                        for pauli in self.qubit_op.primitive.to_list()]
         for pauli_a, pauli_b in zip(opflow_list, paulis):
             cost_a, binary_a = pauli_a
