@@ -113,7 +113,7 @@ def get_operator(rho: np.ndarray,
             wp = np.zeros(N)
             vp = np.zeros(N)
             vp[i] = 1
-            pauli_list.append((gz[i], Pauli(vp, wp)))
+            pauli_list.append((gz[i], Pauli((vp, wp))))
     for i in range(N):
         for j in range(i):
             if Qz[i, j] != 0:
@@ -121,9 +121,9 @@ def get_operator(rho: np.ndarray,
                 vp = np.zeros(N)
                 vp[i] = 1
                 vp[j] = 1
-                pauli_list.append((2 * Qz[i, j], Pauli(vp, wp)))
+                pauli_list.append((2 * Qz[i, j], Pauli((vp, wp))))
 
-    pauli_list.append((cz, Pauli(np.zeros(N), np.zeros(N))))
+    pauli_list.append((cz, Pauli((np.zeros(N), np.zeros(N)))))
     opflow_list = [(pauli[1].to_label(), pauli[0]) for pauli in pauli_list]
     return PauliSumOp.from_list(opflow_list)
 
