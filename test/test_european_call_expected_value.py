@@ -18,7 +18,7 @@ from test import QiskitFinanceTestCase
 import numpy as np
 
 from qiskit.circuit.library import TwoLocal, NormalDistribution
-from qiskit.utils import aqua_globals, QuantumInstance
+from qiskit.utils import algorithm_globals, QuantumInstance
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import LinearAmplitudeFunction
 from qiskit.quantum_info import Operator
@@ -31,7 +31,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
     def setUp(self):
         super().setUp()
         self.seed = 457
-        aqua_globals.random_seed = self.seed
+        algorithm_globals.random_seed = self.seed
 
     def test_ecev_circuit(self):
         """Test the expected circuit.
