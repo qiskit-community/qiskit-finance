@@ -20,7 +20,7 @@ import numpy as np
 
 from qiskit_optimization.applications.ising.common import sample_most_likely
 from qiskit import BasicAer
-from qiskit.utils import aqua_globals, QuantumInstance
+from qiskit.utils import algorithm_globals, QuantumInstance
 from qiskit.algorithms import NumPyMinimumEigensolver, QAOA
 from qiskit.algorithms.optimizers import COBYLA
 from qiskit_finance.applications.ising import portfolio
@@ -33,7 +33,7 @@ class TestPortfolio(QiskitFinanceTestCase):
     def setUp(self):
         super().setUp()
         self.seed = 50
-        aqua_globals.random_seed = self.seed
+        algorithm_globals.random_seed = self.seed
 
         num_assets = 4
         stocks = [("TICKER%s" % i) for i in range(num_assets)]

@@ -20,7 +20,7 @@ import numpy as np
 
 from qiskit.quantum_info import Pauli
 
-from qiskit.utils import aqua_globals
+from qiskit.utils import algorithm_globals
 from qiskit.algorithms import NumPyMinimumEigensolver
 from qiskit_finance.applications.ising.portfolio_diversification import \
     (get_portfoliodiversification_solution,
@@ -129,7 +129,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
 
     def setUp(self):
         super().setUp()
-        aqua_globals.random_seed = 100
+        algorithm_globals.random_seed = 100
         self.n = 2
         self.q = 1
         self.instance = np.ones((self.n, self.n))

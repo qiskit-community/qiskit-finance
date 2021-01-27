@@ -19,7 +19,7 @@ import numpy as np
 from sklearn.datasets import make_spd_matrix
 from qiskit.quantum_info import Pauli
 
-from qiskit.utils import aqua_globals
+from qiskit.utils import algorithm_globals
 from qiskit.opflow import PauliSumOp
 
 
@@ -36,10 +36,10 @@ def random_model(n, seed=None):
 
     """
     if seed:
-        aqua_globals.random_seed = seed
+        algorithm_globals.random_seed = seed
 
     # draw random return values between [0, 1]
-    m_u = aqua_globals.random.uniform(size=n, low=0, high=1)
+    m_u = algorithm_globals.random.uniform(size=n, low=0, high=1)
 
     # construct positive semi-definite covariance matrix
     sigma = make_spd_matrix(n)

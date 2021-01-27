@@ -20,7 +20,7 @@ from enum import Enum
 import numpy as np
 import fastdtw
 
-from qiskit.utils import aqua_globals
+from qiskit.utils import algorithm_globals
 from ..exceptions import QiskitFinanceError
 
 logger = logging.getLogger(__name__)
@@ -195,8 +195,8 @@ class BaseDataProvider(ABC):
         # Coordinates for visualisation purposes
         x_c = np.zeros([self._n, 1])
         y_c = np.zeros([self._n, 1])
-        x_c = (aqua_globals.random.random(self._n) - 0.5) * 1
-        y_c = (aqua_globals.random.random(self._n) - 0.5) * 1
+        x_c = (algorithm_globals.random.random(self._n) - 0.5) * 1
+        y_c = (algorithm_globals.random.random(self._n) - 0.5) * 1
         # for (cnt, s) in enumerate(self.tickers):
         # x_c[cnt, 1] = self.data[cnt][0]
         # y_c[cnt, 0] = self.data[cnt][-1]
