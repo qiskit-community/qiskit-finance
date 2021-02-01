@@ -73,16 +73,16 @@ def get_operator(mu,
         i_ = i
         # i_ = n - i - 1
         if np.abs(mu_z[i_]) > 1e-6:
-            xp = np.zeros(n, dtype=np.bool)
-            zp = np.zeros(n, dtype=np.bool)
+            xp = np.zeros(n, dtype=bool)
+            zp = np.zeros(n, dtype=bool)
             zp[i_] = True
             pauli_list.append([mu_z[i_], Pauli((zp, xp))])
         for j in range(i):
             j_ = j
             # j_ = n-j-1
             if np.abs(sigma_z[i_, j_]) > 1e-6:
-                xp = np.zeros(n, dtype=np.bool)
-                zp = np.zeros(n, dtype=np.bool)
+                xp = np.zeros(n, dtype=bool)
+                zp = np.zeros(n, dtype=bool)
                 zp[i_] = True
                 zp[j_] = True
                 pauli_list.append([2 * sigma_z[i_, j_], Pauli((zp, xp))])
