@@ -106,7 +106,7 @@ class FixedIncomeExpectedValue(QuantumCircuit):
 
         # apply approximation scaling
         offset_angle = (offset - 1 / 2) * np.pi / 2 * rescaling_factor + np.pi / 4
-        slope_angles = slopes * np.pi / 2 * rescaling_factor
+        slope_angles = slopes * np.pi / 2 * rescaling_factor  # type: ignore
 
         # apply approximate payoff function
         self.ry(2 * offset_angle, self.num_qubits - 1)
