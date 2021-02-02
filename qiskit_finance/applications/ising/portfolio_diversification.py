@@ -12,6 +12,7 @@
 
 """ portfolio diversification """
 
+from typing import cast
 import numpy as np
 from qiskit.quantum_info import Pauli
 
@@ -167,7 +168,7 @@ def get_portfoliodiversification_solution(rho: np.ndarray,
 
     x_state = np.flip(x_state, axis=0)
 
-    return x_state
+    return cast(np.ndarray, x_state)
 
 
 def get_portfoliodiversification_value(rho: np.ndarray,
