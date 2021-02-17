@@ -18,6 +18,6 @@ runs:
   steps: 
     - run : |
         pip install -e .
-        pip install qiskit-optimization[cplex]
+        pip install qiskit-optimization[cplex,cvx]
         pip install -U -c constraints.txt -r requirements-dev.txt
       shell: bash
