@@ -21,11 +21,17 @@ class Portfolio(BaseApplication):
         x = [mdl.binary_var(name='x_{0}'.format(i)) for i in range(num_assets)]
         quad = mdl.quad_matrix_sum(self._sigma, x)
         linear = np.dot(self._mu, x)
-        mdl.minimize(quad + linear)
+        mdl.minimize(self._q * quad + linear)
         mdl.add_constraint(mdl.sum(x[i] for i in range(num_assets)) == self._budget)
         qp = QuadraticProgram()
         qp.from_docplex(mdl)
         return qp
+
+    def portfolio_expected_value(self, x):
+        return np.dot(self._mu, x)
+
+    def portfolio_variance(self, x):
+        return np.dot(x, np.dot(self._sigma, x))
 
     def interpret(self, x):
         return x
