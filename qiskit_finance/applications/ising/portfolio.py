@@ -27,11 +27,11 @@ class Portfolio(BaseApplication):
         qp.from_docplex(mdl)
         return qp
 
-    def portfolio_expected_value(self, x):
-        return np.dot(self._mu, x)
+    def portfolio_expected_value(self, result):
+        return np.dot(self._mu, result.x)
 
-    def portfolio_variance(self, x):
-        return np.dot(x, np.dot(self._sigma, x))
+    def portfolio_variance(self, result):
+        return np.dot(x, np.dot(self._sigma, result.x))
 
-    def interpret(self, x):
-        return x
+    def interpret(self, result):
+        return result.x
