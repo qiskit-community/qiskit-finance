@@ -31,7 +31,7 @@ class Portfolio(BaseApplication):
         return np.dot(self._mu, result.x)
 
     def portfolio_variance(self, result):
-        return np.dot(x, np.dot(self._sigma, result.x))
+        return np.dot(result.x, np.dot(self._sigma, result.x))
 
     def interpret(self, result):
         return result.x
