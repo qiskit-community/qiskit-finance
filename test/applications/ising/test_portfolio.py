@@ -18,11 +18,11 @@ from test import QiskitFinanceTestCase
 import datetime
 import numpy as np
 
-from qiskit_optimization.applications.ising.common import sample_most_likely
 from qiskit import BasicAer
 from qiskit.utils import algorithm_globals, QuantumInstance
 from qiskit.algorithms import NumPyMinimumEigensolver, QAOA
 from qiskit.algorithms.optimizers import COBYLA
+from qiskit_optimization.applications import OptimizationApplication
 from qiskit_finance.applications.ising import portfolio
 from qiskit_finance.data_providers import RandomDataProvider
 
@@ -55,7 +55,7 @@ class TestPortfolio(QiskitFinanceTestCase):
         """ portfolio test """
         algo = NumPyMinimumEigensolver()
         result = algo.compute_minimum_eigenvalue(operator=self.qubit_op)
-        selection = sample_most_likely(result.eigenstate)
+        selection = OptimizationApplication.sample_most_likely(result.eigenstate)
         value = portfolio.portfolio_value(
             selection, self.muu, self.sigma, self.risk, self.budget, self.penalty)
         np.testing.assert_array_equal(selection, [0, 1, 1, 0])
@@ -71,7 +71,7 @@ class TestPortfolio(QiskitFinanceTestCase):
                     initial_point=[0., 0.],
                     quantum_instance=quantum_instance)
         result = qaoa.compute_minimum_eigenvalue(operator=self.qubit_op)
-        selection = sample_most_likely(result.eigenstate)
+        selection = OptimizationApplication.sample_most_likely(result.eigenstate)
         value = portfolio.portfolio_value(
             selection, self.muu, self.sigma, self.risk, self.budget, self.penalty)
         np.testing.assert_array_equal(selection, [0, 1, 1, 0])
