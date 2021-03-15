@@ -17,7 +17,7 @@ import numpy as np
 from qiskit import QuantumCircuit
 
 
-class FixedIncomeExpectedValue(QuantumCircuit):
+class FixedIncomePricingObjective(QuantumCircuit):
     r"""The Fixed Income Expected Value amplitude function.
     This circuit can be used to evaluate the expected value of the total value :math:`V` of the
     assets

@@ -17,7 +17,7 @@ from qiskit.circuit import QuantumCircuit
 from qiskit.circuit.library import LinearAmplitudeFunction
 
 
-class EuropeanCallExpectedValue(QuantumCircuit):
+class EuropeanCallPricingObjective(QuantumCircuit):
     """The European Call Option Expected Value.
     Evaluates the expected payoff for a European call option given an uncertainty model.
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.

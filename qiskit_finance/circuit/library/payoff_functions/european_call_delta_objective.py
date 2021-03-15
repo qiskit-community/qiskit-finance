@@ -18,7 +18,7 @@ from qiskit.circuit import QuantumCircuit, QuantumRegister
 from qiskit.circuit.library import IntegerComparator
 
 
-class EuropeanCallDelta(QuantumCircuit):
+class EuropeanCallDeltaObjective(QuantumCircuit):
     """The European Call Option Delta.
     Evaluates the variance for a European call option given an uncertainty model.
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.

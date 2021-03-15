@@ -15,12 +15,12 @@ from typing import Tuple
 
 from qiskit.circuit import QuantumCircuit
 from qiskit.algorithms.amplitude_estimators import EstimationProblem
-from .estimation_application import EstimationApplication
-from ..circuit.library.payoff_functions.european_call_expected_value \
-    import EuropeanCallExpectedValue as ECEV_Circ
+from qiskit_finance.applications.estimation.estimation_application import EstimationApplication
+from qiskit_finance.circuit.library.payoff_functions.european_call_pricing_objective \
+    import EuropeanCallPricingObjective
 
 
-class EuropeanCallExpectedValue(EstimationApplication):
+class EuropeanCallPricing(EstimationApplication):
     """The European Call Option Expected Value.
     Evaluates the expected payoff for a European call option given an uncertainty model.
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.
@@ -41,11 +41,11 @@ class EuropeanCallExpectedValue(EstimationApplication):
             bounds: The bounds of the discretized random variable.
             uncertainty_model: A circuit for encoding a problem distribution
         """
-        self._european_call_objective = ECEV_Circ(num_state_qubits=num_state_qubits, strike_price=strike_price,
-                                                  rescaling_factor=rescaling_factor, bounds=bounds)
-
-        self._num_state_qubits = num_state_qubits
+        self._european_call_objective = EuropeanCallPricingObjective(
+            num_state_qubits=num_state_qubits, strike_price=strike_price,
+            rescaling_factor=rescaling_factor, bounds=bounds)
         self._european_call = self._european_call_objective.compose(uncertainty_model, front=True)
+        self._num_state_qubits = uncertainty_model.num_qubits
 
     def to_estimation_problem(self):
         problem = EstimationProblem(state_preparation=self._european_call,
