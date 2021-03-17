@@ -13,7 +13,7 @@
 
 """Optimization applications for finance"""
 
-from .portfolio import Portfolio
+from .portfolio import PortfolioOptimization
 from .portfolio_diversification import PortfolioDiversification
 
 __all__ = [

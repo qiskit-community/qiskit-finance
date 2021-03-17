@@ -11,12 +11,4 @@
 # that they have been altered from the originals.
 
 
-"""Optimization applications for finance"""
-
-from .portfolio import Portfolio
-from .portfolio_diversification import PortfolioDiversification
-
-__all__ = [
-   'Portfolio',
-   'PortfolioDiversification'
-]
+"""Quantum circuit for Finance."""

@@ -42,7 +42,7 @@ Estimation Applications
 
 from .estimation import (EstimationApplication, EuropeanCallDelta, EuropeanCallPricing,
                          FixedIncomePricing)
-from .optimization import Portfolio, PortfolioDiversification
+from .optimization import PortfolioOptimization, PortfolioDiversification
 
 __all__ = [
     'Portfolio',

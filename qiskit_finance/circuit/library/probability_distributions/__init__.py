@@ -16,5 +16,3 @@ from .gaussian_conditional_independence_model import GaussianConditionalIndepend
 from .lognormal import LogNormalDistribution
 from .normal import NormalDistribution
 from .uniform import UniformDistribution
-
-

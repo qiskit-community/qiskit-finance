@@ -25,7 +25,7 @@ class PortfolioDiversification(OptimizationApplication):
     """Optimization application for the "portfolio diversification" problem introduced in [1].
 
     References:
-        [1]: Gerard Cornuejols, Reha Tutuncu (2006), "Optimization Methods in Finance".
+        [1]: GG. Cornuejols and R. Tutuncu, Optimization methods in finance, 2006
     """
 
     def __init__(self, similarity_matrix: np.ndarray, num_assets: int, num_clusters: int) -> None:

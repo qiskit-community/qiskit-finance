@@ -21,7 +21,7 @@ from qiskit_optimization.applications import OptimizationApplication
 from qiskit_optimization.problems import QuadraticProgram
 
 
-class Portfolio(OptimizationApplication):
+class PortfolioOptimization(OptimizationApplication):
     """Optimization application for the "portfolio optimization" [1] problem.
 
     References:
