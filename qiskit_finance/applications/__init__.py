@@ -24,7 +24,7 @@ Optimization Applications
    :toctree: ../stubs/
    :nosignatures:
 
-   Portfolio
+   PortfolioOptimization
    PortfolioDiversification
 
 Estimation Applications
@@ -45,7 +45,7 @@ from .estimation import (EstimationApplication, EuropeanCallDelta, EuropeanCallP
 from .optimization import PortfolioOptimization, PortfolioDiversification
 
 __all__ = [
-    'Portfolio',
+    'PortfolioOptimization',
     'PortfolioDiversification',
     'EstimationApplication',
     'EuropeanCallDelta',

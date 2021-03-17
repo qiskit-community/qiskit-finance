@@ -13,10 +13,10 @@
 
 """Optimization applications for finance"""
 
-from .portfolio import PortfolioOptimization
+from .portfolio_optimization import PortfolioOptimization
 from .portfolio_diversification import PortfolioDiversification
 
 __all__ = [
-   'Portfolio',
+   'PortfolioOptimization',
    'PortfolioDiversification'
 ]
