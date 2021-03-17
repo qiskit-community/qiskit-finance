@@ -11,22 +11,12 @@
 # that they have been altered from the originals.
 
 
-"""
-Ising Models (:mod:`qiskit_finance.applications.ising`)
-=======================================================
+"""Optimization applications for finance"""
 
-Ising models for finance problems
+from .portfolio import Portfolio
+from .portfolio_diversification import PortfolioDiversification
 
-.. currentmodule:: qiskit_finance.applications.ising
-
-Ising Models
-============
-
-.. autosummary::
-   :toctree: ../stubs/
-   :nosignatures:
-
-   portfolio
-   portfolio_diversification
-
-"""
+__all__ = [
+   'Portfolio',
+   'PortfolioDiversification'
+]

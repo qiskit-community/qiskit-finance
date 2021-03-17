@@ -16,27 +16,39 @@ Finance applications (:mod:`qiskit_finance.applications`)
 
 .. currentmodule:: qiskit_finance.applications
 
-Applications for Qiskit's finance module. The present set are in the form of
-Ising Hamiltonians.
+Applications for Qiskit's finance module.
 
-Submodules
+Optimization Applications
 ==========
-
 .. autosummary::
-   :toctree:
+   :toctree: ../stubs/
+   :nosignatures:
 
-   ising
+   Portfolio
+   PortfolioDiversification
+
+Estimation Applications
+==========
+.. autosummary::
+   :toctree: ../stubs/
+   :nosignatures:
+   EstimationApplication
+   EuropeanCallDelta
+   EuropeanCallPricing
+   FixedIncomePricing
+
 
 """
 
-# from .european_call_delta import EuropeanCallDelta
-# from .european_call_expected_value import EuropeanCallExpectedValue
-# from .fixed_income_expected_value import FixedIncomeExpectedValue
-# from .gaussian_conditional_independence_model import GaussianConditionalIndependenceModel
+from .estimation import (EstimationApplication, EuropeanCallDelta, EuropeanCallPricing,
+                         FixedIncomePricing)
+from .optimization import Portfolio, PortfolioDiversification
 
-# __all__ = [
-#     'EuropeanCallDelta',
-#     'EuropeanCallExpectedValue',
-#     'FixedIncomeExpectedValue',
-#     'GaussianConditionalIndependenceModel'
-# ]
+__all__ = [
+    'Portfolio',
+    'PortfolioDiversification',
+    'EstimationApplication',
+    'EuropeanCallDelta',
+    'EuropeanCallPricing',
+    'FixedIncomePricing'
+]

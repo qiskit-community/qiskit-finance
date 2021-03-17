@@ -23,9 +23,15 @@ from qiskit_finance.circuit.library.payoff_functions.fixed_income_pricing_object
 
 
 class FixedIncomePricing(EstimationApplication):
-    """The European Call Option Delta.
-    Evaluates the variance for a European call option given an uncertainty model.
-    The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.
+    r"""An estimation application for the fixed income pricing problem.
+    evaluate the expected value of the total value :math:`V` of the
+    assets
+    .. math::
+        V = \sum_{t=1}^T \frac{c_t}{(1+r_t)^t}.
+
+    [1]: Woerner, S., & Egger, D. J. (2018).
+         Quantum Risk Analysis.
+         `arXiv:1806.06893 <http://arxiv.org/abs/1806.06893>`_
     """
 
     def __init__(self,
@@ -54,7 +60,14 @@ class FixedIncomePricing(EstimationApplication):
         self._state_preparation = self._fixed_income.compose(uncertainty_model, front=True)
         self._objective_qubits = uncertainty_model.num_qubits
 
-    def to_estimation_problem(self):
+    def to_estimation_problem(self) -> EstimationProblem:
+        """Convert a problem instance into a
+        :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem`
+
+        Returns:
+            The :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem` created
+            from the Fixed problem instance.
+        """
         problem = EstimationProblem(state_preparation=self._state_preparation,
                                     objective_qubits=[self._objective_qubits],
                                     post_processing=self._fixed_income.post_processing)

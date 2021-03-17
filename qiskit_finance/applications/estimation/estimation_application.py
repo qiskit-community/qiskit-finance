@@ -10,8 +10,10 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-"""The European Call Option Expected Value."""
+"""An abstract class for estimation application classes."""
 from abc import ABC, abstractmethod
+
+from qiskit.algorithms.amplitude_estimators import EstimationProblem
 
 
 class EstimationApplication(ABC):
@@ -20,6 +22,8 @@ class EstimationApplication(ABC):
     """
 
     @abstractmethod
-    def to_estimation_problem(self):
+    def to_estimation_problem(self) -> EstimationProblem:
+        """Convert a problem instance into a
+        :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem`
+        """
         pass
-

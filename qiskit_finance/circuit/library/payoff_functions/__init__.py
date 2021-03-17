@@ -10,11 +10,8 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-"""The probability distribution library. """
+"""The Payoff cuntion library. """
 
-from .gaussian_conditional_independence_model import GaussianConditionalIndependenceModel
-from .lognormal import LogNormalDistribution
-from .normal import NormalDistribution
-from .uniform import UniformDistribution
-
-
+from .european_call_delta_objective import EuropeanCallDeltaObjective
+from .european_call_pricing_objective import EuropeanCallPricingObjective
+from .fixed_income_pricing_objective import FixedIncomePricingObjective
