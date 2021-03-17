@@ -32,7 +32,6 @@ Estimation Applications
 .. autosummary::
    :toctree: ../stubs/
    :nosignatures:
-   EstimationApplication
    EuropeanCallDelta
    EuropeanCallPricing
    FixedIncomePricing
@@ -40,14 +39,12 @@ Estimation Applications
 
 """
 
-from .estimation import (EstimationApplication, EuropeanCallDelta, EuropeanCallPricing,
-                         FixedIncomePricing)
+from .estimation import (EuropeanCallDelta, EuropeanCallPricing, FixedIncomePricing)
 from .optimization import PortfolioOptimization, PortfolioDiversification
 
 __all__ = [
     'PortfolioOptimization',
     'PortfolioDiversification',
-    'EstimationApplication',
     'EuropeanCallDelta',
     'EuropeanCallPricing',
     'FixedIncomePricing'

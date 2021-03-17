@@ -16,9 +16,11 @@
 from .european_call_delta import EuropeanCallDelta
 from .european_call_pricing import EuropeanCallPricing
 from .fixed_income_pricing import FixedIncomePricing
+from .fixed_income_pricing import EstimationApplication
 
 __all__ = [
    'EuropeanCallDelta',
    'EuropeanCallPricing',
    'FixedIncomePricing'
+   'EstimationApplication'
 ]
