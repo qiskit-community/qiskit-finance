@@ -97,7 +97,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         self.assertEqualQuadraticProgram(actual_op, expected_op)
 
     def test_interpret(self):
-        "Test interpret"
+        """Test interpret"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
             num_assets=self.n, num_clusters=self.q)
@@ -105,7 +105,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         self.assertEqual(portfolio_diversification.interpret(result_x), [1])
 
     def test_smilarity_matrix(self):
-        "Test similarity_matrix"
+        """Test similarity_matrix"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
             num_assets=self.n, num_clusters=self.q)
@@ -113,7 +113,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         self.assertEqual(portfolio_diversification.similarity_matrix.tolist(), [[0, 1], [1, 0]])
 
     def test_num_assets(self):
-        "test num_assets"
+        """test num_assets"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
             num_assets=self.n, num_clusters=self.q)
@@ -121,7 +121,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         self.assertEqual(portfolio_diversification.num_assets, 3)
 
     def test_num_clusters(self):
-        "test num_clusters"
+        """test num_clusters"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
             num_assets=self.n, num_clusters=self.q)

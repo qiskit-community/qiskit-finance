@@ -22,10 +22,10 @@ from qiskit.utils import QuantumInstance
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import NormalDistribution
 from qiskit.quantum_info import Operator
-from qiskit_finance.applications import FixedIncomeExpectedValue
+from qiskit_finance.circuit.library.payoff_functions import FixedIncomePricingObjective
 
 
-class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
+class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
     """Tests European Call Expected Value uncertainty problem """
 
     def test_circuit(self):
