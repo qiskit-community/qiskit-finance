@@ -108,7 +108,7 @@ class PortfolioOptimization(OptimizationApplication):
         return self._expected_returns
 
     @expected_returns.setter
-    def expected_returns(self, expected_returns) -> None:
+    def expected_returns(self, expected_returns: np.ndarray) -> None:
         """Setter of expected_returns
 
         Args:
