@@ -19,7 +19,8 @@ Finance applications (:mod:`qiskit_finance.applications`)
 Applications for Qiskit's finance module.
 
 Optimization Applications
-==========
+=========================
+
 .. autosummary::
    :toctree: ../stubs/
    :nosignatures:
@@ -28,10 +29,12 @@ Optimization Applications
    PortfolioDiversification
 
 Estimation Applications
-==========
+=======================
+
 .. autosummary::
    :toctree: ../stubs/
    :nosignatures:
+   
    EuropeanCallDelta
    EuropeanCallPricing
    FixedIncomePricing

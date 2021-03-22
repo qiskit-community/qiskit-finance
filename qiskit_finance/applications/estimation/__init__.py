@@ -21,6 +21,6 @@ from .fixed_income_pricing import EstimationApplication
 __all__ = [
    'EuropeanCallDelta',
    'EuropeanCallPricing',
-   'FixedIncomePricing'
+   'FixedIncomePricing',
    'EstimationApplication'
 ]

@@ -10,7 +10,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-"""The European Call Option Expected Value."""
+"""An application class for the Fixed Income Pricing."""
 from typing import Tuple, List
 
 import numpy as np
@@ -26,6 +26,7 @@ class FixedIncomePricing(EstimationApplication):
     r"""An estimation application for the fixed income pricing problem.
     evaluate the expected value of the total value :math:`V` of the
     assets
+
     .. math::
         V = \sum_{t=1}^T \frac{c_t}{(1+r_t)^t}.
 

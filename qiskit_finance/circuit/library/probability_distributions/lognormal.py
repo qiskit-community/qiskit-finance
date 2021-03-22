@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2017, 2020.
+# (C) Copyright IBM 2017, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -56,7 +56,7 @@ class LogNormalDistribution(QuantumCircuit):
         probability of the distribution.
 
     This circuit is for example used in amplitude estimation applications, such as finance [1, 2],
-    where customer demand or the return of a portfolio could be modelled using a log-normal
+    where customer demand or the return of a portfolio could be modeled using a log-normal
     distribution.
 
     Examples:
@@ -123,7 +123,7 @@ class LogNormalDistribution(QuantumCircuit):
         else:  # multivariate case
             super().__init__(sum(num_qubits), name=name)
 
-            # compute the evaluation points using numpy's meshgrid
+            # compute the evaluation points using meshgrid of numpy
             # indexing 'ij' yields the "column-based" indexing
             meshgrid = np.meshgrid(*[np.linspace(bound[0], bound[1], num=2**num_qubits[i])
                                      for i, bound in enumerate(bounds)], indexing='ij')

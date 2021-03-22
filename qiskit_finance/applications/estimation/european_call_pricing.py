@@ -10,7 +10,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-"""An application class for the European Call pricing problem."""
+"""An application class for the European Call Pricing."""
 from typing import Tuple
 
 from qiskit.circuit import QuantumCircuit
@@ -55,7 +55,7 @@ class EuropeanCallPricing(EstimationApplication):
 
         Returns:
             The :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem` created
-            from the Eutopean call pricing problem instance.
+            from the European call pricing problem instance.
         """
         problem = EstimationProblem(state_preparation=self._state_preparation,
                                     objective_qubits=[self._objective_qubits],

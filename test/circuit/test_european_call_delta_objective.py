@@ -10,7 +10,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-""" Test European Call Expected Value uncertainty problem """
+""" Test EuropeanCallDelta."""
 
 import unittest
 from test import QiskitFinanceTestCase
@@ -26,7 +26,7 @@ from qiskit_finance.circuit.library.payoff_functions import EuropeanCallDeltaObj
 
 
 class TestEuropeanCallDelta(QiskitFinanceTestCase):
-    """Tests European Call Expected Value uncertainty problem """
+    """Tests EuropeanCallDelta."""
 
     def test_circuit(self):
         """Test the expected circuit.
@@ -37,8 +37,8 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         strike_price = 0.5
         bounds = (0, 2)
         ecd = EuropeanCallDeltaObjective(num_state_qubits=num_qubits,
-                                strike_price=strike_price,
-                                bounds=bounds)
+                                         strike_price=strike_price,
+                                         bounds=bounds)
 
         # map strike_price to a basis state
         x = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (2 ** num_qubits - 1)
@@ -84,8 +84,8 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
 
         # create amplitude function
         european_call_delta = EuropeanCallDeltaObjective(num_state_qubits=num_qubits,
-                                                strike_price=strike_price,
-                                                bounds=bounds)
+                                                         strike_price=strike_price,
+                                                         bounds=bounds)
 
         # create state preparation
         state_preparation = european_call_delta.compose(uncertainty_model, front=True)

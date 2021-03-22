@@ -10,7 +10,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-"""The Payoff cuntion library. """
+"""The Payoff function library. """
 
 from .european_call_delta_objective import EuropeanCallDeltaObjective
 from .european_call_pricing_objective import EuropeanCallPricingObjective

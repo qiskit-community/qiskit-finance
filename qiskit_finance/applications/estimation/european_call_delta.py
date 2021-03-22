@@ -10,7 +10,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-"""The European Call Option Expected Value."""
+"""An application class for the European Call Option Delta."""
 from typing import Tuple
 
 from qiskit.circuit import QuantumCircuit
@@ -49,7 +49,7 @@ class EuropeanCallDelta(EstimationApplication):
 
         Returns:
             The :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem` created
-            from the Eutopean call delta problem instance.
+            from the European call delta problem instance.
         """
         problem = EstimationProblem(state_preparation=self._state_preparation,
                                     objective_qubits=[self._objective_qubits],

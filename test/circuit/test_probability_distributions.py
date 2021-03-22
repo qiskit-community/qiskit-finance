@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2017, 2020.
+# (C) Copyright IBM 2017, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -20,7 +20,8 @@ from scipy.stats import multivariate_normal
 
 from qiskit.test.base import QiskitTestCase
 from qiskit.circuit import QuantumCircuit
-from qiskit_finance.circuit.library import UniformDistribution, NormalDistribution, LogNormalDistribution
+from qiskit_finance.circuit.library import (UniformDistribution, NormalDistribution,
+                                            LogNormalDistribution)
 from qiskit.quantum_info import Statevector
 
 
@@ -28,7 +29,7 @@ class TestUniformDistribution(QiskitTestCase):
     """Test the uniform distribution circuit."""
 
     def test_uniform(self):
-        """Test the circuit of the uniform distribution is a simple layer of Hadamards."""
+        """Test the circuit of the uniform distribution is a simple layer of Hadamard gates."""
         circuit = UniformDistribution(3)
         expected = QuantumCircuit(3)
         expected.h([0, 1, 2])
@@ -211,8 +212,6 @@ class TestLogNormalDistribution(QiskitTestCase):
 
         normal = LogNormalDistribution(**kwargs)
         self.assertDistributionIsCorrect(normal, num_qubits, mu, sigma, bounds, upto_diag)
-
-    
 
 
 if __name__ == '__main__':
