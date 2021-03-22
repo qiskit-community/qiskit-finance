@@ -41,11 +41,13 @@ class EuropeanCallPricing(EstimationApplication):
             bounds: The bounds of the discretized random variable.
             uncertainty_model: A circuit for encoding a problem distribution
         """
-        self._european_call_objective = EuropeanCallPricingObjective(
+        self._objective = EuropeanCallPricingObjective(
             num_state_qubits=num_state_qubits, strike_price=strike_price,
             rescaling_factor=rescaling_factor, bounds=bounds)
-        self._european_call = self._european_call_objective.compose(uncertainty_model, front=True)
-        self._num_state_qubits = uncertainty_model.num_qubits
+        self._state_preparation = QuantumCircuit(self._objective.num_qubits)
+        self._state_preparation.append(uncertainty_model, range(uncertainty_model.num_qubits))
+        self._state_preparation.append(self._objective, range(self._objective.num_qubits))
+        self._objective_qubits = uncertainty_model.num_qubits
 
     def to_estimation_problem(self) -> EstimationProblem:
         """Convert a problem instance into a
@@ -55,7 +57,7 @@ class EuropeanCallPricing(EstimationApplication):
             The :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem` created
             from the Eutopean call pricing problem instance.
         """
-        problem = EstimationProblem(state_preparation=self._european_call,
-                                    objective_qubits=[self._num_state_qubits],
-                                    post_processing=self._european_call_objective.post_processing)
+        problem = EstimationProblem(state_preparation=self._state_preparation,
+                                    objective_qubits=[self._objective_qubits],
+                                    post_processing=self._objective.post_processing)
         return problem

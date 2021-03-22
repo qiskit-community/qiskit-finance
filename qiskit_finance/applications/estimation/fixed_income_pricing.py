@@ -54,10 +54,12 @@ class FixedIncomePricing(EstimationApplication):
             uncertainty_model: A circuit for encoding a problem distribution
         """
 
-        self._fixed_income = FixedIncomePricingObjective(
+        self._objective = FixedIncomePricingObjective(
             num_qubits=num_qubits, pca_matrix=pca_matrix, initial_interests=initial_interests,
             cash_flow=cash_flow, rescaling_factor=rescaling_factor, bounds=bounds)
-        self._state_preparation = self._fixed_income.compose(uncertainty_model, front=True)
+        self._state_preparation = QuantumCircuit(self._objective.num_qubits)
+        self._state_preparation.append(uncertainty_model, range(uncertainty_model.num_qubits))
+        self._state_preparation.append(self._objective, range(self._objective.num_qubits))
         self._objective_qubits = uncertainty_model.num_qubits
 
     def to_estimation_problem(self) -> EstimationProblem:
@@ -70,5 +72,5 @@ class FixedIncomePricing(EstimationApplication):
         """
         problem = EstimationProblem(state_preparation=self._state_preparation,
                                     objective_qubits=[self._objective_qubits],
-                                    post_processing=self._fixed_income.post_processing)
+                                    post_processing=self._objective.post_processing)
         return problem
