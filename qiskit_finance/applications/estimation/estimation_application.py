@@ -13,7 +13,7 @@
 """An abstract class for estimation application classes."""
 from abc import ABC, abstractmethod
 
-from qiskit.algorithms.amplitude_estimators import EstimationProblem
+from qiskit.algorithms.amplitude_estimators import EstimationProblem, AmplitudeEstimatorResult
 
 
 class EstimationApplication(ABC):
@@ -25,5 +25,16 @@ class EstimationApplication(ABC):
     def to_estimation_problem(self) -> EstimationProblem:
         """Convert a problem instance into a
         :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem`
+        """
+        pass
+
+    @abstractmethod
+    def interpret(self, result: AmplitudeEstimatorResult) -> float:
+        """Convert the calculation result of the problem
+        (:class:`~qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
+        to the answer of the problem.
+
+        Args:
+            result: The calculated result of the problem
         """
         pass

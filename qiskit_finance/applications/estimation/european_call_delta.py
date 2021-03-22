@@ -14,7 +14,7 @@
 from typing import Tuple
 
 from qiskit.circuit import QuantumCircuit
-from qiskit.algorithms.amplitude_estimators import EstimationProblem
+from qiskit.algorithms.amplitude_estimators import EstimationProblem, AmplitudeEstimatorResult
 from qiskit_finance.applications.estimation.estimation_application import EstimationApplication
 from qiskit_finance.circuit.library.payoff_functions.european_call_delta_objective \
     import EuropeanCallDeltaObjective
@@ -55,3 +55,16 @@ class EuropeanCallDelta(EstimationApplication):
                                     objective_qubits=[self._objective_qubits],
                                     post_processing=self._objective.post_processing)
         return problem
+
+    def interpret(self, result: AmplitudeEstimatorResult) -> float:
+        """Convert the calculation result of the problem
+        (:class:`~qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
+        to the answer of the problem.
+
+        Args:
+            result: The calculated result of the problem
+
+        Returns:
+            The estimation value after the post_processing.
+        """
+        return result.estimation_processed
