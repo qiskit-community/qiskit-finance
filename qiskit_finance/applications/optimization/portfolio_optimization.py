@@ -162,7 +162,7 @@ class PortfolioOptimization(OptimizationApplication):
         return self._budget
 
     @budget.setter
-    def budget(self, budget: float) -> None:
+    def budget(self, budget: int) -> None:
         """Setter of budget
 
         Args:
