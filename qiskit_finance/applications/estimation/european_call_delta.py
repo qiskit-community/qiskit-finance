@@ -39,8 +39,10 @@ class EuropeanCallDelta(EstimationApplication):
                                                      strike_price=strike_price,
                                                      bounds=bounds)
         self._state_preparation = QuantumCircuit(self._objective.num_qubits)
-        self._state_preparation.append(uncertainty_model, range(uncertainty_model.num_qubits))
-        self._state_preparation.append(self._objective, range(self._objective.num_qubits))
+        self._state_preparation.compose(uncertainty_model, range(uncertainty_model.num_qubits),
+                                        inplace=True)
+        self._state_preparation.compose(self._objective, range(self._objective.num_qubits),
+                                        inplace=True)
         self._objective_qubits = uncertainty_model.num_qubits
 
     def to_estimation_problem(self) -> EstimationProblem:

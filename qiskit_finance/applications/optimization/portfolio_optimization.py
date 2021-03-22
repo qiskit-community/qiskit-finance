@@ -144,7 +144,7 @@ class PortfolioOptimization(OptimizationApplication):
         return self._risk_factor
 
     @risk_factor.setter
-    def risk_factor(self, risk_factor):
+    def risk_factor(self, risk_factor: float) -> None:
         """Setter of risk_factor
 
         Args:
@@ -162,7 +162,7 @@ class PortfolioOptimization(OptimizationApplication):
         return self._budget
 
     @budget.setter
-    def budget(self, budget):
+    def budget(self, budget: float) -> None:
         """Setter of budget
 
         Args:
