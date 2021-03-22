@@ -52,11 +52,11 @@ class PortfolioOptimization(OptimizationApplication):
             from the portfolio optimization problem instance.
         """
         num_assets = len(self._expected_returns)
-        mdl = AdvModel(name='Portfolio')
+        mdl = AdvModel(name='Portfolio optimization')
         x = [mdl.binary_var(name='x_{0}'.format(i)) for i in range(num_assets)]
         quad = mdl.quad_matrix_sum(self._covariances, x)
         linear = np.dot(self._expected_returns, x)
-        mdl.minimize(self._risk_factor * quad + linear)
+        mdl.minimize(self._risk_factor * quad - linear)
         mdl.add_constraint(mdl.sum(x[i] for i in range(num_assets)) == self._budget)
         op = QuadraticProgram()
         op.from_docplex(mdl)
@@ -144,7 +144,7 @@ class PortfolioOptimization(OptimizationApplication):
         return self._risk_factor
 
     @risk_factor.setter
-    def risk_factor(self, risk_factor: float) -> None:
+    def risk_factor(self, risk_factor):
         """Setter of risk_factor
 
         Args:
@@ -162,7 +162,7 @@ class PortfolioOptimization(OptimizationApplication):
         return self._budget
 
     @budget.setter
-    def budget(self, budget: int) -> None:
+    def budget(self, budget):
         """Setter of budget
 
         Args:
