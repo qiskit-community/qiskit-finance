@@ -59,7 +59,8 @@ class TestEuropeanCallPricing(QiskitFinanceTestCase):
         expected_circ = linear_function.compose(uncertain_model, front=True)
         self.assertEqual(est_problem.objective_qubits, [num_qubits])
         self.assertTrue(Operator(est_problem.state_preparation).equiv(expected_circ))
-        self.assertEqual(linear_function.post_processing(0.5), est_problem.post_processing(0.5))
+        self.assertEqual(linear_function.post_processing(0.5),
+                         est_problem.post_processing(0.5))  # pylint: disable=not-callable
 
 
 if __name__ == '__main__':

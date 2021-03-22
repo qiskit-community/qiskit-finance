@@ -34,7 +34,7 @@ Estimation Applications
 .. autosummary::
    :toctree: ../stubs/
    :nosignatures:
-   
+
    EuropeanCallDelta
    EuropeanCallPricing
    FixedIncomePricing

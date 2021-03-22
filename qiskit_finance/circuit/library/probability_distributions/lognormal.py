@@ -116,7 +116,7 @@ class LogNormalDistribution(QuantumCircuit):
         if bounds is None:
             bounds = (0, 1) if dim == 1 else [(0, 1)] * dim
 
-        if not isinstance(num_qubits, list):  # univariate case
+        if isinstance(num_qubits, int):  # univariate case
             super().__init__(num_qubits, name=name)
 
             x = np.linspace(bounds[0], bounds[1], num=2**num_qubits)  # evaluation points
@@ -125,7 +125,7 @@ class LogNormalDistribution(QuantumCircuit):
 
             # compute the evaluation points using meshgrid of numpy
             # indexing 'ij' yields the "column-based" indexing
-            meshgrid = np.meshgrid(*[np.linspace(bound[0], bound[1], num=2**num_qubits[i])
+            meshgrid = np.meshgrid(*[np.linspace(bound[0], bound[1], num=2**num_qubits[i])  # type: ignore
                                      for i, bound in enumerate(bounds)], indexing='ij')
             # flatten into a list of points
             x = list(zip(*[grid.flatten() for grid in meshgrid]))

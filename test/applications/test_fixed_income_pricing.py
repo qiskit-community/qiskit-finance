@@ -59,7 +59,8 @@ class TestFixedIncomePricing(QiskitFinanceTestCase):
         self.assertTrue(Operator(est_problem.state_preparation).equiv(expected_circ))
         fipo = FixedIncomePricingObjective(num_qubits, pca_matrix, initial_interests,
                                            cash_flow, rescaling_factor, bounds)
-        self.assertEqual(fipo.post_processing(0.5), est_problem.post_processing(0.5))
+        self.assertEqual(fipo.post_processing(0.5),
+                         est_problem.post_processing(0.5))  # pylint: disable=not-callable
 
 
 if __name__ == '__main__':

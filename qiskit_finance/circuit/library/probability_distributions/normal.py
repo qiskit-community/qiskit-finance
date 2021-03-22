@@ -163,7 +163,7 @@ class NormalDistribution(QuantumCircuit):
         if bounds is None:
             bounds = (-1, 1) if dim == 1 else [(-1, 1)] * dim
 
-        if not isinstance(num_qubits, list):  # univariate case
+        if isinstance(num_qubits, int):  # univariate case
             super().__init__(num_qubits, name=name)
 
             x = np.linspace(bounds[0], bounds[1], num=2**num_qubits)

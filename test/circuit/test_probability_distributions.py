@@ -20,9 +20,9 @@ from scipy.stats import multivariate_normal
 
 from qiskit.test.base import QiskitTestCase
 from qiskit.circuit import QuantumCircuit
+from qiskit.quantum_info import Statevector
 from qiskit_finance.circuit.library import (UniformDistribution, NormalDistribution,
                                             LogNormalDistribution)
-from qiskit.quantum_info import Statevector
 
 
 class TestUniformDistribution(QiskitTestCase):
