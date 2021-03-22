@@ -12,7 +12,7 @@
 
 """A circuit that encodes a discretized normal probability distribution in qubit amplitudes."""
 
-from typing import Tuple, Union, List, Optional
+from typing import Tuple, Union, List, Optional, Any
 import numpy as np
 from qiskit.circuit import QuantumCircuit
 
@@ -166,7 +166,7 @@ class NormalDistribution(QuantumCircuit):
         if isinstance(num_qubits, int):  # univariate case
             super().__init__(num_qubits, name=name)
 
-            x = np.linspace(bounds[0], bounds[1], num=2**num_qubits)
+            x = np.linspace(bounds[0], bounds[1], num=2**num_qubits)  # type: Any
         else:  # multivariate case
             super().__init__(sum(num_qubits), name=name)
 

@@ -12,7 +12,7 @@
 
 """The log-normal probability distribution circuit."""
 
-from typing import Tuple, List, Union, Optional
+from typing import Tuple, List, Union, Optional, Any
 import numpy as np
 from qiskit.circuit import QuantumCircuit
 from .normal import _check_bounds_valid, _check_dimensions_match
@@ -119,7 +119,7 @@ class LogNormalDistribution(QuantumCircuit):
         if isinstance(num_qubits, int):  # univariate case
             super().__init__(num_qubits, name=name)
 
-            x = np.linspace(bounds[0], bounds[1], num=2**num_qubits)  # evaluation points
+            x = np.linspace(bounds[0], bounds[1], num=2**num_qubits)
         else:  # multivariate case
             super().__init__(sum(num_qubits), name=name)
 
@@ -129,7 +129,7 @@ class LogNormalDistribution(QuantumCircuit):
                                                  num=2**num_qubits[i])
                                      for i, bound in enumerate(bounds)], indexing='ij')
             # flatten into a list of points
-            x = list(zip(*[grid.flatten() for grid in meshgrid]))
+            x = list(zip(*[grid.flatten() for grid in meshgrid]))  # type: ignore
 
         # compute the normalized, truncated probabilities
         probabilities = []
@@ -144,7 +144,7 @@ class LogNormalDistribution(QuantumCircuit):
             else:
                 probability = 0
             probabilities += [probability]
-        normalized_probabilities = probabilities / np.sum(probabilities)
+        normalized_probabilities = probabilities / np.sum(probabilities)  # type: ignore
 
         # store as properties
         self._values = x
@@ -169,7 +169,7 @@ class LogNormalDistribution(QuantumCircuit):
     @property
     def probabilities(self) -> np.ndarray:
         """Return the sampling probabilities for the values."""
-        return self._probabilities
+        return self._probabilities  # type: ignore
 
     @property
     def bounds(self) -> Union[Tuple[float, float], List[Tuple[float, float]]]:
