@@ -41,6 +41,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         # self.qubit_op = get_operator(self.instance, self.n, self.q)
 
     def assertEqualQuadraticProgram(self, actual, expected):
+        """Compare two instances for quadratic program"""
         # Test name
         self.assertEqual(actual.name, expected.name)
         # Test variables
