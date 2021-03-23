@@ -30,7 +30,7 @@ class EuropeanCallDeltaObjective(QuantumCircuit):
         Args:
             num_state_qubits: The number of qubits used to encode the random variable.
             strike_price: strike price of the European option
-            bounds: The bounds of the discretized random variable.
+            bounds: The tuple of the bounds, (min, max), of the discretized random variable.
         """
         # map strike price to {0, ..., 2^n-1}
         num_values = 2 ** num_state_qubits

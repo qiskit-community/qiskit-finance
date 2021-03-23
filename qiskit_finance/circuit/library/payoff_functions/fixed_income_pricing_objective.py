@@ -53,7 +53,8 @@ class FixedIncomePricingObjective(QuantumCircuit):
             initial_interests: The initial interest rates / offsets for the interest rates.
             cash_flow: The cash flow time series.
             rescaling_factor: The scaling factor used in the Taylor approximation.
-            bounds: The bounds for return values the assets can attain.
+            bounds: The list of the tuple of the bounds, (min, max), for return values the
+                assets can attain.
         """
         self._rescaling_factor = rescaling_factor
 

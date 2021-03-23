@@ -34,7 +34,7 @@ class EuropeanCallPricingObjective(QuantumCircuit):
             num_state_qubits: The number of qubits used to represent the random variable.
             strike_price: strike price of the European option
             rescaling_factor: approximation factor for linear payoff
-            bounds: The bounds of the discretized random variable.
+            bounds: The tuple of the bounds, (min, max), of the discretized random variable.
         """
         # create piecewise linear amplitude function
         breakpoints = [bounds[0], strike_price]

@@ -51,7 +51,9 @@ class FixedIncomePricing(EstimationApplication):
             initial_interests: The initial interest rates / offsets for the interest rates.
             cash_flow: The cash flow time series.
             rescaling_factor: The scaling factor used in the Taylor approximation.
-            bounds: The bounds for return values the assets can attain.
+            bounds: The list of the tuple of the bounds, (min, max), for return values the
+                assets can attain.
+            The bounds for return values the assets can attain.
             uncertainty_model: A circuit for encoding a problem distribution
         """
 
@@ -67,10 +69,10 @@ class FixedIncomePricing(EstimationApplication):
 
     def to_estimation_problem(self) -> EstimationProblem:
         """Convert a problem instance into a
-        :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem`
+        `qiskit.algorithms.amplitude_estimators.EstimationProblem`
 
         Returns:
-            The :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem` created
+            The `qiskit.algorithms.amplitude_estimators.EstimationProblem` created
             from the Fixed problem instance.
         """
         problem = EstimationProblem(state_preparation=self._state_preparation,
@@ -80,7 +82,7 @@ class FixedIncomePricing(EstimationApplication):
 
     def interpret(self, result: AmplitudeEstimatorResult) -> float:
         """Convert the calculation result of the problem
-        (:class:`~qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
+        (`qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
         to the answer of the problem.
 
         Args:

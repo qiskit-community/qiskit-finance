@@ -24,14 +24,14 @@ class EstimationApplication(ABC):
     @abstractmethod
     def to_estimation_problem(self) -> EstimationProblem:
         """Convert a problem instance into a
-        :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem`
+        `qiskit.algorithms.amplitude_estimators.EstimationProblem`
         """
         pass
 
     @abstractmethod
     def interpret(self, result: AmplitudeEstimatorResult) -> float:
         """Convert the calculation result of the problem
-        (:class:`~qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
+        (`qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
         to the answer of the problem.
 
         Args:

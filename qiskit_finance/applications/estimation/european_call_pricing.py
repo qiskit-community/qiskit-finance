@@ -38,7 +38,7 @@ class EuropeanCallPricing(EstimationApplication):
             num_state_qubits: The number of qubits used to represent the random variable.
             strike_price: strike price of the European option
             rescaling_factor: approximation factor for linear payoff
-            bounds: The bounds of the discretized random variable.
+            bounds: The tuple of the bounds, (min, max), of the discretized random variable.
             uncertainty_model: A circuit for encoding a problem distribution
         """
         self._objective = EuropeanCallPricingObjective(
@@ -53,10 +53,10 @@ class EuropeanCallPricing(EstimationApplication):
 
     def to_estimation_problem(self) -> EstimationProblem:
         """Convert a problem instance into a
-        :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem`
+        `qiskit.algorithms.amplitude_estimators.EstimationProblem`
 
         Returns:
-            The :class:`~qiskit.algorithms.amplitude_estimators.EstimationProblem` created
+            The `qiskit.algorithms.amplitude_estimators.EstimationProblem` created
             from the European call pricing problem instance.
         """
         problem = EstimationProblem(state_preparation=self._state_preparation,
@@ -66,7 +66,7 @@ class EuropeanCallPricing(EstimationApplication):
 
     def interpret(self, result: AmplitudeEstimatorResult) -> float:
         """Convert the calculation result of the problem
-        (:class:`~qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
+        (`qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
         to the answer of the problem.
 
         Args:
