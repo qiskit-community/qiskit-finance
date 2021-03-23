@@ -1,3 +1,5 @@
+include LICENSE.txt
+include requirements.txt
 recursive-include qiskit_finance *.txt
 graft test
 prune docs
