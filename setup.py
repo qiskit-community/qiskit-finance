@@ -18,19 +18,8 @@ import os
 long_description = """Qiskit Finance is a open-source library of quantum computing finance experiments.
  """
 
-requirements = [
-    "qiskit-terra>=0.17.0",
-    "qiskit-optimization",
-    "scipy>=1.4",
-    "numpy>=1.17",
-    "psutil>=5",
-    "scikit-learn>=0.20.0",
-    "fastdtw",
-    "setuptools>=40.1.0",
-    "pandas",
-    "quandl",
-    "yfinance",
-]
+with open('requirements.txt') as f:
+    REQUIREMENTS = f.read().splitlines()
 
 if not hasattr(setuptools, 'find_namespace_packages') or not inspect.ismethod(setuptools.find_namespace_packages):
     print("Your setuptools version:'{}' does not support PEP 420 (find_namespace_packages). "
@@ -68,7 +57,7 @@ setuptools.setup(
     ),
     keywords='qiskit sdk quantum finance',
     packages=setuptools.find_packages(include=['qiskit_finance', 'qiskit_finance.*']),
-    install_requires=requirements,
+    install_requires=REQUIREMENTS,
     include_package_data=True,
     python_requires=">=3.6",
     zip_safe=False
