@@ -17,7 +17,7 @@ from qiskit.circuit import QuantumCircuit
 from qiskit.circuit.library import LinearAmplitudeFunction
 
 
-class EuropeanCallExpectedValue(QuantumCircuit):
+class EuropeanCallPricingObjective(QuantumCircuit):
     """The European Call Option Expected Value.
     Evaluates the expected payoff for a European call option given an uncertainty model.
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.
@@ -34,7 +34,7 @@ class EuropeanCallExpectedValue(QuantumCircuit):
             num_state_qubits: The number of qubits used to represent the random variable.
             strike_price: strike price of the European option
             rescaling_factor: approximation factor for linear payoff
-            bounds: The bounds of the discretized random variable.
+            bounds: The tuple of the bounds, (min, max), of the discretized random variable.
         """
         # create piecewise linear amplitude function
         breakpoints = [bounds[0], strike_price]

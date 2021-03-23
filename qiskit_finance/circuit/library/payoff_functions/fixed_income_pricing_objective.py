@@ -17,7 +17,7 @@ import numpy as np
 from qiskit import QuantumCircuit
 
 
-class FixedIncomeExpectedValue(QuantumCircuit):
+class FixedIncomePricingObjective(QuantumCircuit):
     r"""The Fixed Income Expected Value amplitude function.
     This circuit can be used to evaluate the expected value of the total value :math:`V` of the
     assets
@@ -53,7 +53,8 @@ class FixedIncomeExpectedValue(QuantumCircuit):
             initial_interests: The initial interest rates / offsets for the interest rates.
             cash_flow: The cash flow time series.
             rescaling_factor: The scaling factor used in the Taylor approximation.
-            bounds: The bounds for return values the assets can attain.
+            bounds: The list of the tuple of the bounds, (min, max), for return values the
+                assets can attain.
         """
         self._rescaling_factor = rescaling_factor
 

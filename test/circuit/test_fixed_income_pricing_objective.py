@@ -10,7 +10,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-""" Test European Call Expected Value uncertainty problem """
+""" Test FixedIncomePricingObjective"""
 
 import unittest
 from test import QiskitFinanceTestCase
@@ -22,11 +22,11 @@ from qiskit.utils import QuantumInstance
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import NormalDistribution
 from qiskit.quantum_info import Operator
-from qiskit_finance.applications import FixedIncomeExpectedValue
+from qiskit_finance.circuit.library.payoff_functions import FixedIncomePricingObjective
 
 
-class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
-    """Tests European Call Expected Value uncertainty problem """
+class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
+    """Tests FixedIncomePricingObjective"""
 
     def test_circuit(self):
         """Test the expected circuit."""
@@ -37,8 +37,8 @@ class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
         rescaling_factor = 0.125
         bounds = [(0, 0.12), (0, 0.24)]
 
-        circuit = FixedIncomeExpectedValue(num_qubits, pca, initial_interests, cash_flow,
-                                           rescaling_factor, bounds)
+        circuit = FixedIncomePricingObjective(num_qubits, pca, initial_interests, cash_flow,
+                                              rescaling_factor, bounds)
 
         expected = QuantumCircuit(5)
         expected.cry(-np.pi / 216, 0, 4)
@@ -80,7 +80,8 @@ class TestFixedIncomeExpectedValue(QiskitFinanceTestCase):
         rescaling_factor = 0.125
 
         # get fixed income circuit appfactory
-        fixed_income = FixedIncomeExpectedValue(num_qubits, a_n, b, c_f, rescaling_factor, bounds)
+        fixed_income = FixedIncomePricingObjective(
+            num_qubits, a_n, b, c_f, rescaling_factor, bounds)
 
         # build state preparation operator
         state_preparation = fixed_income.compose(dist, front=True)

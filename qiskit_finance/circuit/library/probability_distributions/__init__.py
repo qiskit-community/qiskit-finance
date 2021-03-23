@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2021.
+# (C) Copyright IBM 2020, 2021.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -10,23 +10,9 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
+"""The probability distribution library. """
 
-"""
-Ising Models (:mod:`qiskit_finance.applications.ising`)
-=======================================================
-
-Ising models for finance problems
-
-.. currentmodule:: qiskit_finance.applications.ising
-
-Ising Models
-============
-
-.. autosummary::
-   :toctree: ../stubs/
-   :nosignatures:
-
-   portfolio
-   portfolio_diversification
-
-"""
+from .gaussian_conditional_independence_model import GaussianConditionalIndependenceModel
+from .lognormal import LogNormalDistribution
+from .normal import NormalDistribution
+from .uniform import UniformDistribution

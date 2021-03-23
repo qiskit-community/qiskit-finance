@@ -10,7 +10,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-""" Test European Call Expected Value uncertainty problem """
+""" Test EuropeanCallPricingObjective"""
 
 import unittest
 from test import QiskitFinanceTestCase
@@ -22,11 +22,11 @@ from qiskit.utils import algorithm_globals, QuantumInstance
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import LinearAmplitudeFunction
 from qiskit.quantum_info import Operator
-from qiskit_finance.applications import EuropeanCallExpectedValue
+from qiskit_finance.circuit.library import EuropeanCallPricingObjective
 
 
 class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
-    """Tests European Call Expected Value uncertainty problem """
+    """Tests EuropeanCallPricingObjective."""
 
     def setUp(self):
         super().setUp()
@@ -42,7 +42,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
         rescaling_factor = 0.1
         strike_price = 0.5
         bounds = (0, 2)
-        ecev = EuropeanCallExpectedValue(num_qubits, strike_price, rescaling_factor, bounds)
+        ecev = EuropeanCallPricingObjective(num_qubits, strike_price, rescaling_factor, bounds)
 
         breakpoints = [0, strike_price]
         slopes = [0, 1]
@@ -83,10 +83,10 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
         # create the European call expected value
         strike_price = 2
         rescaling_factor = 0.25
-        european_call = EuropeanCallExpectedValue(num_state_qubits=num_qubits,
-                                                  strike_price=strike_price,
-                                                  rescaling_factor=rescaling_factor,
-                                                  bounds=bounds)
+        european_call = EuropeanCallPricingObjective(num_state_qubits=num_qubits,
+                                                     strike_price=strike_price,
+                                                     rescaling_factor=rescaling_factor,
+                                                     bounds=bounds)
 
         # create the state preparation circuit
         state_preparation = european_call.compose(dist, front=True)

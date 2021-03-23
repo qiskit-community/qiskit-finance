@@ -18,7 +18,7 @@ from qiskit.circuit import QuantumCircuit, QuantumRegister
 from qiskit.circuit.library import IntegerComparator
 
 
-class EuropeanCallDelta(QuantumCircuit):
+class EuropeanCallDeltaObjective(QuantumCircuit):
     """The European Call Option Delta.
     Evaluates the variance for a European call option given an uncertainty model.
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.
@@ -30,7 +30,7 @@ class EuropeanCallDelta(QuantumCircuit):
         Args:
             num_state_qubits: The number of qubits used to encode the random variable.
             strike_price: strike price of the European option
-            bounds: The bounds of the discretized random variable.
+            bounds: The tuple of the bounds, (min, max), of the discretized random variable.
         """
         # map strike price to {0, ..., 2^n-1}
         num_values = 2 ** num_state_qubits

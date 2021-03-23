@@ -15,15 +15,16 @@
 import unittest
 from test import QiskitFinanceTestCase
 
-from qiskit.utils import algorithm_globals
-from qiskit.circuit.library import IntegerComparator
+from qiskit.circuit.library import LinearAmplitudeFunction
 from qiskit.quantum_info import Operator
-from qiskit_finance.applications.estimation import EuropeanCallDelta
-from qiskit_finance.circuit.library.probability_distributions import UniformDistribution
+from qiskit.utils import algorithm_globals
+from qiskit_finance.applications.estimation import EuropeanCallPricing
+from qiskit_finance.circuit.library.probability_distributions import \
+    UniformDistribution
 
 
-class TestEuropeanCallDelta(QiskitFinanceTestCase):
-    """Tests the EuropeanCallDelta application """
+class TestEuropeanCallPricing(QiskitFinanceTestCase):
+    """Tests the EuropeanCallPricing application """
 
     def setUp(self):
         super().setUp()
@@ -33,19 +34,32 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
     def test_to_estimation_problem(self):
         """Test the expected circuit."""
         num_qubits = 3
+        rescaling_factor = 0.1
         strike_price = 0.5
         bounds = (0, 2)
         # make an estimation problem
         uncertain_model = UniformDistribution(num_qubits)
-        ecd = EuropeanCallDelta(num_qubits, strike_price, bounds, uncertain_model)
-        est_problem = ecd.to_estimation_problem()
+        ecp = EuropeanCallPricing(num_qubits, strike_price,
+                                  rescaling_factor, bounds, uncertain_model)
+        est_problem = ecp.to_estimation_problem()
         # make a state_preparation circuit manually
-        x = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (2 ** num_qubits - 1)
-        comparator = IntegerComparator(num_qubits, x)
-        expected_circ = comparator.compose(uncertain_model, front=True)
+        breakpoints = [0, strike_price]
+        slopes = [0, 1]
+        offsets = [0, 0]
+        image = (0, 2 - strike_price)
+        domain = (0, 2)
+        linear_function = LinearAmplitudeFunction(
+            num_qubits,
+            slopes,
+            offsets,
+            domain=domain,
+            image=image,
+            breakpoints=breakpoints,
+            rescaling_factor=rescaling_factor)
+        expected_circ = linear_function.compose(uncertain_model, front=True)
         self.assertEqual(est_problem.objective_qubits, [num_qubits])
         self.assertTrue(Operator(est_problem.state_preparation).equiv(expected_circ))
-        self.assertEqual(0.5,
+        self.assertEqual(linear_function.post_processing(0.5),
                          est_problem.post_processing(0.5))  # pylint: disable=not-callable
 
 

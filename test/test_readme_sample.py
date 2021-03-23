@@ -37,9 +37,9 @@ class TestReadmeSample(QiskitFinanceTestCase):
 
         import numpy as np
         from qiskit import BasicAer
-        from qiskit.algorithms import AmplitudeEstimation, EstimationProblem
+        from qiskit.algorithms import AmplitudeEstimation
         from qiskit.circuit.library import NormalDistribution
-        from qiskit_finance.applications import FixedIncomeExpectedValue
+        from qiskit_finance.applications import FixedIncomePricing
 
         # Create a suitable multivariate distribution
         num_qubits = [2, 2]
@@ -49,19 +49,15 @@ class TestReadmeSample(QiskitFinanceTestCase):
                                   bounds=bounds)
 
         # Create fixed income component
-        fixed_income = FixedIncomeExpectedValue(num_qubits, np.eye(2), np.zeros(2),
-                                                cash_flow=[1.0, 2.0], rescaling_factor=0.125,
-                                                bounds=bounds)
+        fixed_income = FixedIncomePricing(num_qubits, np.eye(2), np.zeros(2),
+                                          cash_flow=[1.0, 2.0], rescaling_factor=0.125,
+                                          bounds=bounds,
+                                          uncertainty_model=mvnd)
 
         # the FixedIncomeExpectedValue provides us with the necessary rescalings
 
-        # create the A operator for amplitude estimation by prepending the
-        # normal distribution to the function mapping
-        state_preparation = fixed_income.compose(mvnd, front=True)
-
-        problem = EstimationProblem(state_preparation=state_preparation,
-                                    objective_qubits=[4],
-                                    post_processing=fixed_income.post_processing)
+        # create the A operator for amplitude estimation
+        problem = fixed_income.to_estimation_problem()
 
         # Set number of evaluation qubits (samples)
         num_eval_qubits = 5
@@ -72,7 +68,7 @@ class TestReadmeSample(QiskitFinanceTestCase):
                                    quantum_instance=q_i)
         result = algo.estimate(problem)
 
-        print('Estimated value:\t%.4f' % result.estimation_processed)
+        print('Estimated value:\t%.4f' % fixed_income.interpret(result))
         print('Probability:    \t%.4f' % result.max_probability)
 
         # ----------------------------------------------------------------------
