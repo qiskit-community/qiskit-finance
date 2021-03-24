@@ -7,6 +7,7 @@ Qiskit Finance documentation
 
   API References <apidocs/qiskit_finance>
   Release Notes <release_notes>
+  Tutorials <tutorials/index>
 
 .. Hiding - Indices and tables
    :ref:`genindex`
