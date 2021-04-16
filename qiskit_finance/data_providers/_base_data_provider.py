@@ -40,7 +40,7 @@ class BaseDataProvider(ABC):
     Doing so requires that the required driver interface is implemented.
 
     To use the subclasses, please see
-    https://github.com/Qiskit/qiskit-tutorials/blob/master/tutorials/finance/11_time_series.ipynb
+    https://github.com/Qiskit/qiskit-finance/blob/main/docs/tutorials/11_time_series.ipynb
 
     """
 
