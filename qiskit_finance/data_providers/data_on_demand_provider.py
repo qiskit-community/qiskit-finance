@@ -30,7 +30,7 @@ class DataOnDemandProvider(BaseDataProvider):
     """NASDAQ Data on Demand data provider.
 
     Please see:
-    https://github.com/Qiskit/qiskit-tutorials/blob/master/tutorials/finance/11_time_series.ipynb
+    https://github.com/Qiskit/qiskit-finance/blob/main/docs/tutorials/11_time_series.ipynb
     for instructions on use, which involve obtaining a NASDAQ DOD access token.
     """
 
