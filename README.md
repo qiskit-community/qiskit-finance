@@ -1,6 +1,6 @@
 # Qiskit Finance
 
-[![License](https://img.shields.io/github/license/Qiskit/qiskit-finance.svg?style=popout-square)](https://opensource.org/licenses/Apache-2.0)[![Build Status](https://github.com/Qiskit/qiskit-finance/workflows/Finance%20Unit%20Tests/badge.svg?branch=master)](https://github.com/Qiskit/qiskit-finance/actions?query=workflow%3A"Finance%20Unit%20Tests"+branch%3Amaster+event%3Apush)[![](https://img.shields.io/github/release/Qiskit/qiskit-finance.svg?style=popout-square)](https://github.com/Qiskit/qiskit-finance/releases)[![](https://img.shields.io/pypi/dm/qiskit-finance.svg?style=popout-square)](https://pypi.org/project/qiskit-finance/)[![Coverage Status](https://coveralls.io/repos/github/Qiskit/qiskit-finance/badge.svg?branch=master)](https://coveralls.io/github/Qiskit/qiskit-finance?branch=master)
+[![License](https://img.shields.io/github/license/Qiskit/qiskit-finance.svg?style=popout-square)](https://opensource.org/licenses/Apache-2.0)[![Build Status](https://github.com/Qiskit/qiskit-finance/workflows/Finance%20Unit%20Tests/badge.svg?branch=main)](https://github.com/Qiskit/qiskit-finance/actions?query=workflow%3A"Finance%20Unit%20Tests"+branch%3Amain+event%3Apush)[![](https://img.shields.io/github/release/Qiskit/qiskit-finance.svg?style=popout-square)](https://github.com/Qiskit/qiskit-finance/releases)[![](https://img.shields.io/pypi/dm/qiskit-finance.svg?style=popout-square)](https://pypi.org/project/qiskit-finance/)[![Coverage Status](https://coveralls.io/repos/github/Qiskit/qiskit-finance/badge.svg?branch=main)](https://coveralls.io/github/Qiskit/qiskit-finance?branch=main)
 
 **Qiskit Finance** is an open-source framework that contains uncertainty components for stock/securities problems,
 Ising translators for portfolio optimizations and data providers to source real or random data to
@@ -94,13 +94,6 @@ We use [GitHub issues](https://github.com/Qiskit/qiskit-finance/issues) for trac
 and for discussion and simple questions.
 For questions that are more suited for a forum, we use the **Qiskit** tag in [Stack Overflow](https://stackoverflow.com/questions/tagged/qiskit).
 
-## Next Steps
-
-Now you're set up and ready to check out some of the other examples from the
-[Qiskit Tutorials](https://github.com/Qiskit/qiskit-tutorials)
-repository, that are used for the IBM Quantum Experience.
-
-
 ## Authors and Citation
 
 Finance was inspired, authored and brought about by the collective work of a team of researchers.
@@ -108,10 +101,10 @@ Finance continues to grow with the help and work of
 [many people](https://github.com/Qiskit/qiskit-finance/graphs/contributors), who contribute
 to the project at different levels.
 If you use Qiskit, please cite as per the provided
-[BibTeX file](https://github.com/Qiskit/qiskit/blob/master/Qiskit.bib).
+[BibTeX file](https://github.com/Qiskit/qiskit/blob/main/Qiskit.bib).
 
 Please note that if you do not like the way your name is cited in the BibTex file then consult
-the information found in the [.mailmap](https://github.com/Qiskit/qiskit-finance/blob/master/.mailmap)
+the information found in the [.mailmap](https://github.com/Qiskit/qiskit-finance/blob/main/.mailmap)
 file.
 
 ## License

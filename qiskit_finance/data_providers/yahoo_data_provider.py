@@ -33,7 +33,7 @@ class YahooDataProvider(BaseDataProvider):
     """Yahoo data provider.
 
     Please see:
-    https://github.com/Qiskit/qiskit-tutorials/blob/master/tutorials/finance/11_time_series.ipynb
+    https://github.com/Qiskit/qiskit-finance/blob/main/docs/tutorials/11_time_series.ipynb
     for instructions on use.
     """
 

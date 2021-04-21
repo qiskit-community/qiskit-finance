@@ -12,7 +12,7 @@
 
 """The log-normal probability distribution circuit."""
 
-from typing import Tuple, List, Union, Optional, Any
+from typing import Tuple, List, Union, Optional
 import numpy as np
 from qiskit.circuit import QuantumCircuit
 from .normal import _check_bounds_valid, _check_dimensions_match
