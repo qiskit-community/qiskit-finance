@@ -15,9 +15,8 @@
 import unittest
 import os
 import datetime
-from test import QiskitFinanceTestCase
+from test import QiskitFinanceTestCase, requires_extra_library
 import numpy as np
-from qiskit.exceptions import MissingOptionalLibraryError
 from qiskit_finance import QiskitFinanceError
 from qiskit_finance.data_providers import (RandomDataProvider,
                                            WikipediaDataProvider,
@@ -37,85 +36,78 @@ class TestDataProviders(QiskitFinanceTestCase):
         self._quandl_token = os.getenv('QUANDL_TOKEN') if os.getenv('QUANDL_TOKEN') else ''
         self._on_demand_token = os.getenv('ON_DEMAND_TOKEN') if os.getenv('ON_DEMAND_TOKEN') else ''
 
+    @requires_extra_library
     def test_random_wrong_use(self):
         """ Random wrong use test """
-        try:
-            rnd = RandomDataProvider(seed=1)
-            # Now, the .run() method is expected, which does the actual data loading
-            # (and can take seconds or minutes,
-            # depending on the data volumes, hence not ok in the constructor)
-            with self.subTest('test RandomDataProvider get_covariance_matrix'):
-                self.assertRaises(QiskitFinanceError, rnd.get_covariance_matrix)
-            with self.subTest('test RandomDataProvider get_similarity_matrix'):
-                self.assertRaises(QiskitFinanceError, rnd.get_similarity_matrix)
-            wiki = WikipediaDataProvider(
-                token=self._quandl_token,
-                tickers=["GOOG", "AAPL"],
-                start=datetime.datetime(2016, 1, 1),
-                end=datetime.datetime(2016, 1, 30)
-            )
-            # Now, the .run() method is expected, which does the actual data loading
-            with self.subTest('test WikipediaDataProvider get_covariance_matrix'):
-                self.assertRaises(QiskitFinanceError, wiki.get_covariance_matrix)
-            with self.subTest('test WikipediaDataProvider get_similarity_matrix'):
-                self.assertRaises(QiskitFinanceError, wiki.get_similarity_matrix)
-        except MissingOptionalLibraryError as ex:
-            self.skipTest(str(ex))
+        rnd = RandomDataProvider(seed=1)
+        # Now, the .run() method is expected, which does the actual data loading
+        # (and can take seconds or minutes,
+        # depending on the data volumes, hence not ok in the constructor)
+        with self.subTest('test RandomDataProvider get_covariance_matrix'):
+            self.assertRaises(QiskitFinanceError, rnd.get_covariance_matrix)
+        with self.subTest('test RandomDataProvider get_similarity_matrix'):
+            self.assertRaises(QiskitFinanceError, rnd.get_similarity_matrix)
+        wiki = WikipediaDataProvider(
+            token=self._quandl_token,
+            tickers=["GOOG", "AAPL"],
+            start=datetime.datetime(2016, 1, 1),
+            end=datetime.datetime(2016, 1, 30)
+        )
+        # Now, the .run() method is expected, which does the actual data loading
+        with self.subTest('test WikipediaDataProvider get_covariance_matrix'):
+            self.assertRaises(QiskitFinanceError, wiki.get_covariance_matrix)
+        with self.subTest('test WikipediaDataProvider get_similarity_matrix'):
+            self.assertRaises(QiskitFinanceError, wiki.get_similarity_matrix)
 
+    @requires_extra_library
     def test_yahoo_wrong_use(self):
         """ Yahoo! wrong use test """
-        try:
-            yahoo = YahooDataProvider(
-                tickers=["AEO", "ABBY"],
-                start=datetime.datetime(2018, 1, 1),
-                end=datetime.datetime(2018, 12, 31)
-            )
-            # Now, the .run() method is expected, which does the actual data loading
-            with self.subTest('test YahooDataProvider get_covariance_matrix'):
-                self.assertRaises(QiskitFinanceError, yahoo.get_covariance_matrix)
-            with self.subTest('test YahooDataProvider get_similarity_matrix'):
-                self.assertRaises(QiskitFinanceError, yahoo.get_similarity_matrix)
-        except MissingOptionalLibraryError as ex:
-            self.skipTest(str(ex))
+        yahoo = YahooDataProvider(
+            tickers=["AEO", "ABBY"],
+            start=datetime.datetime(2018, 1, 1),
+            end=datetime.datetime(2018, 12, 31)
+        )
+        # Now, the .run() method is expected, which does the actual data loading
+        with self.subTest('test YahooDataProvider get_covariance_matrix'):
+            self.assertRaises(QiskitFinanceError, yahoo.get_covariance_matrix)
+        with self.subTest('test YahooDataProvider get_similarity_matrix'):
+            self.assertRaises(QiskitFinanceError, yahoo.get_similarity_matrix)
 
+    @requires_extra_library
     def test_random(self):
         """ random test """
         similarity = np.array([[1.00000000e+00, 6.2284804e-04], [6.2284804e-04, 1.00000000e+00]])
         covariance = np.array([[2.08413157, 0.20842107], [0.20842107, 1.99542187]])
-        try:
-            rnd = RandomDataProvider(seed=1)
-            rnd.run()
-            with self.subTest('test RandomDataProvider get_covariance_matrix'):
-                np.testing.assert_array_almost_equal(rnd.get_covariance_matrix(),
-                                                     covariance, decimal=3)
-            with self.subTest('test RandomDataProvider get_similarity_matrix'):
-                np.testing.assert_array_almost_equal(rnd.get_similarity_matrix(),
-                                                     similarity, decimal=3)
-        except MissingOptionalLibraryError as ex:
-            self.skipTest(str(ex))
+        rnd = RandomDataProvider(seed=1)
+        rnd.run()
+        with self.subTest('test RandomDataProvider get_covariance_matrix'):
+            np.testing.assert_array_almost_equal(rnd.get_covariance_matrix(),
+                                                 covariance, decimal=3)
+        with self.subTest('test RandomDataProvider get_similarity_matrix'):
+            np.testing.assert_array_almost_equal(rnd.get_similarity_matrix(),
+                                                 similarity, decimal=3)
 
+    @requires_extra_library
     def test_random_divide_0(self):
         """ Random divide by 0 test """
         # This will create data with some 0 values, it should not throw
         # divide by 0 errors
-        try:
-            seed = 8888
-            num_assets = 4
-            stocks = [("TICKER%s" % i) for i in range(num_assets)]
-            data = RandomDataProvider(tickers=stocks,
-                                      start=datetime.datetime(2016, 1, 1),
-                                      end=datetime.datetime(2016, 1, 30),
-                                      seed=seed)
-            data.run()
-            mu_value = data.get_period_return_mean_vector()
-            sigma_value = data.get_period_return_covariance_matrix()
-            with self.subTest('test get_period_return_mean_vector is numpy array'):
-                self.assertIsInstance(mu_value, np.ndarray)
-            with self.subTest('test get_period_return_covariance_matrix is numpy array'):
-                self.assertIsInstance(sigma_value, np.ndarray)
-        except MissingOptionalLibraryError as ex:
-            self.skipTest(str(ex))
+        seed = 8888
+        num_assets = 4
+        stocks = [("TICKER%s" % i) for i in range(num_assets)]
+        data = RandomDataProvider(tickers=stocks,
+                                  start=datetime.datetime(2016, 1, 1),
+                                  end=datetime.datetime(2016, 1, 30),
+                                  seed=seed)
+        data.run()
+        mu_value = data.get_period_return_mean_vector()
+        sigma_value = data.get_period_return_covariance_matrix()
+        with self.subTest('test get_period_return_mean_vector is numpy array'):
+            self.assertIsInstance(mu_value, np.ndarray)
+        with self.subTest('test get_period_return_covariance_matrix is numpy array'):
+            self.assertIsInstance(sigma_value, np.ndarray)
 
+    @requires_extra_library
     def test_wikipedia(self):
         """ wikipedia test """
         try:
@@ -140,8 +132,6 @@ class TestDataProviders(QiskitFinanceTestCase):
             with self.subTest('test WikipediaDataProvider get_similarity_matrix'):
                 np.testing.assert_array_almost_equal(wiki.get_similarity_matrix(),
                                                      similarity, decimal=3)
-        except MissingOptionalLibraryError as ex:
-            self.skipTest(str(ex))
         except QiskitFinanceError as ex:
             self.skipTest("Test of WikipediaDataProvider skipped: {}".format(str(ex)))
             # The trouble for automating testing is that after 50 tries
@@ -167,6 +157,7 @@ class TestDataProviders(QiskitFinanceTestCase):
         except QiskitFinanceError as ex:
             self.skipTest("Test of DataOnDemandProvider skipped {}".format(str(ex)))
 
+    @requires_extra_library
     def test_exchangedata(self):
         """ exchange data test """
         try:
@@ -191,11 +182,10 @@ class TestDataProviders(QiskitFinanceTestCase):
             with self.subTest('test ExchangeDataProvider get_similarity_matrix'):
                 np.testing.assert_array_almost_equal(lse.get_similarity_matrix(),
                                                      similarity, decimal=3)
-        except MissingOptionalLibraryError as ex:
-            self.skipTest(str(ex))
         except QiskitFinanceError as ex:
             self.skipTest("Test of ExchangeDataProvider skipped {}".format(str(ex)))
 
+    @requires_extra_library
     def test_yahoo(self):
         """ Yahoo data test """
         try:
@@ -218,8 +208,6 @@ class TestDataProviders(QiskitFinanceTestCase):
             with self.subTest('test YahooDataProvider get_similarity_matrix'):
                 np.testing.assert_array_almost_equal(yahoo.get_similarity_matrix(),
                                                      similarity, decimal=1)
-        except MissingOptionalLibraryError as ex:
-            self.skipTest(str(ex))
         except QiskitFinanceError as ex:
             self.skipTest("Test of YahooDataProvider skipped {}".format(str(ex)))
 

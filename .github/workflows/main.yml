@@ -112,6 +112,7 @@ jobs:
   Finance:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
@@ -129,6 +130,7 @@ jobs:
         uses: ./.github/actions/run-tests
         with:
           event-name: ${{ github.event_name }}
+          run-slow: ${{ contains(github.event.pull_request.labels.*.name, 'run_slow') }}
           python-version: ${{ matrix.python-version }}
       - name: Deprecation Messages
         run: |
