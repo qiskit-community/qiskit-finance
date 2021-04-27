@@ -24,8 +24,11 @@ inputs:
     required: true
 runs:
   using: "composite"
-  steps: 
-    - run: |
+  steps:
+    - name: Run Unit Tests
+      env:
+        PYTHONWARNINGS: default
+      run: |
         # run slow tests only on scheduled event or if input flag is set
         if [ "${{ inputs.event-name }}" == "schedule" ] || [ "${{ inputs.run-slow }}" == "true" ]; then
           export QISKIT_TESTS="run_slow"
