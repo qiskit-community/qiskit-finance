@@ -12,7 +12,9 @@
 
 """The probability distribution library. """
 
-from .gaussian_conditional_independence_model import GaussianConditionalIndependenceModel
+from .gaussian_conditional_independence_model import (
+    GaussianConditionalIndependenceModel,
+)
 from .lognormal import LogNormalDistribution
 from .normal import NormalDistribution
 from .uniform import UniformDistribution

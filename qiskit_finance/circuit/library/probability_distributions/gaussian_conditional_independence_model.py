@@ -26,12 +26,13 @@ class GaussianConditionalIndependenceModel(QuantumCircuit):
     Dependency between individual risk variables and latent variable is approximated linearly.
     """
 
-    def __init__(self,
-                 n_normal: int,
-                 normal_max_value: float,
-                 p_zeros: Union[List[float], np.ndarray],
-                 rhos: Union[List[float], np.ndarray],
-                 ) -> None:
+    def __init__(
+        self,
+        n_normal: int,
+        normal_max_value: float,
+        p_zeros: Union[List[float], np.ndarray],
+        rhos: Union[List[float], np.ndarray],
+    ) -> None:
         """
         Args:
             n_normal: Number of qubits to represent the latent normal random variable Z
@@ -57,7 +58,7 @@ class GaussianConditionalIndependenceModel(QuantumCircuit):
             return norm.pdf(x)
 
         # call super constructor
-        super().__init__(num_qubits, name='P(X)')
+        super().__init__(num_qubits, name="P(X)")
 
         # create linear rotations for conditional defaults
         slopes = []
@@ -78,8 +79,9 @@ class GaussianConditionalIndependenceModel(QuantumCircuit):
             slopes += [slope]
 
         # create normal distribution
-        normal_distribution = NormalDistribution(n_normal, 0, 1,
-                                                 bounds=(-normal_max_value, normal_max_value))
+        normal_distribution = NormalDistribution(
+            n_normal, 0, 1, bounds=(-normal_max_value, normal_max_value)
+        )
 
         # build circuit
         self.append(normal_distribution.to_gate(), list(range(n_normal)))

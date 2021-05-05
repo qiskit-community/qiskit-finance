@@ -19,12 +19,11 @@ from qiskit.circuit.library import LinearAmplitudeFunction
 from qiskit.quantum_info import Operator
 from qiskit.utils import algorithm_globals
 from qiskit_finance.applications.estimation import EuropeanCallPricing
-from qiskit_finance.circuit.library.probability_distributions import \
-    UniformDistribution
+from qiskit_finance.circuit.library.probability_distributions import UniformDistribution
 
 
 class TestEuropeanCallPricing(QiskitFinanceTestCase):
-    """Tests the EuropeanCallPricing application """
+    """Tests the EuropeanCallPricing application"""
 
     def setUp(self):
         super().setUp()
@@ -39,8 +38,9 @@ class TestEuropeanCallPricing(QiskitFinanceTestCase):
         bounds = (0, 2)
         # make an estimation problem
         uncertain_model = UniformDistribution(num_qubits)
-        ecp = EuropeanCallPricing(num_qubits, strike_price,
-                                  rescaling_factor, bounds, uncertain_model)
+        ecp = EuropeanCallPricing(
+            num_qubits, strike_price, rescaling_factor, bounds, uncertain_model
+        )
         est_problem = ecp.to_estimation_problem()
         # make a state_preparation circuit manually
         breakpoints = [0, strike_price]
@@ -55,13 +55,16 @@ class TestEuropeanCallPricing(QiskitFinanceTestCase):
             domain=domain,
             image=image,
             breakpoints=breakpoints,
-            rescaling_factor=rescaling_factor)
+            rescaling_factor=rescaling_factor,
+        )
         expected_circ = linear_function.compose(uncertain_model, front=True)
         self.assertEqual(est_problem.objective_qubits, [num_qubits])
         self.assertTrue(Operator(est_problem.state_preparation).equiv(expected_circ))
-        self.assertEqual(linear_function.post_processing(0.5),
-                         est_problem.post_processing(0.5))  # pylint: disable=not-callable
+        # pylint: disable=not-callable
+        self.assertEqual(
+            linear_function.post_processing(0.5), est_problem.post_processing(0.5)
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

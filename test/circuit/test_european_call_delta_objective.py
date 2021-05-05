@@ -36,9 +36,9 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         num_qubits = 3
         strike_price = 0.5
         bounds = (0, 2)
-        ecd = EuropeanCallDeltaObjective(num_state_qubits=num_qubits,
-                                         strike_price=strike_price,
-                                         bounds=bounds)
+        ecd = EuropeanCallDeltaObjective(
+            num_state_qubits=num_qubits, strike_price=strike_price, bounds=bounds
+        )
 
         # map strike_price to a basis state
         x = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (2 ** num_qubits - 1)
@@ -49,9 +49,13 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
     def test_application(self):
         """Test an end-to-end application."""
         try:
-            from qiskit import Aer  # pylint: disable=unused-import,import-outside-toplevel
+            from qiskit import (
+                Aer,
+            )  # pylint: disable=unused-import,import-outside-toplevel
         except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
+            self.skipTest(
+                "Aer doesn't appear to be installed. Error: '{}'".format(str(ex))
+            )
             return
 
         num_qubits = 3
@@ -63,7 +67,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         t_m = 40 / 365  # 40 days to maturity
 
         # resulting parameters for log-normal distribution
-        mu = ((r - 0.5 * vol ** 2) * t_m + np.log(s_p))
+        mu = (r - 0.5 * vol ** 2) * t_m + np.log(s_p)
         sigma = vol * np.sqrt(t_m)
         mean = np.exp(mu + sigma ** 2 / 2)
         variance = (np.exp(sigma ** 2) - 1) * np.exp(2 * mu + sigma ** 2)
@@ -76,33 +80,37 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         bounds = (low, high)
 
         # construct circuit factory for uncertainty model
-        uncertainty_model = LogNormalDistribution(num_qubits,
-                                                  mu=mu, sigma=sigma ** 2, bounds=bounds)
+        uncertainty_model = LogNormalDistribution(
+            num_qubits, mu=mu, sigma=sigma ** 2, bounds=bounds
+        )
 
         # set the strike price (should be within the low and the high value of the uncertainty)
         strike_price = 1.896
 
         # create amplitude function
-        european_call_delta = EuropeanCallDeltaObjective(num_state_qubits=num_qubits,
-                                                         strike_price=strike_price,
-                                                         bounds=bounds)
+        european_call_delta = EuropeanCallDeltaObjective(
+            num_state_qubits=num_qubits, strike_price=strike_price, bounds=bounds
+        )
 
         # create state preparation
         state_preparation = european_call_delta.compose(uncertainty_model, front=True)
 
-        problem = EstimationProblem(state_preparation=state_preparation,
-                                    objective_qubits=[num_qubits],
-                                    post_processing=european_call_delta.post_processing)
+        problem = EstimationProblem(
+            state_preparation=state_preparation,
+            objective_qubits=[num_qubits],
+            post_processing=european_call_delta.post_processing,
+        )
 
         # run amplitude estimation
-        q_i = QuantumInstance(Aer.get_backend('qasm_simulator'),
-                              seed_simulator=125, seed_transpiler=80)
-        iae = IterativeAmplitudeEstimation(epsilon_target=0.01,
-                                           alpha=0.05,
-                                           quantum_instance=q_i)
+        q_i = QuantumInstance(
+            Aer.get_backend("qasm_simulator"), seed_simulator=125, seed_transpiler=80
+        )
+        iae = IterativeAmplitudeEstimation(
+            epsilon_target=0.01, alpha=0.05, quantum_instance=q_i
+        )
         result = iae.estimate(problem)
         self.assertAlmostEqual(result.estimation_processed, 0.8079816552117238)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

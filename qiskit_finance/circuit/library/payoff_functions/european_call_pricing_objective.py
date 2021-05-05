@@ -23,12 +23,13 @@ class EuropeanCallPricingObjective(QuantumCircuit):
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.
     """
 
-    def __init__(self,
-                 num_state_qubits: int,
-                 strike_price: float,
-                 rescaling_factor: float,
-                 bounds: Tuple[float, float],
-                 ) -> None:
+    def __init__(
+        self,
+        num_state_qubits: int,
+        strike_price: float,
+        rescaling_factor: float,
+        bounds: Tuple[float, float],
+    ) -> None:
         """
         Args:
             num_state_qubits: The number of qubits used to represent the random variable.
@@ -49,9 +50,10 @@ class EuropeanCallPricingObjective(QuantumCircuit):
             domain=bounds,
             image=(f_min, f_max),
             breakpoints=breakpoints,
-            rescaling_factor=rescaling_factor)
+            rescaling_factor=rescaling_factor,
+        )
 
-        super().__init__(*european_call.qregs, name='ECEV')
+        super().__init__(*european_call.qregs, name="ECEV")
         self._data = european_call.data
         self._european_call = european_call
 

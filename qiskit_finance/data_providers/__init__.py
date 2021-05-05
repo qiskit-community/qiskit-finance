@@ -61,7 +61,11 @@ from .yahoo_data_provider import YahooDataProvider
 from .random_data_provider import RandomDataProvider
 
 __all__ = [
-    'BaseDataProvider', 'StockMarket', 'RandomDataProvider',
-    'DataOnDemandProvider', 'ExchangeDataProvider', 'WikipediaDataProvider',
-    'YahooDataProvider'
+    "BaseDataProvider",
+    "StockMarket",
+    "RandomDataProvider",
+    "DataOnDemandProvider",
+    "ExchangeDataProvider",
+    "WikipediaDataProvider",
+    "YahooDataProvider",
 ]

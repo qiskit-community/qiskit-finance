@@ -16,7 +16,4 @@
 from .portfolio_optimization import PortfolioOptimization
 from .portfolio_diversification import PortfolioDiversification
 
-__all__ = [
-   'PortfolioOptimization',
-   'PortfolioDiversification'
-]
+__all__ = ["PortfolioOptimization", "PortfolioDiversification"]

@@ -78,13 +78,15 @@ class LogNormalDistribution(QuantumCircuit):
 
     """
 
-    def __init__(self,
-                 num_qubits: Union[int, List[int]],
-                 mu: Optional[Union[float, List[float]]] = None,
-                 sigma: Optional[Union[float, List[float]]] = None,
-                 bounds: Optional[Union[Tuple[float, float], List[Tuple[float, float]]]] = None,
-                 upto_diag: bool = False,
-                 name: str = 'P(X)') -> None:
+    def __init__(
+        self,
+        num_qubits: Union[int, List[int]],
+        mu: Optional[Union[float, List[float]]] = None,
+        sigma: Optional[Union[float, List[float]]] = None,
+        bounds: Optional[Union[Tuple[float, float], List[Tuple[float, float]]]] = None,
+        upto_diag: bool = False,
+        name: str = "P(X)",
+    ) -> None:
         r"""
         Args:
             num_qubits: The number of qubits used to discretize the random variable. For a 1d
@@ -119,15 +121,21 @@ class LogNormalDistribution(QuantumCircuit):
         if isinstance(num_qubits, int):  # univariate case
             super().__init__(num_qubits, name=name)
 
-            x = np.linspace(bounds[0], bounds[1], num=2**num_qubits)
+            x = np.linspace(bounds[0], bounds[1], num=2 ** num_qubits)
         else:  # multivariate case
             super().__init__(sum(num_qubits), name=name)
 
             # compute the evaluation points using meshgrid of numpy
             # indexing 'ij' yields the "column-based" indexing
-            meshgrid = np.meshgrid(*[np.linspace(bound[0], bound[1],   # type: ignore
-                                                 num=2**num_qubits[i])
-                                     for i, bound in enumerate(bounds)], indexing='ij')
+            meshgrid = np.meshgrid(
+                *[
+                    np.linspace(
+                        bound[0], bound[1], num=2 ** num_qubits[i]  # type: ignore
+                    )
+                    for i, bound in enumerate(bounds)
+                ],
+                indexing="ij"
+            )
             # flatten into a list of points
             x = list(zip(*[grid.flatten() for grid in meshgrid]))  # type: ignore
 
@@ -157,6 +165,7 @@ class LogNormalDistribution(QuantumCircuit):
             self.isometry(np.sqrt(normalized_probabilities), self.qubits, None)
         else:
             from qiskit.extensions import Initialize  # pylint: disable=cyclic-import
+
             initialize = Initialize(np.sqrt(normalized_probabilities))
             circuit = initialize.gates_to_uncompute().inverse()
             self.compose(circuit, inplace=True)

@@ -29,8 +29,13 @@ class PortfolioOptimization(OptimizationApplication):
         https://en.wikipedia.org/wiki/Portfolio_optimization
     """
 
-    def __init__(self, expected_returns: np.ndarray, covariances: np.ndarray,
-                 risk_factor: float, budget: int) -> None:
+    def __init__(
+        self,
+        expected_returns: np.ndarray,
+        covariances: np.ndarray,
+        risk_factor: float,
+        budget: int,
+    ) -> None:
         """
         Args:
             expected_returns: The expected returns for the assets.
@@ -52,8 +57,8 @@ class PortfolioOptimization(OptimizationApplication):
             from the portfolio optimization problem instance.
         """
         num_assets = len(self._expected_returns)
-        mdl = AdvModel(name='Portfolio optimization')
-        x = [mdl.binary_var(name='x_{0}'.format(i)) for i in range(num_assets)]
+        mdl = AdvModel(name="Portfolio optimization")
+        x = [mdl.binary_var(name="x_{0}".format(i)) for i in range(num_assets)]
         quad = mdl.quad_matrix_sum(self._covariances, x)
         linear = np.dot(self._expected_returns, x)
         mdl.minimize(self._risk_factor * quad - linear)
@@ -62,7 +67,9 @@ class PortfolioOptimization(OptimizationApplication):
         op.from_docplex(mdl)
         return op
 
-    def portfolio_expected_value(self, result: Union[OptimizationResult, np.ndarray]) -> float:
+    def portfolio_expected_value(
+        self, result: Union[OptimizationResult, np.ndarray]
+    ) -> float:
         """Returns the portfolio expected value based on the result.
 
         Args:
@@ -74,7 +81,9 @@ class PortfolioOptimization(OptimizationApplication):
         x = self._result_to_x(result)
         return np.dot(self._expected_returns, x)
 
-    def portfolio_variance(self, result: Union[OptimizationResult, np.ndarray]) -> float:
+    def portfolio_variance(
+        self, result: Union[OptimizationResult, np.ndarray]
+    ) -> float:
         """Returns the portfolio variance based on the result
 
         Args:

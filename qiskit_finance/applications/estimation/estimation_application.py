@@ -13,7 +13,10 @@
 """An abstract class for estimation application classes."""
 from abc import ABC, abstractmethod
 
-from qiskit.algorithms.amplitude_estimators import EstimationProblem, AmplitudeEstimatorResult
+from qiskit.algorithms.amplitude_estimators import (
+    EstimationProblem,
+    AmplitudeEstimatorResult,
+)
 
 
 class EstimationApplication(ABC):

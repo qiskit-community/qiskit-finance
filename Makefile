@@ -46,7 +46,10 @@ mypy:
 	mypy qiskit_finance test tools
 
 style:
-	pycodestyle qiskit_finance test tools
+	black --check qiskit_finance test tools
+
+black:
+	black qiskit_finance test tools
 
 test:
 	python -m unittest discover -v test

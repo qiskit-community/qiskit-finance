@@ -22,6 +22,7 @@ from ..exceptions import QiskitFinanceError
 
 try:
     import quandl
+
     _HAS_QUANDL = True
 except ImportError:
     _HAS_QUANDL = False
@@ -37,12 +38,14 @@ class ExchangeDataProvider(BaseDataProvider):
     for instructions on use, which involve obtaining a Quandl access token.
     """
 
-    def __init__(self,
-                 token: str,
-                 tickers: Union[str, List[str]],
-                 stockmarket: StockMarket = StockMarket.LONDON,
-                 start: datetime.datetime = datetime.datetime(2016, 1, 1),
-                 end: datetime.datetime = datetime.datetime(2016, 1, 30)) -> None:
+    def __init__(
+        self,
+        token: str,
+        tickers: Union[str, List[str]],
+        stockmarket: StockMarket = StockMarket.LONDON,
+        start: datetime.datetime = datetime.datetime(2016, 1, 1),
+        end: datetime.datetime = datetime.datetime(2016, 1, 30),
+    ) -> None:
         """
         Initializer
         Args:
@@ -58,17 +61,22 @@ class ExchangeDataProvider(BaseDataProvider):
         super().__init__()
         if not _HAS_QUANDL:
             raise MissingOptionalLibraryError(
-                libname='Quandl',
-                name='ExchangeDataProvider',
-                pip_install='pip install quandl')
+                libname="Quandl",
+                name="ExchangeDataProvider",
+                pip_install="pip install quandl",
+            )
         self._tickers = []  # type: Union[str, List[str]]
         if isinstance(tickers, list):
             self._tickers = tickers
         else:
-            self._tickers = tickers.replace('\n', ';').split(";")
+            self._tickers = tickers.replace("\n", ";").split(";")
         self._n = len(self._tickers)
 
-        if stockmarket not in [StockMarket.LONDON, StockMarket.EURONEXT, StockMarket.SINGAPORE]:
+        if stockmarket not in [
+            StockMarket.LONDON,
+            StockMarket.EURONEXT,
+            StockMarket.SINGAPORE,
+        ]:
             msg = "ExchangeDataProvider does not support "
             msg += stockmarket.value
             msg += " as a stock market."
@@ -79,8 +87,8 @@ class ExchangeDataProvider(BaseDataProvider):
 
         self._token = token
         self._tickers = tickers
-        self._start = start.strftime('%Y-%m-%d')
-        self._end = end.strftime('%Y-%m-%d')
+        self._start = start.strftime("%Y-%m-%d")
+        self._end = end.strftime("%Y-%m-%d")
 
     def run(self) -> None:
         """
@@ -88,7 +96,7 @@ class ExchangeDataProvider(BaseDataProvider):
         methods in the base class.
         """
         quandl.ApiConfig.api_key = self._token
-        quandl.ApiConfig.api_version = '2015-04-09'
+        quandl.ApiConfig.api_version = "2015-04-09"
         self._data = []
         stocks_notfound = []
         stocks_forbidden = []
@@ -96,9 +104,9 @@ class ExchangeDataProvider(BaseDataProvider):
             stock_data = None
             name = self._stockmarket + "/" + ticker_name
             try:
-                stock_data = quandl.get(name,
-                                        start_date=self._start,
-                                        end_date=self._end)
+                stock_data = quandl.get(
+                    name, start_date=self._start, end_date=self._end
+                )
             except quandl.AuthenticationError as ex:
                 raise QiskitFinanceError("Quandl invalid token.") from ex
             except quandl.NotFoundError as ex:
@@ -112,11 +120,19 @@ class ExchangeDataProvider(BaseDataProvider):
             try:
                 self._data.append(stock_data["Close"])
             except KeyError as ex:
-                raise QiskitFinanceError("Cannot parse Quandl '{}'output.".format(name)) from ex
+                raise QiskitFinanceError(
+                    "Cannot parse Quandl '{}'output.".format(name)
+                ) from ex
 
         if stocks_notfound or stocks_forbidden:
-            err_msg = 'Stocks not found: {}. '.format(stocks_notfound) if stocks_notfound else ''
+            err_msg = (
+                "Stocks not found: {}. ".format(stocks_notfound)
+                if stocks_notfound
+                else ""
+            )
             if stocks_forbidden:
-                err_msg += 'You do not have permission to view this data. ' \
-                           'Please subscribe to this database: {}'.format(stocks_forbidden)
+                err_msg += (
+                    "You do not have permission to view this data. "
+                    "Please subscribe to this database: {}".format(stocks_forbidden)
+                )
             raise QiskitFinanceError(err_msg)

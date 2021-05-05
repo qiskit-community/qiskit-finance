@@ -16,10 +16,16 @@ from typing import Tuple, List
 import numpy as np
 
 from qiskit.circuit import QuantumCircuit
-from qiskit.algorithms.amplitude_estimators import EstimationProblem, AmplitudeEstimatorResult
-from qiskit_finance.applications.estimation.estimation_application import EstimationApplication
-from qiskit_finance.circuit.library.payoff_functions.fixed_income_pricing_objective \
-    import FixedIncomePricingObjective
+from qiskit.algorithms.amplitude_estimators import (
+    EstimationProblem,
+    AmplitudeEstimatorResult,
+)
+from qiskit_finance.applications.estimation.estimation_application import (
+    EstimationApplication,
+)
+from qiskit_finance.circuit.library.payoff_functions.fixed_income_pricing_objective import (
+    FixedIncomePricingObjective,
+)
 
 
 class FixedIncomePricing(EstimationApplication):
@@ -35,15 +41,16 @@ class FixedIncomePricing(EstimationApplication):
          `arXiv:1806.06893 <http://arxiv.org/abs/1806.06893>`_
     """
 
-    def __init__(self,
-                 num_qubits: List[int],
-                 pca_matrix: np.ndarray,
-                 initial_interests: List[int],
-                 cash_flow: List[float],
-                 rescaling_factor: float,
-                 bounds: List[Tuple[float, float]],
-                 uncertainty_model: QuantumCircuit
-                 ) -> None:
+    def __init__(
+        self,
+        num_qubits: List[int],
+        pca_matrix: np.ndarray,
+        initial_interests: List[int],
+        cash_flow: List[float],
+        rescaling_factor: float,
+        bounds: List[Tuple[float, float]],
+        uncertainty_model: QuantumCircuit,
+    ) -> None:
         r"""
         Args:
             num_qubits: A list specifying the number of qubits used to discretize the assets.
@@ -58,13 +65,20 @@ class FixedIncomePricing(EstimationApplication):
         """
 
         self._objective = FixedIncomePricingObjective(
-            num_qubits=num_qubits, pca_matrix=pca_matrix, initial_interests=initial_interests,
-            cash_flow=cash_flow, rescaling_factor=rescaling_factor, bounds=bounds)
+            num_qubits=num_qubits,
+            pca_matrix=pca_matrix,
+            initial_interests=initial_interests,
+            cash_flow=cash_flow,
+            rescaling_factor=rescaling_factor,
+            bounds=bounds,
+        )
         self._state_preparation = QuantumCircuit(self._objective.num_qubits)
-        self._state_preparation.compose(uncertainty_model, range(uncertainty_model.num_qubits),
-                                        inplace=True)
-        self._state_preparation.compose(self._objective, range(self._objective.num_qubits),
-                                        inplace=True)
+        self._state_preparation.compose(
+            uncertainty_model, range(uncertainty_model.num_qubits), inplace=True
+        )
+        self._state_preparation.compose(
+            self._objective, range(self._objective.num_qubits), inplace=True
+        )
         self._objective_qubits = uncertainty_model.num_qubits
 
     def to_estimation_problem(self) -> EstimationProblem:
@@ -75,9 +89,11 @@ class FixedIncomePricing(EstimationApplication):
             The `qiskit.algorithms.amplitude_estimators.EstimationProblem` created
             from the Fixed problem instance.
         """
-        problem = EstimationProblem(state_preparation=self._state_preparation,
-                                    objective_qubits=[self._objective_qubits],
-                                    post_processing=self._objective.post_processing)
+        problem = EstimationProblem(
+            state_preparation=self._state_preparation,
+            objective_qubits=[self._objective_qubits],
+            post_processing=self._objective.post_processing,
+        )
         return problem
 
     def interpret(self, result: AmplitudeEstimatorResult) -> float:

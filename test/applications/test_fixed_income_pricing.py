@@ -21,8 +21,7 @@ from qiskit import QuantumCircuit
 from qiskit.quantum_info import Operator
 from qiskit.utils import algorithm_globals
 from qiskit_finance.applications.estimation import FixedIncomePricing
-from qiskit_finance.circuit.library.probability_distributions import \
-    UniformDistribution
+from qiskit_finance.circuit.library.probability_distributions import UniformDistribution
 from qiskit_finance.circuit.library.payoff_functions import FixedIncomePricingObjective
 
 
@@ -44,8 +43,15 @@ class TestFixedIncomePricing(QiskitFinanceTestCase):
         bounds = [(0, 0.12), (0, 0.24)]
         # make an estimation problem
         uncertain_model = UniformDistribution(4)
-        fip = FixedIncomePricing(num_qubits, pca_matrix, initial_interests, cash_flow,
-                                 rescaling_factor, bounds, uncertain_model)
+        fip = FixedIncomePricing(
+            num_qubits,
+            pca_matrix,
+            initial_interests,
+            cash_flow,
+            rescaling_factor,
+            bounds,
+            uncertain_model,
+        )
         est_problem = fip.to_estimation_problem()
         # make a state_preparation circuit manually
         expected = QuantumCircuit(5)
@@ -57,11 +63,17 @@ class TestFixedIncomePricing(QiskitFinanceTestCase):
         expected_circ = expected.compose(uncertain_model, front=True)
         self.assertEqual(est_problem.objective_qubits, [4])
         self.assertTrue(Operator(est_problem.state_preparation).equiv(expected_circ))
-        fipo = FixedIncomePricingObjective(num_qubits, pca_matrix, initial_interests,
-                                           cash_flow, rescaling_factor, bounds)
-        self.assertEqual(fipo.post_processing(0.5),
-                         est_problem.post_processing(0.5))  # pylint: disable=not-callable
+        fipo = FixedIncomePricingObjective(
+            num_qubits,
+            pca_matrix,
+            initial_interests,
+            cash_flow,
+            rescaling_factor,
+            bounds,
+        )
+        # pylint: disable=not-callable
+        self.assertEqual(fipo.post_processing(0.5), est_problem.post_processing(0.5))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

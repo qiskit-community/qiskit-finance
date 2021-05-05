@@ -14,10 +14,16 @@
 from typing import Tuple
 
 from qiskit.circuit import QuantumCircuit
-from qiskit.algorithms.amplitude_estimators import EstimationProblem, AmplitudeEstimatorResult
-from qiskit_finance.applications.estimation.estimation_application import EstimationApplication
-from qiskit_finance.circuit.library.payoff_functions.european_call_pricing_objective \
-    import EuropeanCallPricingObjective
+from qiskit.algorithms.amplitude_estimators import (
+    EstimationProblem,
+    AmplitudeEstimatorResult,
+)
+from qiskit_finance.applications.estimation.estimation_application import (
+    EstimationApplication,
+)
+from qiskit_finance.circuit.library.payoff_functions.european_call_pricing_objective import (
+    EuropeanCallPricingObjective,
+)
 
 
 class EuropeanCallPricing(EstimationApplication):
@@ -26,13 +32,14 @@ class EuropeanCallPricing(EstimationApplication):
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.
     """
 
-    def __init__(self,
-                 num_state_qubits: int,
-                 strike_price: float,
-                 rescaling_factor: float,
-                 bounds: Tuple[float, float],
-                 uncertainty_model: QuantumCircuit,
-                 ) -> None:
+    def __init__(
+        self,
+        num_state_qubits: int,
+        strike_price: float,
+        rescaling_factor: float,
+        bounds: Tuple[float, float],
+        uncertainty_model: QuantumCircuit,
+    ) -> None:
         """
         Args:
             num_state_qubits: The number of qubits used to represent the random variable.
@@ -42,13 +49,18 @@ class EuropeanCallPricing(EstimationApplication):
             uncertainty_model: A circuit for encoding a problem distribution
         """
         self._objective = EuropeanCallPricingObjective(
-            num_state_qubits=num_state_qubits, strike_price=strike_price,
-            rescaling_factor=rescaling_factor, bounds=bounds)
+            num_state_qubits=num_state_qubits,
+            strike_price=strike_price,
+            rescaling_factor=rescaling_factor,
+            bounds=bounds,
+        )
         self._state_preparation = QuantumCircuit(self._objective.num_qubits)
-        self._state_preparation.compose(uncertainty_model, range(uncertainty_model.num_qubits),
-                                        inplace=True)
-        self._state_preparation.compose(self._objective, range(self._objective.num_qubits),
-                                        inplace=True)
+        self._state_preparation.compose(
+            uncertainty_model, range(uncertainty_model.num_qubits), inplace=True
+        )
+        self._state_preparation.compose(
+            self._objective, range(self._objective.num_qubits), inplace=True
+        )
         self._objective_qubits = uncertainty_model.num_qubits
 
     def to_estimation_problem(self) -> EstimationProblem:
@@ -59,9 +71,11 @@ class EuropeanCallPricing(EstimationApplication):
             The `qiskit.algorithms.amplitude_estimators.EstimationProblem` created
             from the European call pricing problem instance.
         """
-        problem = EstimationProblem(state_preparation=self._state_preparation,
-                                    objective_qubits=[self._objective_qubits],
-                                    post_processing=self._objective.post_processing)
+        problem = EstimationProblem(
+            state_preparation=self._state_preparation,
+            objective_qubits=[self._objective_qubits],
+            post_processing=self._objective.post_processing,
+        )
         return problem
 
     def interpret(self, result: AmplitudeEstimatorResult) -> float:

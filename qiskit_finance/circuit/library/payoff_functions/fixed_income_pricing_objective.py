@@ -38,14 +38,15 @@ class FixedIncomePricingObjective(QuantumCircuit):
              `arXiv:1806.06893 <http://arxiv.org/abs/1806.06893>`_
     """
 
-    def __init__(self,
-                 num_qubits: List[int],
-                 pca_matrix: np.ndarray,
-                 initial_interests: List[int],
-                 cash_flow: List[float],
-                 rescaling_factor: float,
-                 bounds: List[Tuple[float, float]],
-                 ) -> None:
+    def __init__(
+        self,
+        num_qubits: List[int],
+        pca_matrix: np.ndarray,
+        initial_interests: List[int],
+        cash_flow: List[float],
+        rescaling_factor: float,
+        bounds: List[Tuple[float, float]],
+    ) -> None:
         r"""
         Args:
             num_qubits: A list specifying the number of qubits used to discretize the assets.
@@ -68,7 +69,7 @@ class FixedIncomePricingObjective(QuantumCircuit):
         dimensions = len(num_qubits)
 
         # initialize parent class
-        super().__init__(sum(num_qubits) + 1, name='F')
+        super().__init__(sum(num_qubits) + 1, name="F")
 
         # construct PCA-based cost function (1st order approximation):
         # c_t / (1 + A_t x + b_t)^{t+1} ~ c_t / (1 + b_t)^{t+1} - (t+1) c_t A_t /
@@ -78,7 +79,12 @@ class FixedIncomePricingObjective(QuantumCircuit):
         g = np.zeros(dimensions)
         for t in range(time_steps):
             h += cash_flow[t] / (1 + initial_interests[t]) ** (t + 1)
-            g += -(t + 1) * cash_flow[t] * pca_matrix[t, :] / (1 + initial_interests[t]) ** (t + 2)
+            g += (
+                -(t + 1)
+                * cash_flow[t]
+                * pca_matrix[t, :]
+                / (1 + initial_interests[t]) ** (t + 2)
+            )
 
         # compute overall offset using lower bound for x (corresponding to x = min)
         low = [bound[0] for bound in bounds]
