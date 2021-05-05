@@ -34,12 +34,14 @@ class DataOnDemandProvider(BaseDataProvider):
     for instructions on use, which involve obtaining a NASDAQ DOD access token.
     """
 
-    def __init__(self,
-                 token: str,
-                 tickers: Union[str, List[str]],
-                 start: datetime.datetime = datetime.datetime(2016, 1, 1),
-                 end: datetime.datetime = datetime.datetime(2016, 1, 30),
-                 verify: Optional[Union[str, bool]] = None) -> None:
+    def __init__(
+        self,
+        token: str,
+        tickers: Union[str, List[str]],
+        start: datetime.datetime = datetime.datetime(2016, 1, 1),
+        end: datetime.datetime = datetime.datetime(2016, 1, 30),
+        verify: Optional[Union[str, bool]] = None,
+    ) -> None:
         """
         Args:
             token: data on demand access token
@@ -59,7 +61,7 @@ class DataOnDemandProvider(BaseDataProvider):
         if isinstance(tickers, list):
             self._tickers = tickers
         else:
-            self._tickers = tickers.replace('\n', ';').split(";")
+            self._tickers = tickers.replace("\n", ";").split(";")
         self._n = len(self._tickers)
 
         self._token = token
@@ -73,42 +75,41 @@ class DataOnDemandProvider(BaseDataProvider):
         methods in the base class.
         """
 
-        http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',
-                                   ca_certs=certifi.where())
-        url = 'https://dataondemand.nasdaq.com/api/v1/quotes?'
+        http = urllib3.PoolManager(cert_reqs="CERT_REQUIRED", ca_certs=certifi.where())
+        url = "https://dataondemand.nasdaq.com/api/v1/quotes?"
         self._data = []
         for ticker in self._tickers:
             values = {
-                '_Token': self._token,
-                'symbols': [ticker],
-                'start': self._start.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
-                'end': self._end.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
-                'next_cursor': 0
+                "_Token": self._token,
+                "symbols": [ticker],
+                "start": self._start.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
+                "end": self._end.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
+                "next_cursor": 0,
             }
             encoded = url + urlencode(values)
             try:
                 if self._verify is None:
                     response = http.request(
-                        'POST', encoded
+                        "POST", encoded
                     )  # this runs certificate verification, as per the set-up of the urllib3
                 else:
                     # this disables certificate verification (False)
                     # or forces the certificate path (str)
-                    response = http.request(
-                        'POST', encoded, verify=self._verify
-                    )
+                    response = http.request("POST", encoded, verify=self._verify)
                 if response.status != 200:
                     msg = "Accessing NASDAQ Data on Demand with parameters {} encoded into ".format(
-                        values)
+                        values
+                    )
                     msg += encoded
                     msg += " failed. Hint: Check the _Token. Check the spelling of tickers."
                     raise QiskitFinanceError(msg)
-                quotes = json.loads(response.data.decode('utf-8'))["quotes"]
+                quotes = json.loads(response.data.decode("utf-8"))["quotes"]
                 price_evolution = []
                 for q in quotes:
                     price_evolution.append(q["ask_price"])
                 self._data.append(price_evolution)
             except Exception as ex:  # pylint: disable=broad-except
                 raise QiskitFinanceError(
-                    'Accessing NASDAQ Data on Demand failed.') from ex
+                    "Accessing NASDAQ Data on Demand failed."
+                ) from ex
             http.clear()

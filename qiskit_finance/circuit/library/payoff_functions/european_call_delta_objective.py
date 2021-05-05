@@ -24,8 +24,9 @@ class EuropeanCallDeltaObjective(QuantumCircuit):
     The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike price K.
     """
 
-    def __init__(self, num_state_qubits: int, strike_price: float, bounds: Tuple[float, float]
-                 ) -> None:
+    def __init__(
+        self, num_state_qubits: int, strike_price: float, bounds: Tuple[float, float]
+    ) -> None:
         """
         Args:
             num_state_qubits: The number of qubits used to encode the random variable.
@@ -34,16 +35,20 @@ class EuropeanCallDeltaObjective(QuantumCircuit):
         """
         # map strike price to {0, ..., 2^n-1}
         num_values = 2 ** num_state_qubits
-        strike_price = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (num_values - 1)
+        strike_price = (
+            (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (num_values - 1)
+        )
         strike_price = int(np.ceil(strike_price))
 
         # create comparator
         comparator = IntegerComparator(num_state_qubits, strike_price)
 
         # initialize circuit
-        qr_state = QuantumRegister(comparator.num_qubits - comparator.num_ancillas, 'state')
-        qr_work = QuantumRegister(comparator.num_ancillas, 'work')
-        super().__init__(qr_state, qr_work, name='ECD')
+        qr_state = QuantumRegister(
+            comparator.num_qubits - comparator.num_ancillas, "state"
+        )
+        qr_work = QuantumRegister(comparator.num_ancillas, "work")
+        super().__init__(qr_state, qr_work, name="ECD")
 
         self.append(comparator.to_gate(), self.qubits)
 

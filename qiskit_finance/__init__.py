@@ -43,6 +43,4 @@ Submodules
 from .version import __version__
 from .exceptions import QiskitFinanceError
 
-__all__ = [
-    '__version__',
-    'QiskitFinanceError']
+__all__ = ["__version__", "QiskitFinanceError"]

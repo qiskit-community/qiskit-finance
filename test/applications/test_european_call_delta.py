@@ -23,7 +23,7 @@ from qiskit_finance.circuit.library.probability_distributions import UniformDist
 
 
 class TestEuropeanCallDelta(QiskitFinanceTestCase):
-    """Tests the EuropeanCallDelta application """
+    """Tests the EuropeanCallDelta application"""
 
     def setUp(self):
         super().setUp()
@@ -45,9 +45,9 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         expected_circ = comparator.compose(uncertain_model, front=True)
         self.assertEqual(est_problem.objective_qubits, [num_qubits])
         self.assertTrue(Operator(est_problem.state_preparation).equiv(expected_circ))
-        self.assertEqual(0.5,
-                         est_problem.post_processing(0.5))  # pylint: disable=not-callable
+        # pylint: disable=not-callable
+        self.assertEqual(0.5, est_problem.post_processing(0.5))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -28,7 +28,9 @@ class PortfolioDiversification(OptimizationApplication):
         [1]: GG. Cornuejols and R. Tutuncu, Optimization methods in finance, 2006
     """
 
-    def __init__(self, similarity_matrix: np.ndarray, num_assets: int, num_clusters: int) -> None:
+    def __init__(
+        self, similarity_matrix: np.ndarray, num_assets: int, num_clusters: int
+    ) -> None:
         """
         Args:
             similarity_matrix: An asset-to-asset similarity matrix, such as the covariance matrix.
@@ -47,13 +49,23 @@ class PortfolioDiversification(OptimizationApplication):
             The :class:`~qiskit_optimization.problems.QuadraticProgram` created
             from the portfolio diversification problem instance.
         """
-        mdl = AdvModel(name='Portfolio diversification')
-        x = {(i, j): mdl.binary_var(name='x_{0}_{1}'.format(i, j)) for i in range(self._num_assets)
-             for j in range(self._num_assets)}
-        y = {i: mdl.binary_var(name='y_{0}'.format(i)) for i in range(self._num_assets)}
-        mdl.maximize(mdl.sum(self._similarity_matrix[i, j] * x[(i, j)]
-                             for i in range(self._num_assets) for j in range(self._num_assets)))
-        mdl.add_constraint(mdl.sum(y[j] for j in range(self._num_assets)) == self._num_clusters)
+        mdl = AdvModel(name="Portfolio diversification")
+        x = {
+            (i, j): mdl.binary_var(name="x_{0}_{1}".format(i, j))
+            for i in range(self._num_assets)
+            for j in range(self._num_assets)
+        }
+        y = {i: mdl.binary_var(name="y_{0}".format(i)) for i in range(self._num_assets)}
+        mdl.maximize(
+            mdl.sum(
+                self._similarity_matrix[i, j] * x[(i, j)]
+                for i in range(self._num_assets)
+                for j in range(self._num_assets)
+            )
+        )
+        mdl.add_constraint(
+            mdl.sum(y[j] for j in range(self._num_assets)) == self._num_clusters
+        )
         for i in range(self._num_assets):
             mdl.add_constraint(mdl.sum(x[(i, j)] for j in range(self._num_assets)) == 1)
         for j in range(self._num_assets):
@@ -75,7 +87,7 @@ class PortfolioDiversification(OptimizationApplication):
             The list of asset indices whose corresponding variable is 1
         """
         x = self._result_to_x(result)
-        return [i for i, x_i in enumerate(x[-self._num_assets:]) if x_i]
+        return [i for i, x_i in enumerate(x[-self._num_assets :]) if x_i]
 
     @property
     def similarity_matrix(self) -> np.ndarray:

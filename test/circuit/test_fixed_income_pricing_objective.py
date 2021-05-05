@@ -37,8 +37,9 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
         rescaling_factor = 0.125
         bounds = [(0, 0.12), (0, 0.24)]
 
-        circuit = FixedIncomePricingObjective(num_qubits, pca, initial_interests, cash_flow,
-                                              rescaling_factor, bounds)
+        circuit = FixedIncomePricingObjective(
+            num_qubits, pca, initial_interests, cash_flow, rescaling_factor, bounds
+        )
 
         expected = QuantumCircuit(5)
         expected.cry(-np.pi / 216, 0, 4)
@@ -52,9 +53,13 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
     def test_application(self):
         """Test an end-to-end application."""
         try:
-            from qiskit import Aer  # pylint: disable=unused-import,import-outside-toplevel
+            from qiskit import (
+                Aer,
+            )  # pylint: disable=unused-import,import-outside-toplevel
         except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
+            self.skipTest(
+                "Aer doesn't appear to be installed. Error: '{}'".format(str(ex))
+            )
             return
 
         a_n = np.eye(2)
@@ -63,10 +68,7 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
         num_qubits = [2, 2]
 
         # specify the lower and upper bounds for the different dimension
-        bounds = [
-            (0, 0.12),
-            (0, 0.24)
-        ]
+        bounds = [(0, 0.12), (0, 0.24)]
         mu = [0.12, 0.24]
         sigma = 0.01 * np.eye(2)
 
@@ -81,26 +83,30 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
 
         # get fixed income circuit appfactory
         fixed_income = FixedIncomePricingObjective(
-            num_qubits, a_n, b, c_f, rescaling_factor, bounds)
+            num_qubits, a_n, b, c_f, rescaling_factor, bounds
+        )
 
         # build state preparation operator
         state_preparation = fixed_income.compose(dist, front=True)
 
-        problem = EstimationProblem(state_preparation=state_preparation,
-                                    objective_qubits=[4],
-                                    post_processing=fixed_income.post_processing)
+        problem = EstimationProblem(
+            state_preparation=state_preparation,
+            objective_qubits=[4],
+            post_processing=fixed_income.post_processing,
+        )
 
         # run simulation
-        q_i = QuantumInstance(Aer.get_backend('qasm_simulator'),
-                              seed_simulator=2, seed_transpiler=2)
-        iae = IterativeAmplitudeEstimation(epsilon_target=0.01,
-                                           alpha=0.05,
-                                           quantum_instance=q_i)
+        q_i = QuantumInstance(
+            Aer.get_backend("qasm_simulator"), seed_simulator=2, seed_transpiler=2
+        )
+        iae = IterativeAmplitudeEstimation(
+            epsilon_target=0.01, alpha=0.05, quantum_instance=q_i
+        )
         result = iae.estimate(problem)
 
         # compare to precomputed solution
         self.assertAlmostEqual(result.estimation_processed, 2.3389012822103044)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

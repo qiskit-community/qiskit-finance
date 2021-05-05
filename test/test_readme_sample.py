@@ -25,11 +25,11 @@ class TestReadmeSample(QiskitFinanceTestCase):
     """Test sample code from readme"""
 
     def test_readme_sample(self):
-        """ readme sample test """
+        """readme sample test"""
         # pylint: disable=import-outside-toplevel,redefined-builtin
 
         def print(*args):
-            """ overloads print to log values """
+            """overloads print to log values"""
             if args:
                 self.log.debug(args[0], *args[1:])
 
@@ -44,15 +44,20 @@ class TestReadmeSample(QiskitFinanceTestCase):
         # Create a suitable multivariate distribution
         num_qubits = [2, 2]
         bounds = [(0, 0.12), (0, 0.24)]
-        mvnd = NormalDistribution(num_qubits,
-                                  mu=[0.12, 0.24], sigma=0.01 * np.eye(2),
-                                  bounds=bounds)
+        mvnd = NormalDistribution(
+            num_qubits, mu=[0.12, 0.24], sigma=0.01 * np.eye(2), bounds=bounds
+        )
 
         # Create fixed income component
-        fixed_income = FixedIncomePricing(num_qubits, np.eye(2), np.zeros(2),
-                                          cash_flow=[1.0, 2.0], rescaling_factor=0.125,
-                                          bounds=bounds,
-                                          uncertainty_model=mvnd)
+        fixed_income = FixedIncomePricing(
+            num_qubits,
+            np.eye(2),
+            np.zeros(2),
+            cash_flow=[1.0, 2.0],
+            rescaling_factor=0.125,
+            bounds=bounds,
+            uncertainty_model=mvnd,
+        )
 
         # the FixedIncomeExpectedValue provides us with the necessary rescalings
 
@@ -63,21 +68,22 @@ class TestReadmeSample(QiskitFinanceTestCase):
         num_eval_qubits = 5
 
         # Construct and run amplitude estimation
-        q_i = BasicAer.get_backend('statevector_simulator')
-        algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits,
-                                   quantum_instance=q_i)
+        q_i = BasicAer.get_backend("statevector_simulator")
+        algo = AmplitudeEstimation(
+            num_eval_qubits=num_eval_qubits, quantum_instance=q_i
+        )
         result = algo.estimate(problem)
 
-        print('Estimated value:\t%.4f' % fixed_income.interpret(result))
-        print('Probability:    \t%.4f' % result.max_probability)
+        print("Estimated value:\t%.4f" % fixed_income.interpret(result))
+        print("Probability:    \t%.4f" % result.max_probability)
 
         # ----------------------------------------------------------------------
 
-        with self.subTest('test estimation'):
+        with self.subTest("test estimation"):
             self.assertAlmostEqual(result.estimation_processed, 2.46, places=4)
-        with self.subTest('test max.probability'):
+        with self.subTest("test max.probability"):
             self.assertAlmostEqual(result.max_probability, 0.8487, places=4)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

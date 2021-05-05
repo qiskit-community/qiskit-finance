@@ -41,7 +41,14 @@ Probability distribution
 
 """
 
-from .payoff_functions import (EuropeanCallDeltaObjective, EuropeanCallPricingObjective,
-                               FixedIncomePricingObjective)
-from .probability_distributions import (GaussianConditionalIndependenceModel, LogNormalDistribution,
-                                        NormalDistribution, UniformDistribution)
+from .payoff_functions import (
+    EuropeanCallDeltaObjective,
+    EuropeanCallPricingObjective,
+    FixedIncomePricingObjective,
+)
+from .probability_distributions import (
+    GaussianConditionalIndependenceModel,
+    LogNormalDistribution,
+    NormalDistribution,
+    UniformDistribution,
+)

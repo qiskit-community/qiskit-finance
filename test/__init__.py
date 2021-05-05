@@ -12,10 +12,6 @@
 
 """ Finance test packages """
 
-from .finance_test_case import (QiskitFinanceTestCase,
-                                requires_extra_library)
+from .finance_test_case import QiskitFinanceTestCase, requires_extra_library
 
-__all__ = [
-    'QiskitFinanceTestCase',
-    'requires_extra_library'
-]
+__all__ = ["QiskitFinanceTestCase", "requires_extra_library"]

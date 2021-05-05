@@ -42,13 +42,13 @@ Estimation Applications
 
 """
 
-from .estimation import (EuropeanCallDelta, EuropeanCallPricing, FixedIncomePricing)
+from .estimation import EuropeanCallDelta, EuropeanCallPricing, FixedIncomePricing
 from .optimization import PortfolioOptimization, PortfolioDiversification
 
 __all__ = [
-    'PortfolioOptimization',
-    'PortfolioDiversification',
-    'EuropeanCallDelta',
-    'EuropeanCallPricing',
-    'FixedIncomePricing'
+    "PortfolioOptimization",
+    "PortfolioDiversification",
+    "EuropeanCallDelta",
+    "EuropeanCallPricing",
+    "FixedIncomePricing",
 ]

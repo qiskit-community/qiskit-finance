@@ -18,7 +18,7 @@ from test import QiskitFinanceTestCase
 
 import numpy as np
 from qiskit.utils import algorithm_globals
-from qiskit_optimization.problems import (QuadraticProgram, VarType)
+from qiskit_optimization.problems import QuadraticProgram, VarType
 from qiskit_finance.applications.optimization import PortfolioDiversification
 
 logger = logging.getLogger(__name__)
@@ -51,12 +51,19 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         # Test objective
         self.assertEqual(actual.objective.sense, expected.objective.sense)
         self.assertEqual(actual.objective.constant, expected.objective.constant)
-        self.assertDictEqual(actual.objective.linear.to_dict(), expected.objective.linear.to_dict())
-        self.assertDictEqual(actual.objective.quadratic.to_dict(),
-                             expected.objective.quadratic.to_dict())
+        self.assertDictEqual(
+            actual.objective.linear.to_dict(), expected.objective.linear.to_dict()
+        )
+        self.assertDictEqual(
+            actual.objective.quadratic.to_dict(), expected.objective.quadratic.to_dict()
+        )
         # Test constraint
-        self.assertEqual(len(actual.linear_constraints), len(expected.linear_constraints))
-        for act_lin, exp_lin in zip(actual.linear_constraints, expected.linear_constraints):
+        self.assertEqual(
+            len(actual.linear_constraints), len(expected.linear_constraints)
+        )
+        for act_lin, exp_lin in zip(
+            actual.linear_constraints, expected.linear_constraints
+        ):
             self.assertEqual(act_lin.sense, exp_lin.sense)
             self.assertEqual(act_lin.rhs, exp_lin.rhs)
             self.assertEqual(act_lin.linear.to_dict(), exp_lin.linear.to_dict())
@@ -74,34 +81,42 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         """Test to_quadratic_program"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
-            num_assets=self.n, num_clusters=self.q)
+            num_assets=self.n,
+            num_clusters=self.q,
+        )
 
         actual_op = portfolio_diversification.to_quadratic_program()
 
-        expected_op = QuadraticProgram(name='Portfolio diversification')
+        expected_op = QuadraticProgram(name="Portfolio diversification")
         for i in range(self.n):
             for j in range(self.n):
-                expected_op.binary_var(name='x_{0}_{1}'.format(i, j))
+                expected_op.binary_var(name="x_{0}_{1}".format(i, j))
         for i in range(self.n):
-            expected_op.binary_var(name='y_{0}'.format(i))
-        linear = {'x_0_0': 1, 'x_0_1': 0.8, 'x_1_0': 0.8, 'x_1_1': 1}
+            expected_op.binary_var(name="y_{0}".format(i))
+        linear = {"x_0_0": 1, "x_0_1": 0.8, "x_1_0": 0.8, "x_1_1": 1}
         expected_op.maximize(linear=linear)
-        expected_op.linear_constraint(linear={'y_0': 1, 'y_1': 1}, sense='==', rhs=1)
-        expected_op.linear_constraint(linear={'x_0_0': 1, 'x_0_1': 1}, sense='==', rhs=1)
-        expected_op.linear_constraint(linear={'x_1_0': 1, 'x_1_1': 1}, sense='==', rhs=1)
-        expected_op.linear_constraint(linear={'x_0_0': 1, 'y_0': -1}, sense='==', rhs=0)
-        expected_op.linear_constraint(linear={'x_1_1': 1, 'y_1': -1}, sense='==', rhs=0)
-        expected_op.linear_constraint(linear={'x_0_0': 1, 'y_0': -1}, sense='<=', rhs=0)
-        expected_op.linear_constraint(linear={'x_0_1': 1, 'y_1': -1}, sense='<=', rhs=0)
-        expected_op.linear_constraint(linear={'x_1_0': 1, 'y_0': -1}, sense='<=', rhs=0)
-        expected_op.linear_constraint(linear={'x_1_1': 1, 'y_1': -1}, sense='<=', rhs=0)
+        expected_op.linear_constraint(linear={"y_0": 1, "y_1": 1}, sense="==", rhs=1)
+        expected_op.linear_constraint(
+            linear={"x_0_0": 1, "x_0_1": 1}, sense="==", rhs=1
+        )
+        expected_op.linear_constraint(
+            linear={"x_1_0": 1, "x_1_1": 1}, sense="==", rhs=1
+        )
+        expected_op.linear_constraint(linear={"x_0_0": 1, "y_0": -1}, sense="==", rhs=0)
+        expected_op.linear_constraint(linear={"x_1_1": 1, "y_1": -1}, sense="==", rhs=0)
+        expected_op.linear_constraint(linear={"x_0_0": 1, "y_0": -1}, sense="<=", rhs=0)
+        expected_op.linear_constraint(linear={"x_0_1": 1, "y_1": -1}, sense="<=", rhs=0)
+        expected_op.linear_constraint(linear={"x_1_0": 1, "y_0": -1}, sense="<=", rhs=0)
+        expected_op.linear_constraint(linear={"x_1_1": 1, "y_1": -1}, sense="<=", rhs=0)
         self.assertEqualQuadraticProgram(actual_op, expected_op)
 
     def test_interpret(self):
         """Test interpret"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
-            num_assets=self.n, num_clusters=self.q)
+            num_assets=self.n,
+            num_clusters=self.q,
+        )
         result_x = np.array([0, 1, 0, 1, 0, 1])
         self.assertEqual(portfolio_diversification.interpret(result_x), [1])
 
@@ -109,15 +124,21 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         """Test similarity_matrix"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
-            num_assets=self.n, num_clusters=self.q)
+            num_assets=self.n,
+            num_clusters=self.q,
+        )
         portfolio_diversification.similarity_matrix = np.array([[0, 1], [1, 0]])
-        self.assertEqual(portfolio_diversification.similarity_matrix.tolist(), [[0, 1], [1, 0]])
+        self.assertEqual(
+            portfolio_diversification.similarity_matrix.tolist(), [[0, 1], [1, 0]]
+        )
 
     def test_num_assets(self):
         """test num_assets"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
-            num_assets=self.n, num_clusters=self.q)
+            num_assets=self.n,
+            num_clusters=self.q,
+        )
         portfolio_diversification.num_assets = 3
         self.assertEqual(portfolio_diversification.num_assets, 3)
 
@@ -125,10 +146,12 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         """test num_clusters"""
         portfolio_diversification = PortfolioDiversification(
             similarity_matrix=self.similarity_matrix,
-            num_assets=self.n, num_clusters=self.q)
+            num_assets=self.n,
+            num_clusters=self.q,
+        )
         portfolio_diversification.num_clusters = 3
         self.assertEqual(portfolio_diversification.num_clusters, 3)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

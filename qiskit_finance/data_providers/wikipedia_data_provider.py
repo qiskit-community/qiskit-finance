@@ -22,6 +22,7 @@ from ..exceptions import QiskitFinanceError
 
 try:
     import quandl
+
     _HAS_QUANDL = True
 except ImportError:
     _HAS_QUANDL = False
@@ -37,11 +38,13 @@ class WikipediaDataProvider(BaseDataProvider):
     for instructions on use.
     """
 
-    def __init__(self,
-                 token: Optional[str] = None,
-                 tickers: Optional[Union[str, List[str]]] = None,
-                 start: datetime.datetime = datetime.datetime(2016, 1, 1),
-                 end: datetime.datetime = datetime.datetime(2016, 1, 30)) -> None:
+    def __init__(
+        self,
+        token: Optional[str] = None,
+        tickers: Optional[Union[str, List[str]]] = None,
+        start: datetime.datetime = datetime.datetime(2016, 1, 1),
+        end: datetime.datetime = datetime.datetime(2016, 1, 30),
+    ) -> None:
         """
         Initializer
         Args:
@@ -55,21 +58,22 @@ class WikipediaDataProvider(BaseDataProvider):
         super().__init__()
         if not _HAS_QUANDL:
             raise MissingOptionalLibraryError(
-                libname='Quandl',
-                name='WikipediaDataProvider',
-                pip_install='pip install quandl')
+                libname="Quandl",
+                name="WikipediaDataProvider",
+                pip_install="pip install quandl",
+            )
         self._tickers = None  # type: Optional[Union[str, List[str]]]
         tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):
             self._tickers = tickers
         else:
-            self._tickers = tickers.replace('\n', ';').split(";")
+            self._tickers = tickers.replace("\n", ";").split(";")
         self._n = len(self._tickers)
 
         self._token = token
         self._tickers = tickers
-        self._start = start.strftime('%Y-%m-%d')
-        self._end = end.strftime('%Y-%m-%d')
+        self._start = start.strftime("%Y-%m-%d")
+        self._end = end.strftime("%Y-%m-%d")
         self._data = []
 
     def run(self) -> None:
@@ -78,16 +82,16 @@ class WikipediaDataProvider(BaseDataProvider):
         get_covariance_matrix methods in the base class.
         """
         quandl.ApiConfig.api_key = self._token
-        quandl.ApiConfig.api_version = '2015-04-09'
+        quandl.ApiConfig.api_version = "2015-04-09"
         self._data = []
         stocks_notfound = []
         for _, ticker_name in enumerate(self._tickers):
             stock_data = None
-            name = 'WIKI' + "/" + ticker_name
+            name = "WIKI" + "/" + ticker_name
             try:
-                stock_data = quandl.get(name,
-                                        start_date=self._start,
-                                        end_date=self._end)
+                stock_data = quandl.get(
+                    name, start_date=self._start, end_date=self._end
+                )
             except quandl.AuthenticationError as ex:
                 raise QiskitFinanceError("Quandl invalid token.") from ex
             except quandl.NotFoundError as ex:
@@ -102,4 +106,4 @@ class WikipediaDataProvider(BaseDataProvider):
                 raise QiskitFinanceError("Cannot parse quandl output.") from ex
 
         if stocks_notfound:
-            raise QiskitFinanceError('Stocks not found: {}. '.format(stocks_notfound))
+            raise QiskitFinanceError("Stocks not found: {}. ".format(stocks_notfound))
