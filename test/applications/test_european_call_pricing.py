@@ -61,9 +61,7 @@ class TestEuropeanCallPricing(QiskitFinanceTestCase):
         self.assertEqual(est_problem.objective_qubits, [num_qubits])
         self.assertTrue(Operator(est_problem.state_preparation).equiv(expected_circ))
         # pylint: disable=not-callable
-        self.assertEqual(
-            linear_function.post_processing(0.5), est_problem.post_processing(0.5)
-        )
+        self.assertEqual(linear_function.post_processing(0.5), est_problem.post_processing(0.5))
 
 
 if __name__ == "__main__":

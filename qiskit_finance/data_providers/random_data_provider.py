@@ -79,15 +79,13 @@ class RandomDataProvider(BaseDataProvider):
         generator = np.random.default_rng(self._seed)
         self._data = []
         for _ in self._tickers:
-            d_f = pd.DataFrame(
-                generator.standard_normal(length)
-            ).cumsum() + generator.integers(1, 101)
+            d_f = pd.DataFrame(generator.standard_normal(length)).cumsum() + generator.integers(
+                1, 101
+            )
             trimmed = np.maximum(d_f[0].values, np.zeros(len(d_f[0].values)))
             trimmed_list = trimmed.tolist()
             # find index of first 0 element
-            zero_idx = next(
-                (idx for idx, val in enumerate(trimmed_list) if val == 0), -1
-            )
+            zero_idx = next((idx for idx, val in enumerate(trimmed_list) if val == 0), -1)
             if zero_idx >= 0:
                 # set to 0 all values after first 0
                 trimmed_list = [

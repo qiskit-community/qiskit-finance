@@ -89,9 +89,7 @@ class WikipediaDataProvider(BaseDataProvider):
             stock_data = None
             name = "WIKI" + "/" + ticker_name
             try:
-                stock_data = quandl.get(
-                    name, start_date=self._start, end_date=self._end
-                )
+                stock_data = quandl.get(name, start_date=self._start, end_date=self._end)
             except quandl.AuthenticationError as ex:
                 raise QiskitFinanceError("Quandl invalid token.") from ex
             except quandl.NotFoundError as ex:

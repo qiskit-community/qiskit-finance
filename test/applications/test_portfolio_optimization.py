@@ -53,19 +53,13 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         # Test objective
         self.assertEqual(actual.objective.sense, expected.objective.sense)
         self.assertEqual(actual.objective.constant, expected.objective.constant)
-        self.assertDictEqual(
-            actual.objective.linear.to_dict(), expected.objective.linear.to_dict()
-        )
+        self.assertDictEqual(actual.objective.linear.to_dict(), expected.objective.linear.to_dict())
         self.assertDictEqual(
             actual.objective.quadratic.to_dict(), expected.objective.quadratic.to_dict()
         )
         # Test constraint
-        self.assertEqual(
-            len(actual.linear_constraints), len(expected.linear_constraints)
-        )
-        for act_lin, exp_lin in zip(
-            actual.linear_constraints, expected.linear_constraints
-        ):
+        self.assertEqual(len(actual.linear_constraints), len(expected.linear_constraints))
+        for act_lin, exp_lin in zip(actual.linear_constraints, expected.linear_constraints):
             self.assertEqual(act_lin.sense, exp_lin.sense)
             self.assertEqual(act_lin.rhs, exp_lin.rhs)
             self.assertEqual(act_lin.linear.to_dict(), exp_lin.linear.to_dict())
@@ -115,9 +109,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         )
         result_x = np.array([0, 1, 0, 1])
         expected_value = np.dot(self.expected_returns, result_x)
-        self.assertEqual(
-            portfolio_optimization.portfolio_expected_value(result_x), expected_value
-        )
+        self.assertEqual(portfolio_optimization.portfolio_expected_value(result_x), expected_value)
 
     def test_portfolio_variance(self):
         """test portfolio_variance"""

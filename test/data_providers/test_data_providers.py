@@ -36,12 +36,8 @@ class TestDataProviders(QiskitFinanceTestCase):
 
     def setUp(self):
         super().setUp()
-        self._quandl_token = (
-            os.getenv("QUANDL_TOKEN") if os.getenv("QUANDL_TOKEN") else ""
-        )
-        self._on_demand_token = (
-            os.getenv("ON_DEMAND_TOKEN") if os.getenv("ON_DEMAND_TOKEN") else ""
-        )
+        self._quandl_token = os.getenv("QUANDL_TOKEN") if os.getenv("QUANDL_TOKEN") else ""
+        self._on_demand_token = os.getenv("ON_DEMAND_TOKEN") if os.getenv("ON_DEMAND_TOKEN") else ""
 
     @requires_extra_library
     def test_random_wrong_use(self):
@@ -83,20 +79,14 @@ class TestDataProviders(QiskitFinanceTestCase):
     @requires_extra_library
     def test_random(self):
         """random test"""
-        similarity = np.array(
-            [[1.00000000e00, 6.2284804e-04], [6.2284804e-04, 1.00000000e00]]
-        )
+        similarity = np.array([[1.00000000e00, 6.2284804e-04], [6.2284804e-04, 1.00000000e00]])
         covariance = np.array([[2.08413157, 0.20842107], [0.20842107, 1.99542187]])
         rnd = RandomDataProvider(seed=1)
         rnd.run()
         with self.subTest("test RandomDataProvider get_covariance_matrix"):
-            np.testing.assert_array_almost_equal(
-                rnd.get_covariance_matrix(), covariance, decimal=3
-            )
+            np.testing.assert_array_almost_equal(rnd.get_covariance_matrix(), covariance, decimal=3)
         with self.subTest("test RandomDataProvider get_similarity_matrix"):
-            np.testing.assert_array_almost_equal(
-                rnd.get_similarity_matrix(), similarity, decimal=3
-            )
+            np.testing.assert_array_almost_equal(rnd.get_similarity_matrix(), similarity, decimal=3)
 
     @requires_extra_library
     def test_random_divide_0(self):
@@ -134,9 +124,7 @@ class TestDataProviders(QiskitFinanceTestCase):
             similarity = np.array(
                 [[1.00000000e00, 8.44268222e-05], [8.44268222e-05, 1.00000000e00]]
             )
-            covariance = np.array(
-                [[269.60118129, 25.42252332], [25.42252332, 7.86304499]]
-            )
+            covariance = np.array([[269.60118129, 25.42252332], [25.42252332, 7.86304499]])
             with self.subTest("test WikipediaDataProvider get_covariance_matrix"):
                 np.testing.assert_array_almost_equal(
                     wiki.get_covariance_matrix(), covariance, decimal=3

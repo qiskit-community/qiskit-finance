@@ -69,9 +69,7 @@ class TestReadmeSample(QiskitFinanceTestCase):
 
         # Construct and run amplitude estimation
         q_i = BasicAer.get_backend("statevector_simulator")
-        algo = AmplitudeEstimation(
-            num_eval_qubits=num_eval_qubits, quantum_instance=q_i
-        )
+        algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits, quantum_instance=q_i)
         result = algo.estimate(problem)
 
         print("Estimated value:\t%.4f" % fixed_income.interpret(result))

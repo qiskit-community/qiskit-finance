@@ -79,12 +79,7 @@ class FixedIncomePricingObjective(QuantumCircuit):
         g = np.zeros(dimensions)
         for t in range(time_steps):
             h += cash_flow[t] / (1 + initial_interests[t]) ** (t + 1)
-            g += (
-                -(t + 1)
-                * cash_flow[t]
-                * pca_matrix[t, :]
-                / (1 + initial_interests[t]) ** (t + 2)
-            )
+            g += -(t + 1) * cash_flow[t] * pca_matrix[t, :] / (1 + initial_interests[t]) ** (t + 2)
 
         # compute overall offset using lower bound for x (corresponding to x = min)
         low = [bound[0] for bound in bounds]

@@ -77,9 +77,8 @@ class QiskitFinanceTestCase(unittest.TestCase, ABC):
         # is set.
         if os.getenv("LOG_LEVEL"):
             # Set up formatter.
-            log_fmt = (
-                "{}.%(funcName)s:%(levelname)s:%(asctime)s:"
-                " %(message)s".format(cls.__name__)
+            log_fmt = "{}.%(funcName)s:%(levelname)s:%(asctime)s:" " %(message)s".format(
+                cls.__name__
             )
             formatter = logging.Formatter(log_fmt)
 

@@ -44,9 +44,7 @@ class TestUniformDistribution(QiskitTestCase):
 class TestNormalDistribution(QiskitTestCase):
     """Test the normal distribution circuit."""
 
-    def assertDistributionIsCorrect(
-        self, circuit, num_qubits, mu, sigma, bounds, upto_diag
-    ):
+    def assertDistributionIsCorrect(self, circuit, num_qubits, mu, sigma, bounds, upto_diag):
         """Assert that ``circuit`` implements the normal distribution correctly.
 
         This test asserts that the ``circuit`` produces the desired state-vector.
@@ -68,7 +66,7 @@ class TestNormalDistribution(QiskitTestCase):
                 np.linspace(bound[0], bound[1], num=2 ** num_qubits[i])
                 for i, bound in enumerate(bounds)
             ],
-            indexing="ij"
+            indexing="ij",
         )
         x = list(zip(*[grid.flatten() for grid in meshgrid]))
 
@@ -112,23 +110,17 @@ class TestNormalDistribution(QiskitTestCase):
             kwargs["mu"] = mu
 
         if sigma is None:
-            sigma = (
-                np.eye(len(num_qubits)).tolist() if isinstance(num_qubits, list) else 1
-            )
+            sigma = np.eye(len(num_qubits)).tolist() if isinstance(num_qubits, list) else 1
         else:
             kwargs["sigma"] = sigma
 
         if bounds is None:
-            bounds = [(-1, 1)] * (
-                len(num_qubits) if isinstance(num_qubits, list) else 1
-            )
+            bounds = [(-1, 1)] * (len(num_qubits) if isinstance(num_qubits, list) else 1)
         else:
             kwargs["bounds"] = bounds
 
         normal = NormalDistribution(**kwargs)
-        self.assertDistributionIsCorrect(
-            normal, num_qubits, mu, sigma, bounds, upto_diag
-        )
+        self.assertDistributionIsCorrect(normal, num_qubits, mu, sigma, bounds, upto_diag)
 
     @data(
         [2, [1, 1], 2, (0, 1)],  # invalid mu
@@ -157,9 +149,7 @@ class TestNormalDistribution(QiskitTestCase):
 class TestLogNormalDistribution(QiskitTestCase):
     """Test the normal distribution circuit."""
 
-    def assertDistributionIsCorrect(
-        self, circuit, num_qubits, mu, sigma, bounds, upto_diag
-    ):
+    def assertDistributionIsCorrect(self, circuit, num_qubits, mu, sigma, bounds, upto_diag):
         """Assert that ``circuit`` implements the normal distribution correctly.
 
         This test asserts that the ``circuit`` produces the desired state-vector.
@@ -181,7 +171,7 @@ class TestLogNormalDistribution(QiskitTestCase):
                 np.linspace(bound[0], bound[1], num=2 ** num_qubits[i])
                 for i, bound in enumerate(bounds)
             ],
-            indexing="ij"
+            indexing="ij",
         )
         x = list(zip(*[grid.flatten() for grid in meshgrid]))
 
@@ -231,9 +221,7 @@ class TestLogNormalDistribution(QiskitTestCase):
             kwargs["mu"] = mu
 
         if sigma is None:
-            sigma = (
-                np.eye(len(num_qubits)).tolist() if isinstance(num_qubits, list) else 1
-            )
+            sigma = np.eye(len(num_qubits)).tolist() if isinstance(num_qubits, list) else 1
         else:
             kwargs["sigma"] = sigma
 
@@ -243,9 +231,7 @@ class TestLogNormalDistribution(QiskitTestCase):
             kwargs["bounds"] = bounds
 
         normal = LogNormalDistribution(**kwargs)
-        self.assertDistributionIsCorrect(
-            normal, num_qubits, mu, sigma, bounds, upto_diag
-        )
+        self.assertDistributionIsCorrect(normal, num_qubits, mu, sigma, bounds, upto_diag)
 
 
 if __name__ == "__main__":

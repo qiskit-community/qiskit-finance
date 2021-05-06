@@ -109,7 +109,5 @@ class DataOnDemandProvider(BaseDataProvider):
                     price_evolution.append(q["ask_price"])
                 self._data.append(price_evolution)
             except Exception as ex:  # pylint: disable=broad-except
-                raise QiskitFinanceError(
-                    "Accessing NASDAQ Data on Demand failed."
-                ) from ex
+                raise QiskitFinanceError("Accessing NASDAQ Data on Demand failed.") from ex
             http.clear()

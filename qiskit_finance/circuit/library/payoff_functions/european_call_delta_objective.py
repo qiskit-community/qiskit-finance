@@ -35,18 +35,14 @@ class EuropeanCallDeltaObjective(QuantumCircuit):
         """
         # map strike price to {0, ..., 2^n-1}
         num_values = 2 ** num_state_qubits
-        strike_price = (
-            (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (num_values - 1)
-        )
+        strike_price = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (num_values - 1)
         strike_price = int(np.ceil(strike_price))
 
         # create comparator
         comparator = IntegerComparator(num_state_qubits, strike_price)
 
         # initialize circuit
-        qr_state = QuantumRegister(
-            comparator.num_qubits - comparator.num_ancillas, "state"
-        )
+        qr_state = QuantumRegister(comparator.num_qubits - comparator.num_ancillas, "state")
         qr_work = QuantumRegister(comparator.num_ancillas, "work")
         super().__init__(qr_state, qr_work, name="ECD")
 
