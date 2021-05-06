@@ -28,9 +28,7 @@ class PortfolioDiversification(OptimizationApplication):
         [1]: GG. Cornuejols and R. Tutuncu, Optimization methods in finance, 2006
     """
 
-    def __init__(
-        self, similarity_matrix: np.ndarray, num_assets: int, num_clusters: int
-    ) -> None:
+    def __init__(self, similarity_matrix: np.ndarray, num_assets: int, num_clusters: int) -> None:
         """
         Args:
             similarity_matrix: An asset-to-asset similarity matrix, such as the covariance matrix.
@@ -63,9 +61,7 @@ class PortfolioDiversification(OptimizationApplication):
                 for j in range(self._num_assets)
             )
         )
-        mdl.add_constraint(
-            mdl.sum(y[j] for j in range(self._num_assets)) == self._num_clusters
-        )
+        mdl.add_constraint(mdl.sum(y[j] for j in range(self._num_assets)) == self._num_clusters)
         for i in range(self._num_assets):
             mdl.add_constraint(mdl.sum(x[(i, j)] for j in range(self._num_assets)) == 1)
         for j in range(self._num_assets):

@@ -110,9 +110,7 @@ class BaseDataProvider(ABC):
                 "No data loaded, yet. Please run the method run() first to load the data."
             ) from ex
         _div_func = np.vectorize(BaseDataProvider._divide)
-        period_returns = (
-            _div_func(np.array(self._data)[:, 1:], np.array(self._data)[:, :-1]) - 1
-        )
+        period_returns = _div_func(np.array(self._data)[:, 1:], np.array(self._data)[:, :-1]) - 1
         self.period_return_mean = cast(np.ndarray, np.mean(period_returns, axis=1))
         return self.period_return_mean
 
@@ -158,9 +156,7 @@ class BaseDataProvider(ABC):
                 "No data loaded, yet. Please run the method run() first to load the data."
             ) from ex
         _div_func = np.vectorize(BaseDataProvider._divide)
-        period_returns = (
-            _div_func(np.array(self._data)[:, 1:], np.array(self._data)[:, :-1]) - 1
-        )
+        period_returns = _div_func(np.array(self._data)[:, 1:], np.array(self._data)[:, :-1]) - 1
         self.period_return_cov = np.cov(period_returns)
         return self.period_return_cov
 

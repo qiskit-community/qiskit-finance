@@ -104,9 +104,7 @@ class ExchangeDataProvider(BaseDataProvider):
             stock_data = None
             name = self._stockmarket + "/" + ticker_name
             try:
-                stock_data = quandl.get(
-                    name, start_date=self._start, end_date=self._end
-                )
+                stock_data = quandl.get(name, start_date=self._start, end_date=self._end)
             except quandl.AuthenticationError as ex:
                 raise QiskitFinanceError("Quandl invalid token.") from ex
             except quandl.NotFoundError as ex:
@@ -120,16 +118,10 @@ class ExchangeDataProvider(BaseDataProvider):
             try:
                 self._data.append(stock_data["Close"])
             except KeyError as ex:
-                raise QiskitFinanceError(
-                    "Cannot parse Quandl '{}'output.".format(name)
-                ) from ex
+                raise QiskitFinanceError("Cannot parse Quandl '{}'output.".format(name)) from ex
 
         if stocks_notfound or stocks_forbidden:
-            err_msg = (
-                "Stocks not found: {}. ".format(stocks_notfound)
-                if stocks_notfound
-                else ""
-            )
+            err_msg = "Stocks not found: {}. ".format(stocks_notfound) if stocks_notfound else ""
             if stocks_forbidden:
                 err_msg += (
                     "You do not have permission to view this data. "

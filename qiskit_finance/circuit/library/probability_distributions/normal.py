@@ -176,12 +176,10 @@ class NormalDistribution(QuantumCircuit):
             # indexing 'ij' yields the "column-based" indexing
             meshgrid = np.meshgrid(
                 *[
-                    np.linspace(
-                        bound[0], bound[1], num=2 ** num_qubits[i]  # type: ignore
-                    )
+                    np.linspace(bound[0], bound[1], num=2 ** num_qubits[i])  # type: ignore
                     for i, bound in enumerate(bounds)
                 ],
-                indexing="ij"
+                indexing="ij",
             )
             # flatten into a list of points
             x = list(zip(*[grid.flatten() for grid in meshgrid]))
@@ -225,9 +223,7 @@ class NormalDistribution(QuantumCircuit):
 
 
 def _check_dimensions_match(num_qubits, mu, sigma, bounds):
-    num_qubits = (
-        [num_qubits] if not isinstance(num_qubits, (list, np.ndarray)) else num_qubits
-    )
+    num_qubits = [num_qubits] if not isinstance(num_qubits, (list, np.ndarray)) else num_qubits
     dim = len(num_qubits)
 
     if mu is not None:

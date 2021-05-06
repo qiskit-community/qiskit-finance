@@ -51,19 +51,13 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         # Test objective
         self.assertEqual(actual.objective.sense, expected.objective.sense)
         self.assertEqual(actual.objective.constant, expected.objective.constant)
-        self.assertDictEqual(
-            actual.objective.linear.to_dict(), expected.objective.linear.to_dict()
-        )
+        self.assertDictEqual(actual.objective.linear.to_dict(), expected.objective.linear.to_dict())
         self.assertDictEqual(
             actual.objective.quadratic.to_dict(), expected.objective.quadratic.to_dict()
         )
         # Test constraint
-        self.assertEqual(
-            len(actual.linear_constraints), len(expected.linear_constraints)
-        )
-        for act_lin, exp_lin in zip(
-            actual.linear_constraints, expected.linear_constraints
-        ):
+        self.assertEqual(len(actual.linear_constraints), len(expected.linear_constraints))
+        for act_lin, exp_lin in zip(actual.linear_constraints, expected.linear_constraints):
             self.assertEqual(act_lin.sense, exp_lin.sense)
             self.assertEqual(act_lin.rhs, exp_lin.rhs)
             self.assertEqual(act_lin.linear.to_dict(), exp_lin.linear.to_dict())
@@ -96,12 +90,8 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         linear = {"x_0_0": 1, "x_0_1": 0.8, "x_1_0": 0.8, "x_1_1": 1}
         expected_op.maximize(linear=linear)
         expected_op.linear_constraint(linear={"y_0": 1, "y_1": 1}, sense="==", rhs=1)
-        expected_op.linear_constraint(
-            linear={"x_0_0": 1, "x_0_1": 1}, sense="==", rhs=1
-        )
-        expected_op.linear_constraint(
-            linear={"x_1_0": 1, "x_1_1": 1}, sense="==", rhs=1
-        )
+        expected_op.linear_constraint(linear={"x_0_0": 1, "x_0_1": 1}, sense="==", rhs=1)
+        expected_op.linear_constraint(linear={"x_1_0": 1, "x_1_1": 1}, sense="==", rhs=1)
         expected_op.linear_constraint(linear={"x_0_0": 1, "y_0": -1}, sense="==", rhs=0)
         expected_op.linear_constraint(linear={"x_1_1": 1, "y_1": -1}, sense="==", rhs=0)
         expected_op.linear_constraint(linear={"x_0_0": 1, "y_0": -1}, sense="<=", rhs=0)
@@ -128,9 +118,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
             num_clusters=self.q,
         )
         portfolio_diversification.similarity_matrix = np.array([[0, 1], [1, 0]])
-        self.assertEqual(
-            portfolio_diversification.similarity_matrix.tolist(), [[0, 1], [1, 0]]
-        )
+        self.assertEqual(portfolio_diversification.similarity_matrix.tolist(), [[0, 1], [1, 0]])
 
     def test_num_assets(self):
         """test num_assets"""

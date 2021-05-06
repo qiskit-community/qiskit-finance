@@ -42,9 +42,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
         rescaling_factor = 0.1
         strike_price = 0.5
         bounds = (0, 2)
-        ecev = EuropeanCallPricingObjective(
-            num_qubits, strike_price, rescaling_factor, bounds
-        )
+        ecev = EuropeanCallPricingObjective(num_qubits, strike_price, rescaling_factor, bounds)
 
         breakpoints = [0, strike_price]
         slopes = [0, 1]
@@ -70,9 +68,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
                 Aer,
             )  # pylint: disable=unused-import,import-outside-toplevel
         except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest(
-                "Aer doesn't appear to be installed. Error: '{}'".format(str(ex))
-            )
+            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
             return
 
         bounds = np.array([0.0, 7.0])
@@ -116,9 +112,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
         q_i = QuantumInstance(
             Aer.get_backend("qasm_simulator"), seed_simulator=125, seed_transpiler=80
         )
-        iae = IterativeAmplitudeEstimation(
-            epsilon_target=0.01, alpha=0.05, quantum_instance=q_i
-        )
+        iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, quantum_instance=q_i)
         result = iae.estimate(problem)
         self.assertAlmostEqual(result.estimation_processed, 1.0127253837345427)
 

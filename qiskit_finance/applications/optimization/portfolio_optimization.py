@@ -67,9 +67,7 @@ class PortfolioOptimization(OptimizationApplication):
         op.from_docplex(mdl)
         return op
 
-    def portfolio_expected_value(
-        self, result: Union[OptimizationResult, np.ndarray]
-    ) -> float:
+    def portfolio_expected_value(self, result: Union[OptimizationResult, np.ndarray]) -> float:
         """Returns the portfolio expected value based on the result.
 
         Args:
@@ -81,9 +79,7 @@ class PortfolioOptimization(OptimizationApplication):
         x = self._result_to_x(result)
         return np.dot(self._expected_returns, x)
 
-    def portfolio_variance(
-        self, result: Union[OptimizationResult, np.ndarray]
-    ) -> float:
+    def portfolio_variance(self, result: Union[OptimizationResult, np.ndarray]) -> float:
         """Returns the portfolio variance based on the result
 
         Args:

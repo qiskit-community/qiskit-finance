@@ -57,9 +57,7 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
                 Aer,
             )  # pylint: disable=unused-import,import-outside-toplevel
         except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest(
-                "Aer doesn't appear to be installed. Error: '{}'".format(str(ex))
-            )
+            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
             return
 
         a_n = np.eye(2)
@@ -99,9 +97,7 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
         q_i = QuantumInstance(
             Aer.get_backend("qasm_simulator"), seed_simulator=2, seed_transpiler=2
         )
-        iae = IterativeAmplitudeEstimation(
-            epsilon_target=0.01, alpha=0.05, quantum_instance=q_i
-        )
+        iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, quantum_instance=q_i)
         result = iae.estimate(problem)
 
         # compare to precomputed solution

@@ -129,12 +129,10 @@ class LogNormalDistribution(QuantumCircuit):
             # indexing 'ij' yields the "column-based" indexing
             meshgrid = np.meshgrid(
                 *[
-                    np.linspace(
-                        bound[0], bound[1], num=2 ** num_qubits[i]  # type: ignore
-                    )
+                    np.linspace(bound[0], bound[1], num=2 ** num_qubits[i])  # type: ignore
                     for i, bound in enumerate(bounds)
                 ],
-                indexing="ij"
+                indexing="ij",
             )
             # flatten into a list of points
             x = list(zip(*[grid.flatten() for grid in meshgrid]))  # type: ignore
