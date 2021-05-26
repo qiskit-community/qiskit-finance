@@ -101,7 +101,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
 
         # run amplitude estimation
         q_i = QuantumInstance(
-            Aer.get_backend("qasm_simulator"), seed_simulator=125, seed_transpiler=80
+            Aer.get_backend("aer_simulator"), seed_simulator=125, seed_transpiler=80
         )
         iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, quantum_instance=q_i)
         result = iae.estimate(problem)
