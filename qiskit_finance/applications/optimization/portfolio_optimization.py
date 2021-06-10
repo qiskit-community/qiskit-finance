@@ -45,7 +45,7 @@ class PortfolioOptimization(OptimizationApplication):
             risk_factor: The risk appetite of the decision maker.
             budget: The budget, i.e. the number of assets to be selected.
             bounds: The list of tuples for the lower bounds and the upper bounds of each variable.
-                e.g. [(lowerbound1, upperbound1), (lowerbound2, upperbound2), ...].
+                e.g. [(lower bound1, upper bound1), (lower bound2, upper bound2), ...].
                 Default is None which means all the variables are binary variables.
         """
         self._expected_returns = expected_returns
