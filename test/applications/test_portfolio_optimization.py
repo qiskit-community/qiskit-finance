@@ -44,8 +44,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         ]
         self.risk_factor = 0.5
         self.budget = 2
-        self.lbs = [0, 0, 0, 1]
-        self.ubs = [2, 3, 4, 5]
+        self.bounds = [(0, 2), (0, 3), (0, 4), (1, 5)]
 
     def assertEqualQuadraticProgram(self, actual, expected):
         """Compare two instances for quadratic program"""
@@ -73,7 +72,7 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
 
     def test_to_quadratic_program(self):
         """Test to_quadratic_program"""
-        # When lbs and ubs are None
+        # When bounds is None
         portfolio_optimization = PortfolioOptimization(
             self.expected_returns, self.covariances, self.risk_factor, self.budget
         )
@@ -91,20 +90,16 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         linear = {i: 1 for i in range(self.num_assets)}
         expected_op.linear_constraint(linear=linear, sense="==", rhs=self.budget)
         self.assertEqualQuadraticProgram(actual_op, expected_op)
-
-        # When lbs and ubs are provided
+        # When bounds is provided
         portfolio_optimization = PortfolioOptimization(
-            self.expected_returns,
-            self.covariances,
-            self.risk_factor,
-            self.budget,
-            self.lbs,
-            self.ubs,
+            self.expected_returns, self.covariances, self.risk_factor, self.budget, self.bounds
         )
         actual_op = portfolio_optimization.to_quadratic_program()
         expected_op = QuadraticProgram(name="Portfolio optimization")
         for i in range(self.num_assets):
-            expected_op.integer_var(lowerbound=self.lbs[i], upperbound=self.ubs[i], name=f"x_{i}")
+            expected_op.integer_var(
+                lowerbound=self.bounds[i][0], upperbound=self.bounds[i][1], name=f"x_{i}"
+            )
         quadratic = {
             (i, j): self.risk_factor * self.covariances[i][j]
             for i in range(self.num_assets)
@@ -117,17 +112,17 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         self.assertEqualQuadraticProgram(actual_op, expected_op)
 
     @data(
-        [[1], [[1], [1]], 0.5, 2, None, None],
-        [[1], [[1, 1]], 0.5, 2, None, None],
-        [[1, 2], [[1, 2], [3, 4]], 0.5, 2, [0, -1], [2, 2]],
-        [[1, 2], [[1, 2], [3, 4]], 0.5, 2, [0], [2, 2]],
-        [[1, 2], [[1, 2], [3, 4]], 0.5, 2, [0, 0, 0], [2, 2, 2]],
+        [[1], [[1], [1]], 0.5, 2, None],
+        [[1], [[1, 1]], 0.5, 2, None],
+        [[1, 2], [[1, 2], [3, 4]], 0.5, 2, [(0, 2), (-1, 2)]],
+        [[1, 2], [[1, 2], [3, 4]], 0.5, 2, [(0, 2), (3, 1)]],
+        [[1, 2], [[1, 2], [3, 4]], 0.5, 2, [(0, 2), (0, 2), (0, 2)]],
     )
     @unpack
-    def test_is_compatibility(self, expected_returns, covariances, risk_factor, budget, lbs, ubs):
+    def test_is_compatibility(self, expected_returns, covariances, risk_factor, budget, bounds):
         """Test error cases in _is_compatibility"""
         with self.assertRaises(QiskitFinanceError):
-            _ = PortfolioOptimization(expected_returns, covariances, risk_factor, budget, lbs, ubs)
+            _ = PortfolioOptimization(expected_returns, covariances, risk_factor, budget, bounds)
 
     def test_interpret(self):
         """test interpret"""
@@ -171,31 +166,13 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         portfolio_optimization.budget = 3
         self.assertEqual(portfolio_optimization.budget, 3)
 
-    def test_lbs(self):
-        """test lbs"""
+    def test_bounds(self):
+        """test bounds"""
         portfolio_optimization = PortfolioOptimization(
-            self.expected_returns,
-            self.covariances,
-            self.risk_factor,
-            self.budget,
-            self.lbs,
-            self.ubs,
+            self.expected_returns, self.covariances, self.risk_factor, self.budget, self.bounds
         )
-        portfolio_optimization.lbs = [0, 0, 0, 0]
-        self.assertEqual(portfolio_optimization.lbs, [0, 0, 0, 0])
-
-    def test_ubs(self):
-        """test ubs"""
-        portfolio_optimization = PortfolioOptimization(
-            self.expected_returns,
-            self.covariances,
-            self.risk_factor,
-            self.budget,
-            self.lbs,
-            self.ubs,
-        )
-        portfolio_optimization.ubs = [2, 2, 2, 2]
-        self.assertEqual(portfolio_optimization.ubs, [2, 2, 2, 2])
+        portfolio_optimization.bounds = [(0, 4), (0, 4), (0, 4), (1, 4)]
+        self.assertEqual(portfolio_optimization.bounds, [(0, 4), (0, 4), (0, 4), (1, 4)])
 
 
 if __name__ == "__main__":

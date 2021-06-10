@@ -11,7 +11,7 @@
 # that they have been altered from the originals.
 
 """An application class for a portfolio optimization problem."""
-from typing import List, Union, Optional
+from typing import List, Tuple, Union, Optional
 
 import numpy as np
 from docplex.mp.advmodel import AdvModel
@@ -36,8 +36,7 @@ class PortfolioOptimization(OptimizationApplication):
         covariances: np.ndarray,
         risk_factor: float,
         budget: int,
-        lbs: Optional[List[int]] = None,
-        ubs: Optional[List[int]] = None,
+        bounds: Optional[List[Tuple[int, int]]] = None
     ) -> None:
         """
         Args:
@@ -45,15 +44,15 @@ class PortfolioOptimization(OptimizationApplication):
             covariances: The covariances between the assets.
             risk_factor: The risk appetite of the decision maker.
             budget: The budget, i.e. the number of assets to be selected.
-            lbs: The lower bounds of each selectable assets. Default is 0.
-            ubs: The upper bounds of each selectable assets. Default is 1.
+            bounds: The list of tuples for the lower bounds and the upper bounds of each variable.
+                e.g. [(lowerbound1, upperbound1), (lowerbound2, upperbound2), ...].
+                Default is None which means all the variables are binary variables.
         """
         self._expected_returns = expected_returns
         self._covariances = covariances
         self._risk_factor = risk_factor
         self._budget = budget
-        self._lbs = lbs
-        self._ubs = ubs
+        self._bounds = bounds
         self._check_compatibility()
 
     def to_quadratic_program(self) -> QuadraticProgram:
@@ -67,9 +66,9 @@ class PortfolioOptimization(OptimizationApplication):
         self._check_compatibility()
         num_assets = len(self._expected_returns)
         mdl = AdvModel(name="Portfolio optimization")
-        if self._lbs:
+        if self.bounds:
             x = [
-                mdl.integer_var(lb=self._lbs[i], ub=self._ubs[i], name=f"x_{i}")
+                mdl.integer_var(lb=self.bounds[i][0], ub=self.bounds[i][1], name=f"x_{i}")
                 for i in range(num_assets)
             ]
         else:
@@ -127,27 +126,28 @@ class PortfolioOptimization(OptimizationApplication):
                 "The sizes of expected_returns and covariances do not match. ",
                 f"expected_returns: {self._expected_returns}, covariances: {self._covariances}.",
             )
-
-        if self._lbs is not None or self._ubs is not None:
-            if any(ele < 0 for ele in self._lbs):
-                raise QiskitFinanceError(
-                    f"The lower bounds can not be negative values. lbs: {self._lbs}"
-                )
+        if self._bounds is not None:
             if (
-                not isinstance(self._lbs, list)
-                or not isinstance(self._ubs, list)
-                or not all(isinstance(ele, int) for ele in self._lbs)
-                or not all(isinstance(ele, int) for ele in self._ubs)
-                or len(self._lbs) != len(self._ubs)
+                not isinstance(self._bounds, list)
+                or not all(isinstance(lb_, int) for lb_, _ in self._bounds)
+                or not all(isinstance(ub_, int) for _, ub_ in self._bounds)
             ):
                 raise QiskitFinanceError(
-                    "ubs and lbs must be integer lists of equal lengths. ",
-                    f"lbs: {self._lbs}, ubs: {self._ubs}",
+                    f"The bounds must be a list of tuples of integers. {self._bounds}",
                 )
-            if len(self._lbs) != len(self._expected_returns):
+            if any(lb_ < 0 for lb_, _ in self._bounds):
                 raise QiskitFinanceError(
-                    f"The lengths of lbs and ubs, {len(self._lbs)}, do not match to the number of ",
-                    f"types of assets, {len(self._expected_returns)}.",
+                    f"The lower bounds can not be negative values. {self._bounds}"
+                )
+            if any(ub_ < lb_ for lb_, ub_ in self._bounds):
+                raise QiskitFinanceError(
+                    "The upper bound of each variable must be larger than the lower bound of that.",
+                    f" {self._bounds}"
+                )
+            if len(self._bounds) != len(self._expected_returns):
+                raise QiskitFinanceError(
+                    f"The lengths of the bounds, {len(self._bounds)}, do not match to ",
+                    f"the number of types of assets, {len(self._expected_returns)}.",
                 )
 
     @property
@@ -223,37 +223,20 @@ class PortfolioOptimization(OptimizationApplication):
         self._budget = budget
 
     @property
-    def lbs(self) -> List[int]:
-        """Getter of the lower bounds of each selectable assets
+    def bounds(self) -> List[Tuple[int, int]]:
+        """Getter of the lower bounds and upper bounds of each selectable assets.
 
         Returns:
-            The lower bounds of each assets selectable
+            The lower bounds and upper bounds of each assets selectable
         """
-        return self._lbs
+        return self._bounds
 
-    @lbs.setter
-    def lbs(self, lbs: List[int]) -> None:
-        """Setter of the lower bounds of each selectable assets
+    @bounds.setter
+    def bounds(self, bounds: List[Tuple[int, int]]) ->None:
+        """Setter of the lower bounds and upper bounds of each selectable assets.
 
         Args:
-            lbs: The lower bounds of each selectable assets
+            bounds: The lower bounds and upper bounds of each assets selectable
         """
-        self._lbs = lbs
-
-    @property
-    def ubs(self) -> List[int]:
-        """Getter of the upper bounds of each selectable assets
-
-        Returns:
-            The upper bounds of each selectable assets
-        """
-        return self._ubs
-
-    @ubs.setter
-    def ubs(self, ubs: List[int]) -> None:
-        """Setter of the upper bounds of each selectable assets
-
-        Args:
-            ubs: The upper bounds of each selectable assets
-        """
-        self._ubs = ubs
+        self._check_compatibility()  # check compatibility before setting bounds
+        self._bounds = bounds
