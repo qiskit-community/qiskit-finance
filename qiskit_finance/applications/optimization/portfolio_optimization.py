@@ -135,10 +135,6 @@ class PortfolioOptimization(OptimizationApplication):
                 raise QiskitFinanceError(
                     f"The bounds must be a list of tuples of integers. {self._bounds}",
                 )
-            if any(lb_ < 0 for lb_, _ in self._bounds):
-                raise QiskitFinanceError(
-                    f"The lower bounds can not be negative values. {self._bounds}"
-                )
             if any(ub_ < lb_ for lb_, ub_ in self._bounds):
                 raise QiskitFinanceError(
                     "The upper bound of each variable must be larger than the lower bound of that.",
