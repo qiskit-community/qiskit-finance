@@ -36,7 +36,7 @@ class PortfolioOptimization(OptimizationApplication):
         covariances: np.ndarray,
         risk_factor: float,
         budget: int,
-        bounds: Optional[List[Tuple[int, int]]] = None
+        bounds: Optional[List[Tuple[int, int]]] = None,
     ) -> None:
         """
         Args:
@@ -137,8 +137,8 @@ class PortfolioOptimization(OptimizationApplication):
                 )
             if any(ub_ < lb_ for lb_, ub_ in self._bounds):
                 raise QiskitFinanceError(
-                    "The upper bound of each variable must be larger than the lower bound of that.",
-                    f" {self._bounds}"
+                    "The upper bound of each variable, in the list of bounds, must be larger ",
+                    f"than its lower bound. {self._bounds}",
                 )
             if len(self._bounds) != len(self._expected_returns):
                 raise QiskitFinanceError(
@@ -228,7 +228,7 @@ class PortfolioOptimization(OptimizationApplication):
         return self._bounds
 
     @bounds.setter
-    def bounds(self, bounds: List[Tuple[int, int]]) ->None:
+    def bounds(self, bounds: List[Tuple[int, int]]) -> None:
         """Setter of the lower bounds and upper bounds of each selectable assets.
 
         Args:
