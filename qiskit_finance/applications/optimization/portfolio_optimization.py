@@ -53,7 +53,7 @@ class PortfolioOptimization(OptimizationApplication):
         self._risk_factor = risk_factor
         self._budget = budget
         self._bounds = bounds
-        self._check_compatibility()
+        self._check_compatibility(bounds)
 
     def to_quadratic_program(self) -> QuadraticProgram:
         """Convert a portfolio optimization problem instance into a
@@ -63,7 +63,7 @@ class PortfolioOptimization(OptimizationApplication):
             The :class:`~qiskit_optimization.problems.QuadraticProgram` created
             from the portfolio optimization problem instance.
         """
-        self._check_compatibility()
+        self._check_compatibility(self._bounds)
         num_assets = len(self._expected_returns)
         mdl = AdvModel(name="Portfolio optimization")
         if self.bounds:
@@ -117,7 +117,7 @@ class PortfolioOptimization(OptimizationApplication):
         x = self._result_to_x(result)
         return [i for i, x_i in enumerate(x) if x_i]
 
-    def _check_compatibility(self) -> None:
+    def _check_compatibility(self, bounds) -> None:
         """Check the compatibility of given variables"""
         if len(self._expected_returns) != len(self._covariances) or not all(
             len(self._expected_returns) == len(row) for row in self._covariances
@@ -126,21 +126,21 @@ class PortfolioOptimization(OptimizationApplication):
                 "The sizes of expected_returns and covariances do not match. ",
                 f"expected_returns: {self._expected_returns}, covariances: {self._covariances}.",
             )
-        if self._bounds is not None:
+        if bounds is not None:
             if (
-                not isinstance(self._bounds, list)
-                or not all(isinstance(lb_, int) for lb_, _ in self._bounds)
-                or not all(isinstance(ub_, int) for _, ub_ in self._bounds)
+                not isinstance(bounds, list)
+                or not all(isinstance(lb_, int) for lb_, _ in bounds)
+                or not all(isinstance(ub_, int) for _, ub_ in bounds)
             ):
                 raise QiskitFinanceError(
-                    f"The bounds must be a list of tuples of integers. {self._bounds}",
+                    f"The bounds must be a list of tuples of integers. {bounds}",
                 )
-            if any(ub_ < lb_ for lb_, ub_ in self._bounds):
+            if any(ub_ < lb_ for lb_, ub_ in bounds):
                 raise QiskitFinanceError(
                     "The upper bound of each variable, in the list of bounds, must be larger ",
-                    f"than its lower bound. {self._bounds}",
+                    f"than its lower bound. {bounds}",
                 )
-            if len(self._bounds) != len(self._expected_returns):
+            if len(bounds) != len(self._expected_returns):
                 raise QiskitFinanceError(
                     f"The lengths of the bounds, {len(self._bounds)}, do not match to ",
                     f"the number of types of assets, {len(self._expected_returns)}.",
@@ -234,5 +234,5 @@ class PortfolioOptimization(OptimizationApplication):
         Args:
             bounds: The lower bounds and upper bounds of each assets selectable
         """
-        self._check_compatibility()  # check compatibility before setting bounds
+        self._check_compatibility(bounds)  # check compatibility before setting bounds
         self._bounds = bounds
