@@ -137,8 +137,8 @@ class PortfolioOptimization(OptimizationApplication):
                 )
             if any(ub_ < lb_ for lb_, ub_ in bounds):
                 raise QiskitFinanceError(
-                    "The upper bound of each variable, in the list of bounds, must be larger ",
-                    f"than its lower bound. {bounds}",
+                    "The upper bound of each variable, in the list of bounds, must be greater ",
+                    f"than or equal to the lower bound. {bounds}",
                 )
             if len(bounds) != len(self._expected_returns):
                 raise QiskitFinanceError(
