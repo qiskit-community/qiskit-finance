@@ -2,5 +2,5 @@
 features:
   - |
     :class`qiskit_finance.applications.optimization.PortfolioOptimization` now supports
-    integer variables. So, users can decide how many asset they buy instead of just two choices,
+    integer variables. So, users can decide how many assets they buy instead of just two choices,
     buy or not.
