@@ -81,6 +81,7 @@ paulis
 pca
 pdf
 piecewise
+portfoliooptimization
 pre
 precomputed
 qgan
@@ -96,6 +97,7 @@ representable
 rescaling
 rescalings
 rutkowski
+selectable
 scholes
 scipy
 silvio
