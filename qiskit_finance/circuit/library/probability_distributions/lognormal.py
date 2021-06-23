@@ -113,7 +113,7 @@ class LogNormalDistribution(QuantumCircuit):
             mu = 0 if dim == 1 else [0] * dim
 
         if sigma is None:
-            sigma = 1 if dim == 1 else np.eye(dim)
+            sigma = 1 if dim == 1 else np.eye(dim)  # type: ignore[assignment]
 
         if bounds is None:
             bounds = (0, 1) if dim == 1 else [(0, 1)] * dim
