@@ -19,6 +19,7 @@ from docplex.mp.advmodel import AdvModel
 from qiskit_optimization.algorithms import OptimizationResult
 from qiskit_optimization.applications import OptimizationApplication
 from qiskit_optimization.problems import QuadraticProgram
+from qiskit_optimization.translators import from_docplex_mp
 from qiskit_finance.exceptions import QiskitFinanceError
 
 
@@ -77,8 +78,7 @@ class PortfolioOptimization(OptimizationApplication):
         linear = np.dot(self._expected_returns, x)
         mdl.minimize(self._risk_factor * quad - linear)
         mdl.add_constraint(mdl.sum(x[i] for i in range(num_assets)) == self._budget)
-        op = QuadraticProgram()
-        op.from_docplex(mdl)
+        op = from_docplex_mp(mdl)
         return op
 
     def portfolio_expected_value(self, result: Union[OptimizationResult, np.ndarray]) -> float:

@@ -19,6 +19,7 @@ from docplex.mp.advmodel import AdvModel
 from qiskit_optimization.algorithms import OptimizationResult
 from qiskit_optimization.applications import OptimizationApplication
 from qiskit_optimization.problems import QuadraticProgram
+from qiskit_optimization.translators import from_docplex_mp
 
 
 class PortfolioDiversification(OptimizationApplication):
@@ -69,8 +70,7 @@ class PortfolioDiversification(OptimizationApplication):
         for i in range(self._num_assets):
             for j in range(self._num_assets):
                 mdl.add_constraint(x[(i, j)] <= y[j])
-        op = QuadraticProgram()
-        op.from_docplex(mdl)
+        op = from_docplex_mp(mdl)
         return op
 
     def interpret(self, result: Union[OptimizationResult, np.ndarray]) -> List[int]:
