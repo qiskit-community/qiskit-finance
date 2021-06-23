@@ -160,7 +160,7 @@ class NormalDistribution(QuantumCircuit):
             mu = 0 if dim == 1 else [0] * dim
 
         if sigma is None:
-            sigma = 1 if dim == 1 else np.eye(dim)
+            sigma = 1 if dim == 1 else np.eye(dim)  # type: ignore[assignment]
 
         if bounds is None:
             bounds = (-1, 1) if dim == 1 else [(-1, 1)] * dim
