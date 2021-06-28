@@ -84,6 +84,8 @@ piecewise
 portfoliooptimization
 pre
 precomputed
+pxd
+py
 qgan
 qiskit
 qiskit's
