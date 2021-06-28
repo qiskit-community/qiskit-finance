@@ -41,6 +41,7 @@ all_check: spell style lint copyright mypy clean_sphinx html doctest
 
 lint:
 	pylint -rn qiskit_finance test tools
+	python tools/verify_headers.py qiskit_finance test tools
 
 mypy:
 	mypy qiskit_finance test tools
