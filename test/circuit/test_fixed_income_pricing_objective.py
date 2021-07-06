@@ -20,8 +20,8 @@ import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.utils import QuantumInstance
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
-from qiskit.circuit.library import NormalDistribution
 from qiskit.quantum_info import Operator
+from qiskit_finance.circuit.library import NormalDistribution
 from qiskit_finance.circuit.library.payoff_functions import FixedIncomePricingObjective
 
 

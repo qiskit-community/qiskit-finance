@@ -35,7 +35,7 @@ evaluate a fixed income asset with uncertain interest rates.
 import numpy as np
 from qiskit import BasicAer
 from qiskit.algorithms import AmplitudeEstimation, EstimationProblem
-from qiskit.circuit.library import NormalDistribution
+from qiskit_finance.circuit.library import NormalDistribution
 from qiskit_finance.applications import FixedIncomeExpectedValue
 
 # Create a suitable multivariate distribution

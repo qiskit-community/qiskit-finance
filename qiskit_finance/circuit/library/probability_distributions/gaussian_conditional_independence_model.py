@@ -17,7 +17,8 @@ import numpy as np
 from scipy.stats.distributions import norm
 
 from qiskit.circuit import QuantumCircuit
-from qiskit.circuit.library import LinearPauliRotations, NormalDistribution
+from qiskit.circuit.library import LinearPauliRotations
+from .normal import NormalDistribution
 
 
 class GaussianConditionalIndependenceModel(QuantumCircuit):

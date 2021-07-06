@@ -17,12 +17,11 @@ from test import QiskitFinanceTestCase
 
 import numpy as np
 
-from qiskit.circuit.library import TwoLocal, NormalDistribution
 from qiskit.utils import algorithm_globals, QuantumInstance
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
-from qiskit.circuit.library import LinearAmplitudeFunction
+from qiskit.circuit.library import LinearAmplitudeFunction, TwoLocal
 from qiskit.quantum_info import Operator
-from qiskit_finance.circuit.library import EuropeanCallPricingObjective
+from qiskit_finance.circuit.library import EuropeanCallPricingObjective, NormalDistribution
 
 
 class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):

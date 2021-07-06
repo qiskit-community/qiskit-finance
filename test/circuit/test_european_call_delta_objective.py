@@ -17,11 +17,12 @@ from test import QiskitFinanceTestCase
 
 import numpy as np
 
-from qiskit.circuit.library import IntegerComparator, LogNormalDistribution
+from qiskit.circuit.library import IntegerComparator
 from qiskit.quantum_info import Operator
-
 from qiskit.utils import QuantumInstance
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
+from qiskit_finance.circuit.library import LogNormalDistribution
+
 from qiskit_finance.circuit.library.payoff_functions import EuropeanCallDeltaObjective
 
 

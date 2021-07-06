@@ -38,7 +38,7 @@ class TestReadmeSample(QiskitFinanceTestCase):
         import numpy as np
         from qiskit import BasicAer
         from qiskit.algorithms import AmplitudeEstimation
-        from qiskit.circuit.library import NormalDistribution
+        from qiskit_finance.circuit.library import NormalDistribution
         from qiskit_finance.applications import FixedIncomePricing
 
         # Create a suitable multivariate distribution
