@@ -56,16 +56,16 @@ git config user.email "qiskit@qiskit.org"
 echo "git rm -rf for the translation po files"
 git rm -rf --ignore-unmatch finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/*.po \
     finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/api \
-    finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/apidocs.po \
-    finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/stubs.po \
+    finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/apidocs \
+    finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/stubs \
     finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/release_notes.po \
     finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/theme \
     finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/_*
 
 # Remove api/ and apidoc/ to avoid confusion while translating
 rm -rf $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/api/ \
-    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/apidocs.po \
-    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/stubs.po \
+    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/apidocs \
+    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/stubs \
     $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/release_notes.po \
     $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/theme/
 
