@@ -8,4 +8,4 @@ fastdtw
 setuptools>=40.1.0
 pandas
 quandl
-yfinance<0.1.63
+yfinance>=0.1.62

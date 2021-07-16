@@ -60,7 +60,7 @@ class YahooDataProvider(BaseDataProvider):
                 name="YahooDataProvider",
                 pip_install="pip install yfinance",
             )
-        self._tickers = None  # type: Optional[Union[str, List[str]]]
+        self._tickers = []
         tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):
             self._tickers = tickers
@@ -68,7 +68,6 @@ class YahooDataProvider(BaseDataProvider):
             self._tickers = tickers.replace("\n", ";").split(";")
         self._n = len(self._tickers)
 
-        self._tickers = tickers
         self._start = start.strftime("%Y-%m-%d")
         self._end = end.strftime("%Y-%m-%d")
         self._data = []
@@ -78,22 +77,31 @@ class YahooDataProvider(BaseDataProvider):
         Loads data, thus enabling get_similarity_matrix and
         get_covariance_matrix methods in the base class.
         """
+        if len(self._tickers) == 0:
+            raise QiskitFinanceError("Missing tickers to download.")
         self._data = []
         stocks_notfound = []
         try:
             stock_data = yf.download(
-                " ".join(self._tickers),
+                self._tickers,
                 start=self._start,
                 end=self._end,
                 group_by="ticker",
                 # threads=False,
                 progress=logger.isEnabledFor(logging.DEBUG),
             )
-            for ticker_name in self._tickers:
-                stock_value = stock_data[ticker_name]["Adj Close"]
+            if len(self._tickers) == 1:
+                ticker_name = self._tickers[0]
+                stock_value = stock_data["Adj Close"]
                 if stock_value.dropna().empty:
                     stocks_notfound.append(ticker_name)
                 self._data.append(stock_value)
+            else:
+                for ticker_name in self._tickers:
+                    stock_value = stock_data[ticker_name]["Adj Close"]
+                    if stock_value.dropna().empty:
+                        stocks_notfound.append(ticker_name)
+                    self._data.append(stock_value)
         except Exception as ex:  # pylint: disable=broad-except
             raise QiskitFinanceError("Accessing Yahoo Data failed.") from ex
 
