@@ -56,14 +56,17 @@ git config user.email "qiskit@qiskit.org"
 echo "git rm -rf for the translation po files"
 git rm -rf --ignore-unmatch finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/*.po \
     finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/api \
-    finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/apidoc \
+    finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/apidocs \
+    finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/stubs \
+    finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/release_notes.po \
     finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/theme \
     finance/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/_*
 
 # Remove api/ and apidoc/ to avoid confusion while translating
 rm -rf $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/api/ \
-    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/apidoc/ \
-    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/stubs/ \
+    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/apidocs \
+    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/stubs \
+    $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/release_notes.po \
     $SOURCE_DIR/$DOC_DIR_PO/$SOURCE_LANG/LC_MESSAGES/theme/
 
 # Copy the new rendered files and add them to the commit.
@@ -71,6 +74,8 @@ echo "copy directory"
 cp -r $SOURCE_DIR/$DOC_DIR_PO/ finance/docs
 cp $SOURCE_DIR/setup.py finance/.
 cp $SOURCE_DIR/requirements-dev.txt finance/.
+cp $SOURCE_DIR/requirements.txt finance/.
+cp $SOURCE_DIR/qiskit_finance/VERSION.txt finance/qiskit_finance/.
 
 # git checkout translationDocs
 echo "add to po files to target dir"
