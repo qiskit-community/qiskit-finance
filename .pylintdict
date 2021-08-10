@@ -17,6 +17,7 @@ berndt
 bernoulli
 bool
 boolean
+brassard
 carlo
 cdf
 clifford
@@ -45,6 +46,8 @@ gacon
 getter
 gg
 goldstone
+grinko
+grover
 gutmann
 hadamard
 hamiltonian
@@ -74,6 +77,7 @@ nosignatures
 np
 num
 numpy
+onodera
 ok
 param
 parametrization
@@ -94,6 +98,7 @@ quandl
 qubit
 qubits
 rangle
+raymond
 readme
 rebalancing
 representable
@@ -111,6 +116,8 @@ stockmarket
 str
 subclasses
 submodules
+suzuki
+tanaka
 tarca
 taylor
 th
@@ -119,11 +126,13 @@ traceback
 tutuncu
 unittest
 univariate
+uno
 variational
 vec
 visualisation
 wikipedia
 woerner
+yamamoto
 yfinance
 york
 zoufal
