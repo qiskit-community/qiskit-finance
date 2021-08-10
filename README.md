@@ -77,7 +77,7 @@ When running the above the estimated value result should be 2.46 and probability
 ### Further examples
 
 Learning path notebooks may be found in the
-[finance tutorials](https://qiskit.org/documentation/tutorials/finance/index.html) section
+[finance tutorials](https://qiskit.org/documentation/finance/tutorials/) section
 of the documentation and are a great place to start.
 
 ----------------------------------------------------------------------------------------------------
