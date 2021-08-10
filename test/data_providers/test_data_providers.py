@@ -185,7 +185,7 @@ class TestDataProviders(QiskitFinanceTestCase):
             self.skipTest("Test of ExchangeDataProvider skipped {}".format(str(ex)))
 
     @data(
-        [["AEO", "AEP"], [[7.0, 1.6], [1.6, 15.7]], [[1.0e00, 9.2e-05], [9.2e-05, 1.0e00]]],
+        [["AEO", "AEP"], [[7.0, 1.6], [1.6, 15.4]], [[1.0e00, 9.2e-05], [9.2e-05, 1.0e00]]],
         ["AEO", 7.0, [[1.0]]],
     )
     @unpack
