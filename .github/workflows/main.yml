@@ -31,9 +31,10 @@ concurrency:
 
 jobs:
   Checks:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest]
         python-version: [3.7]
     steps:
       - name: Print Concurrency Group
@@ -49,10 +50,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: ./.github/actions/install-libraries
-        with:
-          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/install-main-dependencies
+        with:
+          os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
       - name: Install Dependencies
@@ -94,20 +94,25 @@ jobs:
         if: ${{ !cancelled() }}
         shell: bash
   Finance:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
+        include:
+          - os: macos-latest
+            python-version: 3.8
+          - os: windows-latest
+            python-version: 3.8
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: ./.github/actions/install-libraries
-        with:
-          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/install-main-dependencies
+        with:
+          os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
       - run: make lint
@@ -129,23 +134,24 @@ jobs:
         if: ${{ !cancelled() }}
       - name: Deprecation Messages
         run: |
-          mkdir ./f${{ matrix.python-version }}
-          python tools/extract_deprecation.py -file out.txt -output ./f${{ matrix.python-version }}/finance.dep
+          mkdir ./ci-artifact-data
+          python tools/extract_deprecation.py -file out.txt -output ./ci-artifact-data/fin.dep
         shell: bash
       - name: Coverage combine
         run: |
           coverage3 combine
-          mv .coverage ./f${{ matrix.python-version }}/finance.dat
+          mv .coverage ./ci-artifact-data/fin.dat
         if: ${{ matrix.python-version == 3.7 }}
         shell: bash
       - uses: actions/upload-artifact@v2
         with:
-          name: finance${{ matrix.python-version }}
-          path: ./f${{ matrix.python-version }}/*
+          name: ${{ matrix.os }}-${{ matrix.python-version }}
+          path: ./ci-artifact-data/*
   Tutorials:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest]
         python-version: [3.7, 3.8]
     steps:
       - uses: actions/checkout@v2
@@ -154,10 +160,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: ./.github/actions/install-libraries
-        with:
-          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/install-main-dependencies
+        with:
+          os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
       - name: Install Dependencies
@@ -221,29 +226,37 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.6
+          name: ubuntu-latest-3.6
           path: /tmp/f36
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.7
+          name: ubuntu-latest-3.7
           path: /tmp/f37
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.8
+          name: ubuntu-latest-3.8
           path: /tmp/f38
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.9
+          name: ubuntu-latest-3.9
           path: /tmp/f39
+      - uses: actions/download-artifact@v2
+        with:
+          name: macos-latest-3.8
+          path: /tmp/m38
+      - uses: actions/download-artifact@v2
+        with:
+          name: windows-latest-3.8
+          path: /tmp/w38
       - name: Install Dependencies
         run: pip install -U coverage coveralls diff-cover
         shell: bash
       - name: Combined Deprecation Messages
         run: |
-          sort -f -u /tmp/f36/finance.dep /tmp/f37/finance.dep /tmp/f38/finance.dep /tmp/f39/finance.dep || true
+          sort -f -u /tmp/f36/fin.dep /tmp/f37/fin.dep /tmp/f38/fin.dep /tmp/f39/fin.dep /tmp/m38/fin.dep /tmp/w38/fin.dep || true
         shell: bash
       - name: Coverage combine
-        run: coverage3 combine /tmp/f37/finance.dat
+        run: coverage3 combine /tmp/f37/fin.dat
         shell: bash
       - name: Upload to Coveralls
         env:
