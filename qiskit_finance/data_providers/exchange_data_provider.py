@@ -107,10 +107,10 @@ class ExchangeDataProvider(BaseDataProvider):
                 stock_data = quandl.get(name, start_date=self._start, end_date=self._end)
             except quandl.AuthenticationError as ex:
                 raise QiskitFinanceError("Quandl invalid token.") from ex
-            except quandl.NotFoundError as ex:
+            except quandl.NotFoundError:
                 stocks_notfound.append(name)
                 continue
-            except quandl.ForbiddenError as ex:
+            except quandl.ForbiddenError:
                 stocks_forbidden.append(name)
                 continue
             except quandl.QuandlError as ex:
