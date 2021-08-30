@@ -113,7 +113,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
         )
         iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, quantum_instance=q_i)
         result = iae.estimate(problem)
-        self.assertAlmostEqual(result.estimation_processed, 1.0127253837345427)
+        self.assertAlmostEqual(result.estimation_processed, 1.0364776997977694)
 
 
 if __name__ == "__main__":
