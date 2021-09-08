@@ -1,6 +1,6 @@
 # Qiskit Finance
 
-[![License](https://img.shields.io/github/license/Qiskit/qiskit-finance.svg?style=popout-square)](https://opensource.org/licenses/Apache-2.0)[![Build Status](https://github.com/Qiskit/qiskit-finance/workflows/Finance%20Unit%20Tests/badge.svg?branch=main)](https://github.com/Qiskit/qiskit-finance/actions?query=workflow%3A"Finance%20Unit%20Tests"+branch%3Amain+event%3Apush)[![](https://img.shields.io/github/release/Qiskit/qiskit-finance.svg?style=popout-square)](https://github.com/Qiskit/qiskit-finance/releases)[![](https://img.shields.io/pypi/dm/qiskit-finance.svg?style=popout-square)](https://pypi.org/project/qiskit-finance/)[![Coverage Status](https://coveralls.io/repos/github/Qiskit/qiskit-finance/badge.svg?branch=main)](https://coveralls.io/github/Qiskit/qiskit-finance?branch=main)
+[![License](https://img.shields.io/github/license/Qiskit/qiskit-finance.svg?style=popout-square)](https://opensource.org/licenses/Apache-2.0)<!--- long-description-skip-begin -->[![Build Status](https://github.com/Qiskit/qiskit-finance/workflows/Finance%20Unit%20Tests/badge.svg?branch=main)](https://github.com/Qiskit/qiskit-finance/actions?query=workflow%3A"Finance%20Unit%20Tests"+branch%3Amain+event%3Apush)[![](https://img.shields.io/github/release/Qiskit/qiskit-finance.svg?style=popout-square)](https://github.com/Qiskit/qiskit-finance/releases)[![](https://img.shields.io/pypi/dm/qiskit-finance.svg?style=popout-square)](https://pypi.org/project/qiskit-finance/)[![Coverage Status](https://coveralls.io/repos/github/Qiskit/qiskit-finance/badge.svg?branch=main)](https://coveralls.io/github/Qiskit/qiskit-finance?branch=main)<!--- long-description-skip-end -->
 
 **Qiskit Finance** is an open-source framework that contains uncertainty components for stock/securities problems,
 Ising translators for portfolio optimizations and data providers to source real or random data to
@@ -20,7 +20,7 @@ pip install qiskit-finance
 If you want to work on the very latest work-in-progress versions, either to try features ahead of
 their official release or if you want to contribute to Finance, then you can install from source.
 To do this follow the instructions in the
- [documentation](https://qiskit.org/documentation/contributing_to_qiskit.html#installing-from-source).
+ [documentation](https://qiskit.org/documentation/finance/getting_started.html#installation).
 
 
 ----------------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ When running the above the estimated value result should be 2.46 and probability
 ### Further examples
 
 Learning path notebooks may be found in the
-[finance tutorials](https://qiskit.org/documentation/finance/tutorials/) section
+[finance tutorials](https://qiskit.org/documentation/finance/tutorials/index.html) section
 of the documentation and are a great place to start.
 
 ----------------------------------------------------------------------------------------------------
@@ -85,8 +85,8 @@ of the documentation and are a great place to start.
 ## Contribution Guidelines
 
 If you'd like to contribute to Qiskit, please take a look at our
-[contribution guidelines](./CONTRIBUTING.md).
-This project adheres to Qiskit's [code of conduct](./CODE_OF_CONDUCT.md).
+[contribution guidelines](https://github.com/Qiskit/qiskit-finance/blob/main/CONTRIBUTING.md).
+This project adheres to Qiskit's [code of conduct](https://github.com/Qiskit/qiskit-finance/blob/main/CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code.
 
 We use [GitHub issues](https://github.com/Qiskit/qiskit-finance/issues) for tracking requests and bugs. Please
@@ -109,4 +109,4 @@ file.
 
 ## License
 
-This project uses the [Apache License 2.0](LICENSE.txt).
+This project uses the [Apache License 2.0](https://github.com/Qiskit/qiskit-finance/blob/main/LICENSE.txt).
