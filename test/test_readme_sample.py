@@ -72,8 +72,8 @@ class TestReadmeSample(QiskitFinanceTestCase):
         algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits, quantum_instance=q_i)
         result = algo.estimate(problem)
 
-        print("Estimated value:\t%.4f" % fixed_income.interpret(result))
-        print("Probability:    \t%.4f" % result.max_probability)
+        print(f"Estimated value:\t{fixed_income.interpret(result):.4f}")
+        print(f"Probability:    \t{result.max_probability:.4f}")
 
         # ----------------------------------------------------------------------
 

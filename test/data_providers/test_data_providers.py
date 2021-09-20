@@ -94,7 +94,7 @@ class TestDataProviders(QiskitFinanceTestCase):
         # divide by 0 errors
         seed = 8888
         num_assets = 4
-        stocks = [("TICKER%s" % i) for i in range(num_assets)]
+        stocks = [f"TICKER{i}" for i in range(num_assets)]
         random_data = RandomDataProvider(
             tickers=stocks,
             start=datetime.datetime(2016, 1, 1),
@@ -133,7 +133,7 @@ class TestDataProviders(QiskitFinanceTestCase):
                     wiki.get_similarity_matrix(), similarity, decimal=3
                 )
         except QiskitFinanceError as ex:
-            self.skipTest("Test of WikipediaDataProvider skipped: {}".format(str(ex)))
+            self.skipTest(f"Test of WikipediaDataProvider skipped: {str(ex)}")
             # The trouble for automating testing is that after 50 tries
             # from one IP address within a day
             # Quandl complains about the free usage tier limits:
@@ -155,7 +155,7 @@ class TestDataProviders(QiskitFinanceTestCase):
             )
             nasdaq.run()
         except QiskitFinanceError as ex:
-            self.skipTest("Test of DataOnDemandProvider skipped {}".format(str(ex)))
+            self.skipTest(f"Test of DataOnDemandProvider skipped {str(ex)}")
 
     @requires_extra_library
     def test_exchangedata(self):
@@ -182,7 +182,7 @@ class TestDataProviders(QiskitFinanceTestCase):
                     lse.get_similarity_matrix(), similarity, decimal=3
                 )
         except QiskitFinanceError as ex:
-            self.skipTest("Test of ExchangeDataProvider skipped {}".format(str(ex)))
+            self.skipTest(f"Test of ExchangeDataProvider skipped {str(ex)}")
 
     @data(
         [["AEO", "AEP"], [[7.0, 1.6], [1.6, 15.4]], [[1.0e00, 9.2e-05], [9.2e-05, 1.0e00]]],
@@ -208,7 +208,7 @@ class TestDataProviders(QiskitFinanceTestCase):
                     yahoo.get_similarity_matrix(), np.array(similarity), decimal=1
                 )
         except QiskitFinanceError as ex:
-            self.skipTest("Test of YahooDataProvider skipped {}".format(str(ex)))
+            self.skipTest(f"Test of YahooDataProvider skipped {str(ex)}")
 
 
 if __name__ == "__main__":

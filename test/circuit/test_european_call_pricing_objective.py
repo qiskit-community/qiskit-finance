@@ -67,7 +67,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
                 Aer,
             )  # pylint: disable=unused-import,import-outside-toplevel
         except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
+            self.skipTest(f"Aer doesn't appear to be installed. Error: '{str(ex)}'")
             return
 
         bounds = np.array([0.0, 7.0])

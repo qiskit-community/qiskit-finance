@@ -69,8 +69,8 @@ algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits,
                             quantum_instance=q_i)
 result = algo.estimate(problem)
 
-print('Estimated value:\t%.4f' % result.estimation_processed)
-print('Probability:    \t%.4f' % result.max_probability)
+print(f"Estimated value:\t{fixed_income.interpret(result):.4f}")
+print(f"Probability:    \t{result.max_probability:.4f}")
 ```
 When running the above the estimated value result should be 2.46 and probability 0.8487.
 
