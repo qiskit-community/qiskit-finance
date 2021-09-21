@@ -84,9 +84,9 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
         expected_op = QuadraticProgram(name="Portfolio diversification")
         for i in range(self.n):
             for j in range(self.n):
-                expected_op.binary_var(name="x_{0}_{1}".format(i, j))
+                expected_op.binary_var(name=f"x_{i}_{j}")
         for i in range(self.n):
-            expected_op.binary_var(name="y_{0}".format(i))
+            expected_op.binary_var(name=f"y_{i}")
         linear = {"x_0_0": 1, "x_0_1": 0.8, "x_1_0": 0.8, "x_1_1": 1}
         expected_op.maximize(linear=linear)
         expected_op.linear_constraint(linear={"y_0": 1, "y_1": 1}, sense="==", rhs=1)

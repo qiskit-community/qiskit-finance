@@ -97,9 +97,7 @@ class DataOnDemandProvider(BaseDataProvider):
                     # or forces the certificate path (str)
                     response = http.request("POST", encoded, verify=self._verify)
                 if response.status != 200:
-                    msg = "Accessing NASDAQ Data on Demand with parameters {} encoded into ".format(
-                        values
-                    )
+                    msg = f"Accessing NASDAQ Data on Demand with parameters {values} encoded into "
                     msg += encoded
                     msg += " failed. Hint: Check the _Token. Check the spelling of tickers."
                     raise QiskitFinanceError(msg)

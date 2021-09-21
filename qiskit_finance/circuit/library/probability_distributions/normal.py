@@ -230,18 +230,16 @@ def _check_dimensions_match(num_qubits, mu, sigma, bounds):
         mu = [mu] if not isinstance(mu, (list, np.ndarray)) else mu
         if len(mu) != dim:
             raise ValueError(
-                "Dimension of mu ({}) does not match the dimension of the "
-                "random variable specified by the number of qubits ({})"
-                "".format(len(mu), dim)
+                f"Dimension of mu ({len(mu)}) does not match the dimension of the "
+                f"random variable specified by the number of qubits ({dim})"
             )
 
     if sigma is not None:
         sigma = [[sigma]] if not isinstance(sigma, (list, np.ndarray)) else sigma
         if len(sigma) != dim or len(sigma[0]) != dim:
             raise ValueError(
-                "Dimension of sigma ({} x {}) does not match the dimension of "
-                "the random variable specified by the number of qubits ({})"
-                "".format(len(sigma), len(sigma[0]), dim)
+                f"Dimension of sigma ({len(sigma)} x {len(sigma[0])}) does not match the dimension of "
+                f"the random variable specified by the number of qubits ({dim})"
             )
 
     if bounds is not None:
@@ -250,9 +248,8 @@ def _check_dimensions_match(num_qubits, mu, sigma, bounds):
         bounds = [bounds] if not isinstance(bounds[0], tuple) else bounds
         if len(bounds) != dim:
             raise ValueError(
-                "Dimension of bounds ({}) does not match the dimension of the "
-                "random variable specified by the number of qubits ({})"
-                "".format(len(bounds), dim)
+                f"Dimension of bounds ({len(bounds)}) does not match the dimension of the "
+                f"random variable specified by the number of qubits ({dim})"
             )
 
 
@@ -265,7 +262,6 @@ def _check_bounds_valid(bounds):
     for i, bound in enumerate(bounds):
         if not bound[1] - bound[0] > 0:
             raise ValueError(
-                "Dimension {} of the bounds are invalid, must be a non-empty "
+                f"Dimension {i} of the bounds are invalid, must be a non-empty "
                 "interval where the lower bounds is smaller than the upper bound."
-                "".format(i)
             )

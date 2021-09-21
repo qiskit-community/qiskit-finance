@@ -50,11 +50,11 @@ class PortfolioDiversification(OptimizationApplication):
         """
         mdl = AdvModel(name="Portfolio diversification")
         x = {
-            (i, j): mdl.binary_var(name="x_{0}_{1}".format(i, j))
+            (i, j): mdl.binary_var(name=f"x_{i}_{j}")
             for i in range(self._num_assets)
             for j in range(self._num_assets)
         }
-        y = {i: mdl.binary_var(name="y_{0}".format(i)) for i in range(self._num_assets)}
+        y = {i: mdl.binary_var(name=f"y_{i}") for i in range(self._num_assets)}
         mdl.maximize(
             mdl.sum(
                 self._similarity_matrix[i, j] * x[(i, j)]

@@ -114,17 +114,17 @@ class ExchangeDataProvider(BaseDataProvider):
                 stocks_forbidden.append(name)
                 continue
             except quandl.QuandlError as ex:
-                raise QiskitFinanceError("Quandl Error for '{}'.".format(name)) from ex
+                raise QiskitFinanceError(f"Quandl Error for '{name}'.") from ex
             try:
                 self._data.append(stock_data["Close"])
             except KeyError as ex:
-                raise QiskitFinanceError("Cannot parse Quandl '{}'output.".format(name)) from ex
+                raise QiskitFinanceError(f"Cannot parse Quandl '{name}' output.") from ex
 
         if stocks_notfound or stocks_forbidden:
-            err_msg = "Stocks not found: {}. ".format(stocks_notfound) if stocks_notfound else ""
+            err_msg = f"Stocks not found: {stocks_notfound}. " if stocks_notfound else ""
             if stocks_forbidden:
                 err_msg += (
                     "You do not have permission to view this data. "
-                    "Please subscribe to this database: {}".format(stocks_forbidden)
+                    f"Please subscribe to this database: {stocks_forbidden}"
                 )
             raise QiskitFinanceError(err_msg)

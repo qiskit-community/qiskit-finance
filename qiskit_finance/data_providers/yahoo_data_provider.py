@@ -107,7 +107,5 @@ class YahooDataProvider(BaseDataProvider):
 
         if stocks_notfound:
             raise QiskitFinanceError(
-                "No data found for this date range, symbols may be delisted: {}.".format(
-                    stocks_notfound
-                )
+                f"No data found for this date range, symbols may be delisted: {stocks_notfound}."
             )
