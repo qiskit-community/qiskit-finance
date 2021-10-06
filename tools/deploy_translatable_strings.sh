@@ -75,6 +75,7 @@ cp -r $SOURCE_DIR/$DOC_DIR_PO/ finance/docs
 cp $SOURCE_DIR/setup.py finance/.
 cp $SOURCE_DIR/requirements-dev.txt finance/.
 cp $SOURCE_DIR/requirements.txt finance/.
+cp $SOURCE_DIR/README.md finance/.
 cp $SOURCE_DIR/qiskit_finance/VERSION.txt finance/qiskit_finance/.
 
 # git checkout translationDocs
