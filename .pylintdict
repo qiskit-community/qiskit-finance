@@ -13,7 +13,6 @@ autosummary
 backend
 backends
 barkoutsos
-basedataprovider
 berndt
 bernoulli
 bool
@@ -30,7 +29,6 @@ covariances
 currentmodule
 cvar
 dataondemand
-dataondemandprovider
 dicts
 discretization
 discretize
@@ -41,11 +39,7 @@ eigensolver
 enum
 et
 european
-europeancalldelta
-europeancallpricing
-exchangedataprovider
 farhi
-fixedincomepricing
 formatter
 frac
 gacon
@@ -92,7 +86,6 @@ paulis
 pca
 pdf
 piecewise
-portfoliodiversification
 portfoliooptimization
 pre
 precomputed
@@ -102,11 +95,9 @@ qgan
 qgans
 qiskit
 qiskit's
-qiskitfinanceerror
 quandl
 qubit
 qubits
-randomdataprovider
 rangle
 raymond
 readme
@@ -141,9 +132,7 @@ variational
 vec
 visualisation
 wikipedia
-wikipediadataprovider
 woerner
-yahoodataprovider
 yamamoto
 yfinance
 york
