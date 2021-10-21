@@ -58,9 +58,6 @@ class GaussianConditionalIndependenceModel(QuantumCircuit):
         def f(x):  # pylint: disable=invalid-name
             return norm.pdf(x)
 
-        # call super constructor
-        super().__init__(num_qubits, name="P(X)")
-
         # create linear rotations for conditional defaults
         slopes = []
         offsets = []
@@ -85,8 +82,13 @@ class GaussianConditionalIndependenceModel(QuantumCircuit):
         )
 
         # build circuit
-        self.append(normal_distribution.to_gate(), list(range(n_normal)))
+        inner = QuantumCircuit(num_qubits, name="P(X)")
+        inner.append(normal_distribution.to_gate(), list(range(n_normal)))
         for k, (slope, offset) in enumerate(zip(slopes, offsets)):
             lry = LinearPauliRotations(n_normal, slope, offset)
             qubits = list(range(n_normal)) + [n_normal + k]
-            self.append(lry.to_gate(), qubits)
+            inner.append(lry.to_gate(), qubits)
+
+        super().__init__(num_qubits, name="P(X)")
+        self.compose(inner, inner.qubits, inplace=True)
+        # self.append(inner.to_gate(), inner.qubits)

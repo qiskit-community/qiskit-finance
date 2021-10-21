@@ -75,7 +75,7 @@ class NormalDistribution(QuantumCircuit):
     Examples:
 
         >>> circuit = NormalDistribution(3, mu=1, sigma=1, bounds=(0, 2))
-        >>> circuit.draw()
+        >>> circuit.decompose().draw()
              ┌────────────────────────────────────────────────────────────────────────────┐
         q_0: ┤0                                                                           ├
              │                                                                            │
@@ -166,11 +166,11 @@ class NormalDistribution(QuantumCircuit):
             bounds = (-1, 1) if dim == 1 else [(-1, 1)] * dim
 
         if isinstance(num_qubits, int):  # univariate case
-            super().__init__(num_qubits, name=name)
+            inner = QuantumCircuit(num_qubits, name=name)
 
             x = np.linspace(bounds[0], bounds[1], num=2 ** num_qubits)  # type: Any
         else:  # multivariate case
-            super().__init__(sum(num_qubits), name=name)
+            inner = QuantumCircuit(sum(num_qubits), name=name)
 
             # compute the evaluation points using numpy.meshgrid
             # indexing 'ij' yields the "column-based" indexing
@@ -195,16 +195,20 @@ class NormalDistribution(QuantumCircuit):
         self._probabilities = normalized_probabilities
         self._bounds = bounds
 
+        super().__init__(*inner.qregs, name=name)
+
         # use default the isometry (or initialize w/o resets) algorithm to construct the circuit
         # pylint: disable=no-member
         if upto_diag:
-            self.isometry(np.sqrt(normalized_probabilities), self.qubits, None)
+            inner.isometry(np.sqrt(normalized_probabilities), inner.qubits, None)
+            self.append(inner.to_instruction(), inner.qubits)  # Isometry is not a Gate
         else:
             from qiskit.extensions import Initialize  # pylint: disable=cyclic-import
 
             initialize = Initialize(np.sqrt(normalized_probabilities))
             circuit = initialize.gates_to_uncompute().inverse()
-            self.compose(circuit, inplace=True)
+            inner.compose(circuit, inplace=True)
+            self.append(inner.to_gate(), inner.qubits)
 
     @property
     def values(self) -> np.ndarray:

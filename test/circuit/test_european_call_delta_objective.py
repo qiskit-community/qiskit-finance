@@ -81,7 +81,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         # construct circuit factory for uncertainty model
         uncertainty_model = LogNormalDistribution(
             num_qubits, mu=mu, sigma=sigma ** 2, bounds=bounds
-        )
+        ).decompose()
 
         # set the strike price (should be within the low and the high value of the uncertainty)
         strike_price = 1.896

@@ -68,9 +68,6 @@ class FixedIncomePricingObjective(QuantumCircuit):
         # get the number of assets
         dimensions = len(num_qubits)
 
-        # initialize parent class
-        super().__init__(sum(num_qubits) + 1, name="F")
-
         # construct PCA-based cost function (1st order approximation):
         # c_t / (1 + A_t x + b_t)^{t+1} ~ c_t / (1 + b_t)^{t+1} - (t+1) c_t A_t /
         # (1 + b_t)^{t+2} x = h + np.dot(g, x)
@@ -111,9 +108,13 @@ class FixedIncomePricingObjective(QuantumCircuit):
         slope_angles = slopes * np.pi / 2 * rescaling_factor  # type: ignore
 
         # apply approximate payoff function
-        self.ry(2 * offset_angle, self.num_qubits - 1)
+        inner = QuantumCircuit(sum(num_qubits) + 1, name="F")
+        inner.ry(2 * offset_angle, inner.num_qubits - 1)
         for i, angle in enumerate(slope_angles):
-            self.cry(2 * angle, i, self.num_qubits - 1)
+            inner.cry(2 * angle, i, inner.num_qubits - 1)
+
+        super().__init__(sum(num_qubits) + 1, name="F")
+        self.append(inner.to_gate(), inner.qubits)
 
     def post_processing(self, scaled_value: float) -> float:
         """Map the scaled value back to the original domain.

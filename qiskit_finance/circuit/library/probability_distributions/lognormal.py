@@ -119,11 +119,11 @@ class LogNormalDistribution(QuantumCircuit):
             bounds = (0, 1) if dim == 1 else [(0, 1)] * dim
 
         if isinstance(num_qubits, int):  # univariate case
-            super().__init__(num_qubits, name=name)
+            inner = QuantumCircuit(num_qubits, name=name)
 
             x = np.linspace(bounds[0], bounds[1], num=2 ** num_qubits)
         else:  # multivariate case
-            super().__init__(sum(num_qubits), name=name)
+            inner = QuantumCircuit(sum(num_qubits), name=name)
 
             # compute the evaluation points using meshgrid of numpy
             # indexing 'ij' yields the "column-based" indexing
@@ -157,16 +157,20 @@ class LogNormalDistribution(QuantumCircuit):
         self._probabilities = normalized_probabilities
         self._bounds = bounds
 
+        super().__init__(*inner.qregs, name=name)
+
         # use default the isometry (or initialize w/o resets) algorithm to construct the circuit
         # pylint: disable=no-member
         if upto_diag:
-            self.isometry(np.sqrt(normalized_probabilities), self.qubits, None)
+            inner.isometry(np.sqrt(normalized_probabilities), inner.qubits, None)
+            self.append(inner.to_instruction(), inner.qubits)  # Isometry is not a Gate
         else:
             from qiskit.extensions import Initialize  # pylint: disable=cyclic-import
 
             initialize = Initialize(np.sqrt(normalized_probabilities))
             circuit = initialize.gates_to_uncompute().inverse()
-            self.compose(circuit, inplace=True)
+            inner.compose(circuit, inplace=True)
+            self.append(inner.to_gate(), inner.qubits)
 
     @property
     def values(self) -> np.ndarray:
