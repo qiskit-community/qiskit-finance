@@ -37,7 +37,7 @@ class TestUniformDistribution(QiskitTestCase):
         expected = QuantumCircuit(3)
         expected.h([0, 1, 2])
 
-        self.assertEqual(circuit, expected)
+        self.assertEqual(circuit.decompose(), expected)
 
 
 @ddt
