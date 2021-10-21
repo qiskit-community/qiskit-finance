@@ -1,0 +1,18 @@
+---
+features:
+  - |
+    Wrap all library circuits in :mod:`qiskit_finance.circuit.library` into gates such that
+    when they are drawn they appear as blocks with their given name instead of the decomposition.
+    For example
+
+    .. code-block::python
+
+        >>> from qiskit_finance.circuit.library import LogNormalDistribution
+        >>> qc = LogNormalDistribution(2)
+        >>> qc.draw()
+             ┌───────┐
+        q_0: ┤0      ├
+             │  P(X) │
+        q_1: ┤1      ├
+             └───────┘
+
