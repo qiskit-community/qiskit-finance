@@ -66,7 +66,7 @@ class SpellDictGenerator:
             os.mkdir(self._build_dir)
             sphinx_dict_file = os.path.join(self._build_dir, SpellDictGenerator._SPHINX_DICT_FILE)
             # create empty dictionary file
-            with open(sphinx_dict_file, "w"):
+            with open(sphinx_dict_file, "w", encoding="utf8"):
                 pass
             sphinx_build(
                 [
@@ -163,8 +163,8 @@ class SpellDictGenerator:
         word_set = set(w.lower() for w in self._sphinx_words)
         word_set.update(w.lower() for w in self._pylint_words)
         words = sorted(word_set)
-        with open(self._output_file, "w") as out_file:
-            out_file.writelines("%s\n" % word for word in words)
+        with open(self._output_file, "w", encoding="utf8") as out_file:
+            out_file.writelines([f"{word}\n" for word in words])
         return words
 
 
@@ -173,7 +173,7 @@ def check_path(path):
     if not path or os.path.isdir(path):
         return path
 
-    raise argparse.ArgumentTypeError("readable_dir:{} is not a valid path".format(path))
+    raise argparse.ArgumentTypeError(f"readable_dir:{path} is not a valid path")
 
 
 if __name__ == "__main__":
@@ -196,4 +196,4 @@ if __name__ == "__main__":
     OBJ.generate_pylint_spell_words()
     OBJ.merge_sort_dict_to_output()
 
-    sys.exit(os.EX_OK)
+    sys.exit(0)

@@ -92,11 +92,11 @@ class WikipediaDataProvider(BaseDataProvider):
                 stock_data = quandl.get(name, start_date=self._start, end_date=self._end)
             except quandl.AuthenticationError as ex:
                 raise QiskitFinanceError("Quandl invalid token.") from ex
-            except quandl.NotFoundError as ex:
+            except quandl.NotFoundError:
                 stocks_notfound.append(name)
                 continue
             except quandl.QuandlError as ex:
-                raise QiskitFinanceError("Quandl Error for '{}'.".format(name)) from ex
+                raise QiskitFinanceError(f"Quandl Error for '{name}'.") from ex
 
             try:
                 self._data.append(stock_data["Adj. Close"])
@@ -104,4 +104,4 @@ class WikipediaDataProvider(BaseDataProvider):
                 raise QiskitFinanceError("Cannot parse quandl output.") from ex
 
         if stocks_notfound:
-            raise QiskitFinanceError("Stocks not found: {}. ".format(stocks_notfound))
+            raise QiskitFinanceError(f"Stocks not found: {stocks_notfound}. ")

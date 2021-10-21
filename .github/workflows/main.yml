@@ -25,23 +25,34 @@ on:
     # run every day at 1AM
     - cron: '0 1 * * *'
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   Checks:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest]
         python-version: [3.7]
     steps:
+      - name: Print Concurrency Group
+        env:
+          CONCURRENCY_GROUP: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}
+        run: |
+          echo -e "\033[31;1;4mConcurrency Group\033[0m"
+          echo -e "$CONCURRENCY_GROUP\n"
+        shell: bash
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: ./.github/actions/install-libraries
-        with:
-          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/install-main-dependencies
+        with:
+          os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
       - name: Install Dependencies
@@ -51,6 +62,7 @@ jobs:
           sudo apt-get -y install python3-enchant
           sudo apt-get -y install hunspell-en-us
           pip install pyenchant
+          echo "earliest_version: 0.1.0" >> releasenotes/config.yaml
         shell: bash
       - run:  pip check
         if: ${{ !cancelled() }}
@@ -82,77 +94,65 @@ jobs:
       - run:  make doctest
         if: ${{ !cancelled() }}
         shell: bash
-  Lint:
-    runs-on: ubuntu-latest
+  Finance:
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest]
         python-version: [3.6, 3.7, 3.8, 3.9]
+        include:
+          - os: macos-latest
+            python-version: 3.8
+          - os: windows-latest
+            python-version: 3.8
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: ./.github/actions/install-libraries
-        with:
-          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/install-main-dependencies
+        with:
+          os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
       - run: make lint
-        if: ${{ !cancelled() }}
         shell: bash
       - run: make mypy
         if: ${{ !cancelled() }}
         shell: bash
-      - name: Run make lint latest version
+      - name: Run lint latest version
         run: |
           pip install -U pylint
           make lint
-        if: ${{ !cancelled() }}
         shell: bash
-  Finance:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - uses: ./.github/actions/install-libraries
-        with:
-          python-version: ${{ matrix.python-version }}
-      - uses: ./.github/actions/install-main-dependencies
-        if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
-      - uses: ./.github/actions/install-finance
       - name: Finance Unit Tests under Python ${{ matrix.python-version }}
         uses: ./.github/actions/run-tests
         with:
           event-name: ${{ github.event_name }}
           run-slow: ${{ contains(github.event.pull_request.labels.*.name, 'run_slow') }}
           python-version: ${{ matrix.python-version }}
+        if: ${{ !cancelled() }}
       - name: Deprecation Messages
         run: |
-          mkdir ./f${{ matrix.python-version }}
-          python tools/extract_deprecation.py -file out.txt -output ./f${{ matrix.python-version }}/finance.dep
+          mkdir ./ci-artifact-data
+          python tools/extract_deprecation.py -file out.txt -output ./ci-artifact-data/fin.dep
         shell: bash
       - name: Coverage combine
         run: |
           coverage3 combine
-          mv .coverage ./f${{ matrix.python-version }}/finance.dat
+          mv .coverage ./ci-artifact-data/fin.dat
         if: ${{ matrix.python-version == 3.7 }}
         shell: bash
       - uses: actions/upload-artifact@v2
         with:
-          name: finance${{ matrix.python-version }}
-          path: ./f${{ matrix.python-version }}/*
+          name: ${{ matrix.os }}-${{ matrix.python-version }}
+          path: ./ci-artifact-data/*
   Tutorials:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest]
         python-version: [3.7, 3.8]
     steps:
       - uses: actions/checkout@v2
@@ -161,10 +161,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: ./.github/actions/install-libraries
-        with:
-          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/install-main-dependencies
+        with:
+          os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
       - name: Install Dependencies
@@ -177,6 +176,7 @@ jobs:
           QISKIT_PARALLEL: False
           QISKIT_DOCS_BUILD_TUTORIALS: 'always'
         run: |
+          echo "earliest_version: 0.1.0" >> releasenotes/config.yaml
           make html SPHINXOPTS=-W
           cd docs/_build/html
           mkdir artifacts
@@ -203,6 +203,9 @@ jobs:
           rm -rf docs/tutorials/*
           cp -R /tmp/qiskit-finance-stable-$version/docs/tutorials/* docs/tutorials
           # run tutorials and zip results
+          echo "earliest_version: 0.1.0" >> releasenotes/config.yaml
+          # ignore unreleased/untagged notes
+          tools/ignore_untagged_notes.sh
           make html SPHINXOPTS=-W
           cd docs/_build/html
           mkdir artifacts
@@ -216,7 +219,7 @@ jobs:
           path: docs/_build/html/artifacts/tutorials.tar.gz
         if: ${{ matrix.python-version == 3.8 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
   Deprecation_Messages_and_Coverage:
-    needs: [Checks, Lint, Finance, Tutorials]
+    needs: [Finance]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -228,29 +231,37 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.6
+          name: ubuntu-latest-3.6
           path: /tmp/f36
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.7
+          name: ubuntu-latest-3.7
           path: /tmp/f37
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.8
+          name: ubuntu-latest-3.8
           path: /tmp/f38
       - uses: actions/download-artifact@v2
         with:
-          name: finance3.9
+          name: ubuntu-latest-3.9
           path: /tmp/f39
+      - uses: actions/download-artifact@v2
+        with:
+          name: macos-latest-3.8
+          path: /tmp/m38
+      - uses: actions/download-artifact@v2
+        with:
+          name: windows-latest-3.8
+          path: /tmp/w38
       - name: Install Dependencies
         run: pip install -U coverage coveralls diff-cover
         shell: bash
       - name: Combined Deprecation Messages
         run: |
-          sort -f -u /tmp/f36/finance.dep /tmp/f37/finance.dep /tmp/f38/finance.dep /tmp/f39/finance.dep || true
+          sort -f -u /tmp/f36/fin.dep /tmp/f37/fin.dep /tmp/f38/fin.dep /tmp/f39/fin.dep /tmp/m38/fin.dep /tmp/w38/fin.dep || true
         shell: bash
       - name: Coverage combine
-        run: coverage3 combine /tmp/f37/finance.dat
+        run: coverage3 combine /tmp/f37/fin.dat
         shell: bash
       - name: Upload to Coveralls
         env:

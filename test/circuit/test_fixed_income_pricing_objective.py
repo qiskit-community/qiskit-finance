@@ -57,7 +57,7 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
                 Aer,
             )  # pylint: disable=unused-import,import-outside-toplevel
         except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest("Aer doesn't appear to be installed. Error: '{}'".format(str(ex)))
+            self.skipTest(f"Aer doesn't appear to be installed. Error: '{str(ex)}'")
             return
 
         a_n = np.eye(2)
