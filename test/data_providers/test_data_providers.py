@@ -185,7 +185,7 @@ class TestDataProviders(QiskitFinanceTestCase):
             self.skipTest(f"Test of ExchangeDataProvider skipped {str(ex)}")
 
     @data(
-        [["AEO", "AEP"], [[7.0, 1.6], [1.6, 15.4]], [[1.0e00, 9.2e-05], [9.2e-05, 1.0e00]]],
+        [["AEO", "AEP"], [[7.0, 1.0], [1.0, 15.0]], [[1.0e00, 9.2e-05], [9.2e-05, 1.0e00]]],
         ["AEO", 7.0, [[1.0]]],
     )
     @unpack
@@ -201,7 +201,7 @@ class TestDataProviders(QiskitFinanceTestCase):
             yahoo.run()
             with self.subTest("test YahooDataProvider get_covariance_matrix"):
                 np.testing.assert_array_almost_equal(
-                    yahoo.get_covariance_matrix(), np.array(covariance), decimal=1
+                    yahoo.get_covariance_matrix(), np.array(covariance), decimal=0
                 )
             with self.subTest("test YahooDataProvider get_similarity_matrix"):
                 np.testing.assert_array_almost_equal(
