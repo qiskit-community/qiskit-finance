@@ -100,7 +100,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.7, 3.8, 3.9]
         include:
           - os: macos-latest
             python-version: 3.8
@@ -231,10 +231,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: actions/download-artifact@v2
         with:
-          name: ubuntu-latest-3.6
-          path: /tmp/f36
-      - uses: actions/download-artifact@v2
-        with:
           name: ubuntu-latest-3.7
           path: /tmp/f37
       - uses: actions/download-artifact@v2
@@ -258,7 +254,7 @@ jobs:
         shell: bash
       - name: Combined Deprecation Messages
         run: |
-          sort -f -u /tmp/f36/fin.dep /tmp/f37/fin.dep /tmp/f38/fin.dep /tmp/f39/fin.dep /tmp/m38/fin.dep /tmp/w38/fin.dep || true
+          sort -f -u /tmp/f37/fin.dep /tmp/f38/fin.dep /tmp/f39/fin.dep /tmp/m38/fin.dep /tmp/w38/fin.dep || true
         shell: bash
       - name: Coverage combine
         run: coverage3 combine /tmp/f37/fin.dat
