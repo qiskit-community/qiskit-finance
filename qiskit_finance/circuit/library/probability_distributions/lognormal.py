@@ -150,7 +150,7 @@ class LogNormalDistribution(QuantumCircuit):
             else:
                 probability = 0
             probabilities += [probability]
-        normalized_probabilities = probabilities / np.sum(probabilities)  # type: ignore
+        normalized_probabilities = probabilities / np.sum(probabilities)
 
         # store as properties
         self._values = x
@@ -180,7 +180,7 @@ class LogNormalDistribution(QuantumCircuit):
     @property
     def probabilities(self) -> np.ndarray:
         """Return the sampling probabilities for the values."""
-        return self._probabilities  # type: ignore
+        return self._probabilities
 
     @property
     def bounds(self) -> Union[Tuple[float, float], List[Tuple[float, float]]]:
