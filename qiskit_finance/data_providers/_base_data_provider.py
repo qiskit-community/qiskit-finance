@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2021.
+# (C) Copyright IBM 2019, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -50,8 +50,8 @@ class BaseDataProvider(ABC):
         self._data: Optional[List] = None
         self._n = 0  # pylint: disable=invalid-name
         self.period_return_mean: Optional[np.ndarray] = None
-        self.cov = None
-        self.period_return_cov = None
+        self.cov: Optional[np.ndarray] = None
+        self.period_return_cov: Optional[np.ndarray] = None
         self.rho: Optional[np.ndarray] = None
         self.mean: Optional[np.ndarray] = None
 
