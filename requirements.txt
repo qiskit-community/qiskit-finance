@@ -6,6 +6,6 @@ psutil>=5
 scikit-learn>=0.20.0
 fastdtw
 setuptools>=40.1.0
-pandas
+pandas<1.4.0
 quandl
 yfinance>=0.1.62
