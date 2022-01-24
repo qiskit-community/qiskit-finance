@@ -1,0 +1,4 @@
+---
+upgrade:
+  - |
+    Added support for running with Python 3.10.

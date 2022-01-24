@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2021.
+# (C) Copyright IBM 2021, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -55,6 +55,8 @@ jobs:
           os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
+        with:
+          os: ${{ matrix.os }}
       - name: Install Dependencies
         run: |
           pip install jupyter sphinx_rtd_theme qiskit-terra[visualization]
@@ -103,46 +105,85 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.7, 3.8, 3.9, '3.10']
         include:
           - os: macos-latest
             python-version: 3.8
+          - os: macos-latest
+            python-version: '3.10'
           - os: windows-latest
             python-version: 3.8
+          - os: windows-latest
+            python-version: '3.10'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: install Windows dependencies
+        run: |
+          source "$CONDA/etc/profile.d/conda.sh"
+          conda create -n scsenv python=${{ matrix.python-version }}
+          conda activate scsenv
+          conda install -y scs lapack cvxpy -c conda-forge
+        if: ${{ matrix.os == 'windows-latest' }}
+        shell: bash
       - uses: ./.github/actions/install-main-dependencies
         with:
           os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
-      - run: make lint
+        with:
+          os: ${{ matrix.os }}
+      - name: Run lint
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            source "$CONDA/etc/profile.d/conda.sh"
+            conda activate scsenv
+          fi
+          make lint
         shell: bash
-      - run: make mypy
+      - name: Run mypy
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            source "$CONDA/etc/profile.d/conda.sh"
+            conda activate scsenv
+          fi
+          make mypy
         if: ${{ !cancelled() }}
         shell: bash
       - name: Run lint latest version
         run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            source "$CONDA/etc/profile.d/conda.sh"
+            conda activate scsenv
+          fi
           pip install -U pylint
           make lint
         shell: bash
       - name: Finance Unit Tests under Python ${{ matrix.python-version }}
         uses: ./.github/actions/run-tests
         with:
+          os: ${{ matrix.os }}
           event-name: ${{ github.event_name }}
           run-slow: ${{ contains(github.event.pull_request.labels.*.name, 'run_slow') }}
           python-version: ${{ matrix.python-version }}
         if: ${{ !cancelled() }}
       - name: Deprecation Messages
         run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            source "$CONDA/etc/profile.d/conda.sh"
+            conda activate scsenv
+          fi
           mkdir ./ci-artifact-data
           python tools/extract_deprecation.py -file out.txt -output ./ci-artifact-data/fin.dep
         shell: bash
       - name: Coverage combine
         run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            source "$CONDA/etc/profile.d/conda.sh"
+            conda activate scsenv
+          fi
           coverage3 combine
           mv .coverage ./ci-artifact-data/fin.dat
         if: ${{ matrix.python-version == 3.7 }}
@@ -156,7 +197,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.7, 3.8]
+        python-version: [3.8, '3.10']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -169,6 +210,8 @@ jobs:
           os: ${{ matrix.os }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
+        with:
+          os: ${{ matrix.os }}
       - name: Install Dependencies
         run: |
           pip install jupyter sphinx_rtd_theme qiskit-terra[visualization]
@@ -246,18 +289,30 @@ jobs:
           path: /tmp/f39
       - uses: actions/download-artifact@v2
         with:
+          name: ubuntu-latest-3.10
+          path: /tmp/f310
+      - uses: actions/download-artifact@v2
+        with:
           name: macos-latest-3.8
           path: /tmp/m38
       - uses: actions/download-artifact@v2
         with:
+          name: macos-latest-3.10
+          path: /tmp/m310
+      - uses: actions/download-artifact@v2
+        with:
           name: windows-latest-3.8
           path: /tmp/w38
+      - uses: actions/download-artifact@v2
+        with:
+          name: windows-latest-3.10
+          path: /tmp/w310
       - name: Install Dependencies
         run: pip install -U coverage coveralls diff-cover
         shell: bash
       - name: Combined Deprecation Messages
         run: |
-          sort -f -u /tmp/f37/fin.dep /tmp/f38/fin.dep /tmp/f39/fin.dep /tmp/m38/fin.dep /tmp/w38/fin.dep || true
+          sort -f -u /tmp/f37/fin.dep /tmp/f38/fin.dep /tmp/f39/fin.dep /tmp/f310/fin.dep /tmp/m38/fin.dep /tmp/m310/fin.dep /tmp/w38/fin.dep /tmp/w310/fin.dep || true
         shell: bash
       - name: Coverage combine
         run: coverage3 combine /tmp/f37/fin.dat
