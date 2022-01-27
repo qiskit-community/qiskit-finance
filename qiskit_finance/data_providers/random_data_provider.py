@@ -42,12 +42,12 @@ class RandomDataProvider(BaseDataProvider):
         seed: Optional[int] = None,
     ) -> None:
         """
-        Initializer
         Args:
             tickers: tickers
             start: first data point
             end: last data point precedes this date
-            seed: shall a seed be used?
+            seed: optional random seed
+
         Raises:
             MissingOptionalLibraryError: Pandas not installed
         """

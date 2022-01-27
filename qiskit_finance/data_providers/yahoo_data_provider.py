@@ -45,11 +45,11 @@ class YahooDataProvider(BaseDataProvider):
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
-        Initializer
         Args:
             tickers: tickers
             start: start time
             end: end time
+
         Raises:
             MissingOptionalLibraryError: YFinance not installed
         """

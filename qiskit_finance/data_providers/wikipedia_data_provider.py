@@ -46,13 +46,13 @@ class WikipediaDataProvider(BaseDataProvider):
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
-        Initializer
         Args:
             token: quandl access token, which is not needed, strictly speaking
             tickers: tickers
             start: start time
             end: end time
-         Raises:
+
+        Raises:
             MissingOptionalLibraryError: Quandl not installed
         """
         super().__init__()

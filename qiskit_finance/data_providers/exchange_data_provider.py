@@ -47,13 +47,13 @@ class ExchangeDataProvider(BaseDataProvider):
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
-        Initializer
         Args:
-            token: quandl access token
+            token: Quandl access token
             tickers: tickers
             stockmarket: LONDON, EURONEXT, or SINGAPORE
             start: first data point
             end: last data point precedes this date
+
         Raises:
             MissingOptionalLibraryError: Quandl not installed
             QiskitFinanceError: provider doesn't support given stock market
