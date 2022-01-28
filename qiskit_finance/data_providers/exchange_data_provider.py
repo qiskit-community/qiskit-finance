@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2021.
+# (C) Copyright IBM 2019, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -47,13 +47,13 @@ class ExchangeDataProvider(BaseDataProvider):
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
-        Initializer
         Args:
-            token: quandl access token
+            token: Quandl access token
             tickers: tickers
             stockmarket: LONDON, EURONEXT, or SINGAPORE
             start: first data point
             end: last data point precedes this date
+
         Raises:
             MissingOptionalLibraryError: Quandl not installed
             QiskitFinanceError: provider doesn't support given stock market

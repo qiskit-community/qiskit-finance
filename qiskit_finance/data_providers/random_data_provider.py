@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2021.
+# (C) Copyright IBM 2019, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -42,12 +42,12 @@ class RandomDataProvider(BaseDataProvider):
         seed: Optional[int] = None,
     ) -> None:
         """
-        Initializer
         Args:
             tickers: tickers
             start: first data point
             end: last data point precedes this date
-            seed: shall a seed be used?
+            seed: optional random seed
+
         Raises:
             MissingOptionalLibraryError: Pandas not installed
         """

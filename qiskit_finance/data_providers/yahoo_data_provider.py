@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2021.
+# (C) Copyright IBM 2020, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -45,11 +45,11 @@ class YahooDataProvider(BaseDataProvider):
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
-        Initializer
         Args:
             tickers: tickers
             start: start time
             end: end time
+
         Raises:
             MissingOptionalLibraryError: YFinance not installed
         """
