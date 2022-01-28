@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2017, 2021.
+# (C) Copyright IBM 2017, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -34,6 +34,7 @@ class UniformDistribution(QuantumCircuit):
         \mathcal{P}_X |0\rangle^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n - 1} |x\rangle
 
     Examples:
+        >>> from qiskit_finance.circuit.library.probability_distributions import UniformDistribution
         >>> circuit = UniformDistribution(3)
         >>> circuit.decompose().draw()
              ┌───┐

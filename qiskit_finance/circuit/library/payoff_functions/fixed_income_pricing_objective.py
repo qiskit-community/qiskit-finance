@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2018, 2021.
+# (C) Copyright IBM 2018, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -21,14 +21,18 @@ class FixedIncomePricingObjective(QuantumCircuit):
     r"""The Fixed Income Expected Value amplitude function.
     This circuit can be used to evaluate the expected value of the total value :math:`V` of the
     assets
+
     .. math::
         V = \sum_{t=1}^T \frac{c_t}{(1+r_t)^t}.
+
     Here :math:`c_t` are the cash flows of the assets and :math:`r_t` are the interest rates.
     The interest rates are subject to uncertainty and can be described by a PCA-decomposition
-    into the ``pca_matrix`` :math:`A` and ``initial_interests` :math:`\vec{b}`. For a sample
+    into the ``pca_matrix`` :math:`A` and ``initial_interests`` :math:`\vec{b}`. For a sample
     :math:`\vec{x}` of a random variable, the interest rates are modeled as:
+
     .. math::
         \vec{r} = A \vec{x} + \vec{b}.
+
     The number of qubits used to represent each asset is specified by ``num_qubits`` and the
     bounds of the random variable by ``bounds``.
     The approximation of the objective function follows [1].
