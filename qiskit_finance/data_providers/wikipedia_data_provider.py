@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2021.
+# (C) Copyright IBM 2019, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -46,13 +46,13 @@ class WikipediaDataProvider(BaseDataProvider):
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
-        Initializer
         Args:
             token: quandl access token, which is not needed, strictly speaking
             tickers: tickers
             start: start time
             end: end time
-         Raises:
+
+        Raises:
             MissingOptionalLibraryError: Quandl not installed
         """
         super().__init__()
