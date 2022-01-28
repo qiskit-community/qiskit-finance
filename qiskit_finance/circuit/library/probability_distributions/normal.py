@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2017, 2021.
+# (C) Copyright IBM 2017, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -74,15 +74,23 @@ class NormalDistribution(QuantumCircuit):
 
     Examples:
 
+        >>> from qiskit_finance.circuit.library.probability_distributions import NormalDistribution
         >>> circuit = NormalDistribution(3, mu=1, sigma=1, bounds=(0, 2))
         >>> circuit.decompose().draw()
-             ┌────────────────────────────────────────────────────────────────────────────┐
-        q_0: ┤0                                                                           ├
-             │                                                                            │
-        q_1: ┤1 initialize(0.30391,0.3435,0.37271,0.38824,0.38824,0.37271,0.3435,0.30391) ├
-             │                                                                            │
-        q_2: ┤2                                                                           ├
-             └────────────────────────────────────────────────────────────────────────────┘
+                                                                »
+        q_0: ───────────────────────────────────────────────────»
+                                      ┌────────────────────────┐»
+        q_1: ─────────────────────────┤0                       ├»
+             ┌───────────────────────┐│  multiplex2_reverse_dg │»
+        q_2: ┤ multiplex1_reverse_dg ├┤1                       ├»
+             └───────────────────────┘└────────────────────────┘»
+        «     ┌────────────────────────┐
+        «q_0: ┤0                       ├
+        «     │                        │
+        «q_1: ┤1 multiplex3_reverse_dg ├
+        «     │                        │
+        «q_2: ┤2                       ├
+        «     └────────────────────────┘
 
         >>> mu = [1, 0.9]
         >>> sigma = [[1, -0.2], [-0.2, 1]]
@@ -90,16 +98,18 @@ class NormalDistribution(QuantumCircuit):
         >>> circuit.num_qubits
         5
 
+        >>> import os
         >>> from qiskit import QuantumCircuit
         >>> mu = [1, 0.9]
         >>> sigma = [[1, -0.2], [-0.2, 1]]
         >>> bounds = [(0, 1), (-1, 1)]
         >>> p_x = NormalDistribution([2, 3], mu, sigma, bounds)
         >>> circuit = QuantumCircuit(6)
-        >>> circuit.append(p_x, list(range(5)))
+        >>> _ = circuit.append(p_x, list(range(5)))
         >>> for i in range(5):
-        ...    circuit.cry(2 ** i, i, 5)
-        >>> circuit.draw()
+        ...    _ = circuit.cry(2 ** i, i, 5)
+        >>> # strip trailing white spaces to match the expected output
+        >>> print(os.linesep.join([s.rstrip() for s in circuit.draw().lines()]))
              ┌───────┐
         q_0: ┤0      ├────■─────────────────────────────────────────
              │       │    │
@@ -111,7 +121,7 @@ class NormalDistribution(QuantumCircuit):
              │       │    │        │        │        │
         q_4: ┤4      ├────┼────────┼────────┼────────┼────────■─────
              └───────┘┌───┴───┐┌───┴───┐┌───┴───┐┌───┴───┐┌───┴────┐
-        q_5: ─────────┤ RY(1) ├┤ RY(2) ├┤ RY(4) ├┤ RY(8) ├┤ RY(16) ├
+        q_5: ─────────┤ Ry(1) ├┤ Ry(2) ├┤ Ry(4) ├┤ Ry(8) ├┤ Ry(16) ├
                       └───────┘└───────┘└───────┘└───────┘└────────┘
 
     References:
