@@ -43,6 +43,7 @@ farhi
 formatter
 frac
 gacon
+gaussian
 getter
 gg
 goldstone
@@ -60,6 +61,7 @@ ising
 isometry
 kwargs
 latin
+linesep
 london
 lucchi
 macbook
@@ -80,6 +82,7 @@ num
 numpy
 onodera
 ok
+os
 param
 parametrization
 paulis
@@ -105,6 +108,7 @@ rebalancing
 representable
 rescaling
 rescalings
+rstrip
 rutkowski
 selectable
 scholes
