@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2017, 2021.
+# (C) Copyright IBM 2017, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -61,6 +61,7 @@ class LogNormalDistribution(QuantumCircuit):
 
     Examples:
         This class can be used for both univariate and multivariate distributions.
+        >>> from qiskit_finance.circuit.library.probability_distributions import LogNormalDistribution
         >>> mu = [1, 0.9, 0.2]
         >>> sigma = [[1, -0.2, 0.2], [-0.2, 1, 0.4], [0.2, 0.4, 1]]
         >>> circuit = LogNormalDistribution([2, 2, 2], mu, sigma)
