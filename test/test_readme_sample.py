@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2021.
+# (C) Copyright IBM 2020, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -18,6 +18,10 @@ the issue then ensure changes are made to readme too.
 
 import unittest
 
+import contextlib
+import io
+from pathlib import Path
+import re
 from test import QiskitFinanceTestCase
 
 
@@ -26,61 +30,65 @@ class TestReadmeSample(QiskitFinanceTestCase):
 
     def test_readme_sample(self):
         """readme sample test"""
-        # pylint: disable=import-outside-toplevel,redefined-builtin
+        # pylint: disable=exec-used
 
-        def print(*args):
-            """overloads print to log values"""
-            if args:
-                self.log.debug(args[0], *args[1:])
+        readme_name = "README.md"
+        readme_path = Path(__file__).parent.parent.joinpath(readme_name)
+        if not readme_path.exists() or not readme_path.is_file():
+            self.fail(msg=f"{readme_name} not found at {readme_path}")
+            return
 
-        # --- Exact copy of sample code ----------------------------------------
+        # gets the first matched code sample
+        # assumes one code sample to test per readme
+        readme_sample = None
+        with open(readme_path, encoding="UTF-8") as readme_file:
+            match_sample = re.search(
+                "```python.*```",
+                readme_file.read(),
+                flags=re.S,
+            )
+            if match_sample:
+                # gets the matched string stripping the markdown code block
+                readme_sample = match_sample.group(0)[9:-3]
 
-        import numpy as np
-        from qiskit import BasicAer
-        from qiskit.algorithms import AmplitudeEstimation
-        from qiskit_finance.circuit.library import NormalDistribution
-        from qiskit_finance.applications import FixedIncomePricing
+        if readme_sample is None:
+            self.skipTest(f"No sample found inside {readme_name}.")
+            return
 
-        # Create a suitable multivariate distribution
-        num_qubits = [2, 2]
-        bounds = [(0, 0.12), (0, 0.24)]
-        mvnd = NormalDistribution(
-            num_qubits, mu=[0.12, 0.24], sigma=0.01 * np.eye(2), bounds=bounds
-        )
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            try:
+                exec(readme_sample)
+            except Exception as ex:  # pylint: disable=broad-except
+                self.fail(str(ex))
+                return
 
-        # Create fixed income component
-        fixed_income = FixedIncomePricing(
-            num_qubits,
-            np.eye(2),
-            np.zeros(2),
-            cash_flow=[1.0, 2.0],
-            rescaling_factor=0.125,
-            bounds=bounds,
-            uncertainty_model=mvnd,
-        )
+        estimation = None
+        probability = None
+        str_ref1 = "Estimated value:"
+        str_ref2 = "Probability:"
+        texts = out.getvalue().split("\n")
+        for text in texts:
+            idx = text.find(str_ref1)
+            if idx >= 0:
+                estimation = float(text[idx + len(str_ref1) :])
+                continue
+            idx = text.find(str_ref2)
+            if idx >= 0:
+                probability = float(text[idx + len(str_ref2) :])
+            if estimation is not None and probability is not None:
+                break
 
-        # the FixedIncomeExpectedValue provides us with the necessary rescalings
-
-        # create the A operator for amplitude estimation
-        problem = fixed_income.to_estimation_problem()
-
-        # Set number of evaluation qubits (samples)
-        num_eval_qubits = 5
-
-        # Construct and run amplitude estimation
-        q_i = BasicAer.get_backend("statevector_simulator")
-        algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits, quantum_instance=q_i)
-        result = algo.estimate(problem)
-
-        print(f"Estimated value:\t{fixed_income.interpret(result):.4f}")
-        print(f"Probability:    \t{result.max_probability:.4f}")
-
-        # ----------------------------------------------------------------------
+        if estimation is None:
+            self.fail(f"Failed to find estimation inside {readme_name}.")
+            return
+        if probability is None:
+            self.fail(f"Failed to find max.probability inside {readme_name}.")
+            return
 
         with self.subTest("test estimation"):
-            self.assertAlmostEqual(result.estimation_processed, 2.46, places=4)
+            self.assertAlmostEqual(estimation, 2.46, places=4)
         with self.subTest("test max.probability"):
-            self.assertAlmostEqual(result.max_probability, 0.8487, places=4)
+            self.assertAlmostEqual(probability, 0.8487, places=4)
 
 
 if __name__ == "__main__":
