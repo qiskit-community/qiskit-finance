@@ -34,39 +34,39 @@ evaluate a fixed income asset with uncertain interest rates.
 ```python
 import numpy as np
 from qiskit import BasicAer
-from qiskit.algorithms import AmplitudeEstimation, EstimationProblem
+from qiskit.algorithms import AmplitudeEstimation
 from qiskit_finance.circuit.library import NormalDistribution
-from qiskit_finance.applications import FixedIncomeExpectedValue
+from qiskit_finance.applications import FixedIncomePricing
 
 # Create a suitable multivariate distribution
 num_qubits = [2, 2]
 bounds = [(0, 0.12), (0, 0.24)]
-mvnd = NormalDistribution(num_qubits,
-                            mu=[0.12, 0.24], sigma=0.01 * np.eye(2),
-                            bounds=bounds)
+mvnd = NormalDistribution(
+    num_qubits, mu=[0.12, 0.24], sigma=0.01 * np.eye(2), bounds=bounds
+)
 
 # Create fixed income component
-fixed_income = FixedIncomeExpectedValue(num_qubits, np.eye(2), np.zeros(2),
-                                        cash_flow=[1.0, 2.0], rescaling_factor=0.125,
-                                        bounds=bounds)
+fixed_income = FixedIncomePricing(
+    num_qubits,
+    np.eye(2),
+    np.zeros(2),
+    cash_flow=[1.0, 2.0],
+    rescaling_factor=0.125,
+    bounds=bounds,
+    uncertainty_model=mvnd,
+)
 
 # the FixedIncomeExpectedValue provides us with the necessary rescalings
 
-# create the A operator for amplitude estimation by prepending the
-# normal distribution to the function mapping
-state_preparation = fixed_income.compose(mvnd, front=True)
-
-problem = EstimationProblem(state_preparation=state_preparation,
-                            objective_qubits=[4],
-                            post_processing=fixed_income.post_processing)
+# create the A operator for amplitude estimation
+problem = fixed_income.to_estimation_problem()
 
 # Set number of evaluation qubits (samples)
 num_eval_qubits = 5
 
 # Construct and run amplitude estimation
-q_i = BasicAer.get_backend('statevector_simulator')
-algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits,
-                            quantum_instance=q_i)
+q_i = BasicAer.get_backend("statevector_simulator")
+algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits, quantum_instance=q_i)
 result = algo.estimate(problem)
 
 print(f"Estimated value:\t{fixed_income.interpret(result):.4f}")
