@@ -25,7 +25,8 @@ from sphinx.util import logging
 logger = logging.getLogger(__name__)
 
 translations_list = [
-    ("en", "English"),
+    ('en', 'English'),
+    ('bn_BN', 'Bengali'),
 ]
 
 default_language = "en"
