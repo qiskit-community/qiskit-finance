@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2021.
+# (C) Copyright IBM 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -25,8 +25,8 @@ from sphinx.util import logging
 logger = logging.getLogger(__name__)
 
 translations_list = [
-    ('en', 'English'),
-    ('bn_BN', 'Bengali'),
+    ("en", "English"),
+    ("bn_BN", "Bengali"),
 ]
 
 default_language = "en"
