@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2021.
+# (C) Copyright IBM 2020, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -40,7 +40,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         ecd = EuropeanCallDelta(num_qubits, strike_price, bounds, uncertain_model)
         est_problem = ecd.to_estimation_problem()
         # make a state_preparation circuit manually
-        x = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (2 ** num_qubits - 1)
+        x = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (2**num_qubits - 1)
         comparator = IntegerComparator(num_qubits, x)
         expected_circ = comparator.compose(uncertain_model, front=True)
         self.assertEqual(est_problem.objective_qubits, [num_qubits])

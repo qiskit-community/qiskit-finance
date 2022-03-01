@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2018, 2021.
+# (C) Copyright IBM 2018, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -34,7 +34,7 @@ class EuropeanCallDeltaObjective(QuantumCircuit):
             bounds: The tuple of the bounds, (min, max), of the discretized random variable.
         """
         # map strike price to {0, ..., 2^n-1}
-        num_values = 2 ** num_state_qubits
+        num_values = 2**num_state_qubits
         strike_price = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (num_values - 1)
         strike_price = int(np.ceil(strike_price))
 

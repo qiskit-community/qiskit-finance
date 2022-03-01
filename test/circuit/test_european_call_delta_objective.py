@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2021.
+# (C) Copyright IBM 2020, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -42,7 +42,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         )
 
         # map strike_price to a basis state
-        x = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (2 ** num_qubits - 1)
+        x = (strike_price - bounds[0]) / (bounds[1] - bounds[0]) * (2**num_qubits - 1)
         comparator = IntegerComparator(num_qubits, x)
 
         self.assertTrue(Operator(ecd).equiv(comparator))
@@ -66,10 +66,10 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         t_m = 40 / 365  # 40 days to maturity
 
         # resulting parameters for log-normal distribution
-        mu = (r - 0.5 * vol ** 2) * t_m + np.log(s_p)
+        mu = (r - 0.5 * vol**2) * t_m + np.log(s_p)
         sigma = vol * np.sqrt(t_m)
-        mean = np.exp(mu + sigma ** 2 / 2)
-        variance = (np.exp(sigma ** 2) - 1) * np.exp(2 * mu + sigma ** 2)
+        mean = np.exp(mu + sigma**2 / 2)
+        variance = (np.exp(sigma**2) - 1) * np.exp(2 * mu + sigma**2)
         stddev = np.sqrt(variance)
 
         # lowest and highest value considered for the spot price;
@@ -80,7 +80,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
 
         # construct circuit factory for uncertainty model
         uncertainty_model = LogNormalDistribution(
-            num_qubits, mu=mu, sigma=sigma ** 2, bounds=bounds
+            num_qubits, mu=mu, sigma=sigma**2, bounds=bounds
         ).decompose()
 
         # set the strike price (should be within the low and the high value of the uncertainty)
