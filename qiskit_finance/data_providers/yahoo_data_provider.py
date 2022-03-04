@@ -15,17 +15,10 @@
 from typing import Optional, Union, List
 import datetime
 import logging
+import yfinance as yf
 
-from qiskit.exceptions import MissingOptionalLibraryError
 from ._base_data_provider import BaseDataProvider
 from ..exceptions import QiskitFinanceError
-
-try:
-    import yfinance as yf
-
-    _HAS_YFINANCE = True
-except ImportError:
-    _HAS_YFINANCE = False
 
 logger = logging.getLogger(__name__)
 
@@ -49,17 +42,8 @@ class YahooDataProvider(BaseDataProvider):
             tickers: tickers
             start: start time
             end: end time
-
-        Raises:
-            MissingOptionalLibraryError: YFinance not installed
         """
         super().__init__()
-        if not _HAS_YFINANCE:
-            raise MissingOptionalLibraryError(
-                libname="YFinance",
-                name="YahooDataProvider",
-                pip_install="pip install yfinance",
-            )
         self._tickers = []
         tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):

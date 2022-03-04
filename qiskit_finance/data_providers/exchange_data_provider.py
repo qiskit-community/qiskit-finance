@@ -14,20 +14,10 @@
 
 from typing import Union, List
 import datetime
-import logging
+import quandl
 
-from qiskit.exceptions import MissingOptionalLibraryError
 from ._base_data_provider import BaseDataProvider, StockMarket
 from ..exceptions import QiskitFinanceError
-
-try:
-    import quandl
-
-    _HAS_QUANDL = True
-except ImportError:
-    _HAS_QUANDL = False
-
-logger = logging.getLogger(__name__)
 
 
 class ExchangeDataProvider(BaseDataProvider):
@@ -55,16 +45,9 @@ class ExchangeDataProvider(BaseDataProvider):
             end: last data point precedes this date
 
         Raises:
-            MissingOptionalLibraryError: Quandl not installed
             QiskitFinanceError: provider doesn't support given stock market
         """
         super().__init__()
-        if not _HAS_QUANDL:
-            raise MissingOptionalLibraryError(
-                libname="Quandl",
-                name="ExchangeDataProvider",
-                pip_install="pip install quandl",
-            )
         self._tickers = []  # type: Union[str, List[str]]
         if isinstance(tickers, list):
             self._tickers = tickers

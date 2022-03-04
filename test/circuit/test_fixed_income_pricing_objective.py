@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2021.
+# (C) Copyright IBM 2020, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -18,7 +18,7 @@ from test import QiskitFinanceTestCase
 import numpy as np
 
 from qiskit import QuantumCircuit
-from qiskit.utils import QuantumInstance
+from qiskit.utils import QuantumInstance, optionals
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.quantum_info import Operator
 from qiskit_finance.circuit.library import NormalDistribution
@@ -50,15 +50,10 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
 
         self.assertTrue(Operator(circuit).equiv(expected))
 
+    @unittest.skipUnless(optionals.HAS_AER, "qiskit-aer is required to run this test")
     def test_application(self):
         """Test an end-to-end application."""
-        try:
-            from qiskit import (
-                Aer,
-            )  # pylint: disable=unused-import,import-outside-toplevel
-        except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest(f"Aer doesn't appear to be installed. Error: '{str(ex)}'")
-            return
+        from qiskit import Aer
 
         a_n = np.eye(2)
         b = np.zeros(2)

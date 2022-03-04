@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2021.
+# (C) Copyright IBM 2019, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -15,7 +15,7 @@
 import unittest
 import os
 import datetime
-from test import QiskitFinanceTestCase, requires_extra_library
+from test import QiskitFinanceTestCase
 from ddt import ddt, data, unpack
 import numpy as np
 from qiskit_finance import QiskitFinanceError
@@ -38,7 +38,6 @@ class TestDataProviders(QiskitFinanceTestCase):
         self._quandl_token = os.getenv("QUANDL_TOKEN") if os.getenv("QUANDL_TOKEN") else ""
         self._on_demand_token = os.getenv("ON_DEMAND_TOKEN") if os.getenv("ON_DEMAND_TOKEN") else ""
 
-    @requires_extra_library
     def test_random_wrong_use(self):
         """Random wrong use test"""
         rnd = RandomDataProvider(seed=1)
@@ -61,7 +60,6 @@ class TestDataProviders(QiskitFinanceTestCase):
         with self.subTest("test WikipediaDataProvider get_similarity_matrix"):
             self.assertRaises(QiskitFinanceError, wiki.get_similarity_matrix)
 
-    @requires_extra_library
     def test_yahoo_wrong_use(self):
         """Yahoo! wrong use test"""
         yahoo = YahooDataProvider(
@@ -75,7 +73,6 @@ class TestDataProviders(QiskitFinanceTestCase):
         with self.subTest("test YahooDataProvider get_similarity_matrix"):
             self.assertRaises(QiskitFinanceError, yahoo.get_similarity_matrix)
 
-    @requires_extra_library
     def test_random(self):
         """random test"""
         similarity = np.array([[1.00000000e00, 6.2284804e-04], [6.2284804e-04, 1.00000000e00]])
@@ -87,7 +84,6 @@ class TestDataProviders(QiskitFinanceTestCase):
         with self.subTest("test RandomDataProvider get_similarity_matrix"):
             np.testing.assert_array_almost_equal(rnd.get_similarity_matrix(), similarity, decimal=3)
 
-    @requires_extra_library
     def test_random_divide_0(self):
         """Random divide by 0 test"""
         # This will create data with some 0 values, it should not throw
@@ -109,7 +105,6 @@ class TestDataProviders(QiskitFinanceTestCase):
         with self.subTest("test get_period_return_covariance_matrix is numpy array"):
             self.assertIsInstance(sigma_value, np.ndarray)
 
-    @requires_extra_library
     def test_wikipedia(self):
         """wikipedia test"""
         try:
@@ -157,7 +152,6 @@ class TestDataProviders(QiskitFinanceTestCase):
         except QiskitFinanceError as ex:
             self.skipTest(f"Test of DataOnDemandProvider skipped {str(ex)}")
 
-    @requires_extra_library
     def test_exchangedata(self):
         """exchange data test"""
         try:
@@ -189,7 +183,6 @@ class TestDataProviders(QiskitFinanceTestCase):
         ["AEO", 7.0, [[1.0]]],
     )
     @unpack
-    @requires_extra_library
     def test_yahoo(self, tickers, covariance, similarity):
         """Yahoo data test"""
         yahoo = YahooDataProvider(
