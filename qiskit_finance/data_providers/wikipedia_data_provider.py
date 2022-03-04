@@ -13,15 +13,23 @@
 """ Wikipedia data provider. """
 
 from typing import Optional, Union, List
+<<<<<<< HEAD
 import logging
 import datetime
 import nasdaqdatalink
+=======
+import datetime
+import quandl
+>>>>>>> 63822de (Adopt lazy imports from Terra (#152))
 
 from ._base_data_provider import BaseDataProvider
 from ..exceptions import QiskitFinanceError
 
+<<<<<<< HEAD
 logger = logging.getLogger(__name__)
 
+=======
+>>>>>>> 63822de (Adopt lazy imports from Terra (#152))
 
 class WikipediaDataProvider(BaseDataProvider):
     """Wikipedia data provider.

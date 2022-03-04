@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2021.
+# (C) Copyright IBM 2020, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -17,7 +17,7 @@ from test import QiskitFinanceTestCase
 
 import numpy as np
 
-from qiskit.utils import algorithm_globals, QuantumInstance
+from qiskit.utils import algorithm_globals, QuantumInstance, optionals
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import LinearAmplitudeFunction, TwoLocal
 from qiskit.quantum_info import Operator
@@ -60,15 +60,10 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
 
         self.assertTrue(Operator(ecev).equiv(linear_function))
 
+    @unittest.skipUnless(optionals.HAS_AER, "qiskit-aer is required to run this test")
     def test_application(self):
         """Test an end-to-end application."""
-        try:
-            from qiskit import (
-                Aer,
-            )  # pylint: disable=unused-import,import-outside-toplevel
-        except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest(f"Aer doesn't appear to be installed. Error: '{str(ex)}'")
-            return
+        from qiskit import Aer
 
         bounds = np.array([0.0, 7.0])
         num_qubits = 3

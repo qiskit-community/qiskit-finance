@@ -13,15 +13,23 @@
 """ Exchange data provider. """
 
 from typing import Union, List
+<<<<<<< HEAD
 import logging
 import datetime
 import nasdaqdatalink
+=======
+import datetime
+import quandl
+>>>>>>> 63822de (Adopt lazy imports from Terra (#152))
 
 from ._base_data_provider import BaseDataProvider, StockMarket
 from ..exceptions import QiskitFinanceError
 
+<<<<<<< HEAD
 logger = logging.getLogger(__name__)
 
+=======
+>>>>>>> 63822de (Adopt lazy imports from Terra (#152))
 
 class ExchangeDataProvider(BaseDataProvider):
     """Exchange data provider.
