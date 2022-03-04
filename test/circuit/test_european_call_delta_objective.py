@@ -19,7 +19,7 @@ import numpy as np
 
 from qiskit.circuit.library import IntegerComparator
 from qiskit.quantum_info import Operator
-from qiskit.utils import QuantumInstance
+from qiskit.utils import QuantumInstance, optionals
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit_finance.circuit.library import LogNormalDistribution
 
@@ -47,15 +47,10 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
 
         self.assertTrue(Operator(ecd).equiv(comparator))
 
+    @unittest.skipUnless(optionals.HAS_AER, "qiskit-aer is required to run this test")
     def test_application(self):
         """Test an end-to-end application."""
-        try:
-            from qiskit import (
-                Aer,
-            )  # pylint: disable=unused-import,import-outside-toplevel
-        except ImportError as ex:  # pylint: disable=broad-except
-            self.skipTest(f"Aer doesn't appear to be installed. Error: '{str(ex)}'")
-            return
+        from qiskit import Aer
 
         num_qubits = 3
 
