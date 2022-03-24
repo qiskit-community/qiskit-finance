@@ -61,6 +61,7 @@ class LogNormalDistribution(QuantumCircuit):
 
     Examples:
         This class can be used for both univariate and multivariate distributions.
+
         >>> from qiskit_finance.circuit.library.probability_distributions import LogNormalDistribution
         >>> mu = [1, 0.9, 0.2]
         >>> sigma = [[1, -0.2, 0.2], [-0.2, 1, 0.4], [0.2, 0.4, 1]]

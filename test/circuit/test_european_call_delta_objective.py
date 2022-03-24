@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2021.
+# (C) Copyright IBM 2020, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -78,7 +78,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         high = mean + 3 * stddev
         bounds = (low, high)
 
-        # construct circuit factory for uncertainty model
+        # construct circuit for uncertainty model
         uncertainty_model = LogNormalDistribution(
             num_qubits, mu=mu, sigma=sigma ** 2, bounds=bounds
         ).decompose()
