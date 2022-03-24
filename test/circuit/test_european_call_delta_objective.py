@@ -73,7 +73,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         high = mean + 3 * stddev
         bounds = (low, high)
 
-        # construct circuit factory for uncertainty model
+        # construct circuit for uncertainty model
         uncertainty_model = LogNormalDistribution(
             num_qubits, mu=mu, sigma=sigma**2, bounds=bounds
         ).decompose()
