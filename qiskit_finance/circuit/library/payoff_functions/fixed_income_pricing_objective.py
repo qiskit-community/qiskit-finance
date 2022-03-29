@@ -91,7 +91,7 @@ class FixedIncomePricingObjective(QuantumCircuit):
         for k in range(dimensions):
             n_k = num_qubits[k]
             for i in range(n_k):
-                slope = 2 ** i / (2 ** n_k - 1) * (bounds[k][1] - bounds[k][0]) * g[k]
+                slope = 2**i / (2**n_k - 1) * (bounds[k][1] - bounds[k][0]) * g[k]
                 slopes += [slope]
 
         # evaluate min and max values
