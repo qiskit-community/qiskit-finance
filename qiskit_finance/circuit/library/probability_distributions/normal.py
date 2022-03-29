@@ -178,7 +178,7 @@ class NormalDistribution(QuantumCircuit):
         if isinstance(num_qubits, int):  # univariate case
             inner = QuantumCircuit(num_qubits, name=name)
 
-            x = np.linspace(bounds[0], bounds[1], num=2 ** num_qubits)  # type: Any
+            x = np.linspace(bounds[0], bounds[1], num=2**num_qubits)  # type: Any
         else:  # multivariate case
             inner = QuantumCircuit(sum(num_qubits), name=name)
 
