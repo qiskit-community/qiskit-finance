@@ -53,6 +53,7 @@ jobs:
       - uses: ./.github/actions/install-main-dependencies
         with:
           os: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
         with:
@@ -133,6 +134,7 @@ jobs:
       - uses: ./.github/actions/install-main-dependencies
         with:
           os: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
         with:
@@ -210,6 +212,7 @@ jobs:
       - uses: ./.github/actions/install-main-dependencies
         with:
           os: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
         with:
