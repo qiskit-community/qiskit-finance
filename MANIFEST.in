@@ -1,5 +1,6 @@
 include LICENSE.txt
 include requirements.txt
+include qiskit_finance/py.typed
 recursive-include qiskit_finance *.txt
 graft test
 prune docs
