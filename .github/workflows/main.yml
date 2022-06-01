@@ -170,7 +170,7 @@ jobs:
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
-          pip install -U pylint
+          pip install -U -r requirements-dev.txt
           make lint
         shell: bash
       - name: Finance Unit Tests under Python ${{ matrix.python-version }}
