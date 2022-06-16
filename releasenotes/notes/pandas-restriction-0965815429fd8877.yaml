@@ -5,7 +5,7 @@ upgrade:
    to 0.1.70. 
    The bug that broke yfinance upon upgrading to pandas>=1.4.0 has been fixed 
    in the release version 0.1.70.
-   As such, it should be safe to drop the restriction and permit newer versions of pandas.
    Related links:
+   
    * https://github.com/ranaroussi/yfinance/releases/tag/0.1.70
    * https://github.com/ranaroussi/yfinance/issues/937
