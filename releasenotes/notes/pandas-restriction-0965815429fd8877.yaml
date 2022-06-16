@@ -1,0 +1,11 @@
+---
+upgrade:
+  - |
+   Drop pandas minimum version requirement restriction and increase yfinance minimum version
+   to 0.1.70. 
+   The bug that broke yfinance upon upgrading to pandas>=1.4.0 has been fixed 
+   in the release version 0.1.70.
+   Related links:
+   
+   * https://github.com/ranaroussi/yfinance/releases/tag/0.1.70
+   * https://github.com/ranaroussi/yfinance/issues/937
