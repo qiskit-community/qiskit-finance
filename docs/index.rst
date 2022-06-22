@@ -6,7 +6,7 @@ Overview
 ==============
 
 **Qiskit Finance** is an open-source framework that contains uncertainty components for stock/securities problems,
-Ising translators for portfolio optimizations and data providers to source real or random data to
+applications for finance problems, such as portfolio optimization, and data providers to source real or random data to
 finance experiments.
 
 Next Steps
