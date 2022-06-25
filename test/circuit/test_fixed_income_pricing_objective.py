@@ -17,6 +17,7 @@ from test import QiskitFinanceTestCase
 
 import numpy as np
 
+import qiskit
 from qiskit import QuantumCircuit
 from qiskit.utils import QuantumInstance, optionals
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
@@ -53,7 +54,6 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
     @unittest.skipUnless(optionals.HAS_AER, "qiskit-aer is required to run this test")
     def test_application(self):
         """Test an end-to-end application."""
-        from qiskit import Aer
 
         a_n = np.eye(2)
         b = np.zeros(2)
@@ -89,7 +89,11 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
         )
 
         # run simulation
-        q_i = QuantumInstance(Aer.get_backend("aer_simulator"), seed_simulator=2, seed_transpiler=2)
+        q_i = QuantumInstance(
+            qiskit.providers.aer.Aer.get_backend("aer_simulator"),
+            seed_simulator=2,
+            seed_transpiler=2,
+        )
         iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, quantum_instance=q_i)
         result = iae.estimate(problem)
 
