@@ -16,7 +16,7 @@ import unittest
 from test import QiskitFinanceTestCase
 
 import numpy as np
-
+import qiskit
 from qiskit.utils import algorithm_globals, QuantumInstance, optionals
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import LinearAmplitudeFunction, TwoLocal
@@ -63,7 +63,6 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
     @unittest.skipUnless(optionals.HAS_AER, "qiskit-aer is required to run this test")
     def test_application(self):
         """Test an end-to-end application."""
-        from qiskit import Aer
 
         bounds = np.array([0.0, 7.0])
         num_qubits = 3
@@ -104,7 +103,9 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
         )
 
         q_i = QuantumInstance(
-            Aer.get_backend("aer_simulator"), seed_simulator=125, seed_transpiler=80
+            qiskit.providers.aer.Aer.get_backend("aer_simulator"),
+            seed_simulator=125,
+            seed_transpiler=80,
         )
         iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, quantum_instance=q_i)
         result = iae.estimate(problem)
