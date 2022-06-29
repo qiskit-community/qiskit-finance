@@ -13,75 +13,77 @@ installation options for Qiskit and its supported environments/platforms. You sh
 that first. Then the information here can be followed which focuses on the additional installation
 specific to Qiskit Finance.
 
-.. tabbed:: Start locally
+.. tab-set::
 
-    The simplest way to get started is to follow the getting started 'Start locally' for Qiskit
-    here `Qiskit Getting Started <https://qiskit.org/documentation/getting_started.html>`__
+    .. tab-item:: Start locally
 
-    In your virtual environment where you installed Qiskit simply add ``finance`` to the
-    extra list in a similar manner to how the extra ``visualization`` support is installed for
-    Qiskit, i.e:
+        The simplest way to get started is to follow the getting started 'Start locally' for Qiskit
+        here `Qiskit Getting Started <https://qiskit.org/documentation/getting_started.html>`__
 
-    .. code:: sh
+        In your virtual environment where you installed Qiskit simply add ``finance`` to the
+        extra list in a similar manner to how the extra ``visualization`` support is installed for
+        Qiskit, i.e:
 
-        pip install qiskit[finance]
+        .. code:: sh
 
-    It is worth pointing out that if you're a zsh user (which is the default shell on newer
-    versions of macOS), you'll need to put ``qiskit[finance]`` in quotes:
+            pip install qiskit[finance]
 
-    .. code:: sh
+        It is worth pointing out that if you're a zsh user (which is the default shell on newer
+        versions of macOS), you'll need to put ``qiskit[finance]`` in quotes:
 
-        pip install 'qiskit[finance]'
+        .. code:: sh
+
+            pip install 'qiskit[finance]'
 
 
-.. tabbed:: Install from source
+    .. tab-item:: Install from source
 
-   Installing Qiskit Finance from source allows you to access the most recently
-   updated version under development instead of using the version in the Python Package
-   Index (PyPI) repository. This will give you the ability to inspect and extend
-   the latest version of the Qiskit Finance code more efficiently.
+       Installing Qiskit Finance from source allows you to access the most recently
+       updated version under development instead of using the version in the Python Package
+       Index (PyPI) repository. This will give you the ability to inspect and extend
+       the latest version of the Qiskit Finance code more efficiently.
 
-   Since Qiskit Finance depends on Qiskit, and its latest changes may require new or changed
-   features of Qiskit, you should first follow Qiskit's `"Install from source"` instructions
-   here `Qiskit Getting Started <https://qiskit.org/documentation/getting_started.html>`__
+       Since Qiskit Finance depends on Qiskit, and its latest changes may require new or changed
+       features of Qiskit, you should first follow Qiskit's `"Install from source"` instructions
+       here `Qiskit Getting Started <https://qiskit.org/documentation/getting_started.html>`__
 
-   .. raw:: html
+       .. raw:: html
 
-      <h2>Installing Qiskit Finance from Source</h2>
+          <h2>Installing Qiskit Finance from Source</h2>
 
-   Using the same development environment that you installed Qiskit in you are ready to install
-   Qiskit Finance.
+       Using the same development environment that you installed Qiskit in you are ready to install
+       Qiskit Finance.
 
-   1. Clone the Qiskit Finance repository.
+       1. Clone the Qiskit Finance repository.
 
-      .. code:: sh
+          .. code:: sh
 
-         git clone https://github.com/Qiskit/qiskit-finance.git
+             git clone https://github.com/Qiskit/qiskit-finance.git
 
-   2. Cloning the repository creates a local folder called ``qiskit-finance``.
+       2. Cloning the repository creates a local folder called ``qiskit-finance``.
 
-      .. code:: sh
+          .. code:: sh
 
-         cd qiskit-finance
+             cd qiskit-finance
 
-   3. If you want to run tests or linting checks, install the developer requirements.
+       3. If you want to run tests or linting checks, install the developer requirements.
 
-      .. code:: sh
+          .. code:: sh
 
-         pip install -r requirements-dev.txt
+             pip install -r requirements-dev.txt
 
-   4. Install ``qiskit-finance``.
+       4. Install ``qiskit-finance``.
 
-      .. code:: sh
+          .. code:: sh
 
-         pip install .
+             pip install .
 
-   If you want to install it in editable mode, meaning that code changes to the
-   project don't require a reinstall to be applied, you can do this with:
+       If you want to install it in editable mode, meaning that code changes to the
+       project don't require a reinstall to be applied, you can do this with:
 
-   .. code:: sh
+       .. code:: sh
 
-      pip install -e .
+          pip install -e .
 
 ----
 
