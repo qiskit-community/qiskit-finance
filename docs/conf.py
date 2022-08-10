@@ -25,6 +25,7 @@
 #
 import os
 import sys
+from datetime import date
 
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.append(os.path.abspath("."))
@@ -49,7 +50,7 @@ os.environ["QISKIT_DOCS"] = "TRUE"
 
 # -- Project information -----------------------------------------------------
 project = "Qiskit Finance"
-copyright = "2018, 2021, Qiskit Finance Development Team"  # pylint: disable=redefined-builtin
+copyright = f"2018, {date.today().year}, Qiskit Finance Development Team"  # pylint: disable=redefined-builtin
 author = "Qiskit Finance Development Team"
 
 # The short X.Y version
