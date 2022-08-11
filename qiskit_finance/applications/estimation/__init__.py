@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2021.
+# (C) Copyright IBM 2019, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -13,14 +13,14 @@
 
 """Estimation applications for finance"""
 
+from .estimation_application import EstimationApplication
 from .european_call_delta import EuropeanCallDelta
 from .european_call_pricing import EuropeanCallPricing
 from .fixed_income_pricing import FixedIncomePricing
-from .fixed_income_pricing import EstimationApplication
 
 __all__ = [
+    "EstimationApplication",
     "EuropeanCallDelta",
     "EuropeanCallPricing",
     "FixedIncomePricing",
-    "EstimationApplication",
 ]
