@@ -87,6 +87,7 @@ class YahooDataProvider(BaseDataProvider):
                         stocks_notfound.append(ticker_name)
                     self._data.append(stock_value)
         except Exception as ex:  # pylint: disable=broad-except
+            logger.debug(ex, exc_info=True)
             raise QiskitFinanceError("Accessing Yahoo Data failed.") from ex
 
         if stocks_notfound:

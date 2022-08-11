@@ -1,0 +1,5 @@
+---
+other:
+  - |
+    Quandl python client has been discontinued and was replaced by Nasdaq Data Link.
+    More information at https://pypi.org/project/Nasdaq-Data-Link/
