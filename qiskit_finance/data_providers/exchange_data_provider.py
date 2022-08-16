@@ -13,11 +13,14 @@
 """ Exchange data provider. """
 
 from typing import Union, List
+import logging
 import datetime
-import quandl
+import nasdaqdatalink
 
 from ._base_data_provider import BaseDataProvider, StockMarket
 from ..exceptions import QiskitFinanceError
+
+logger = logging.getLogger(__name__)
 
 
 class ExchangeDataProvider(BaseDataProvider):
@@ -25,7 +28,7 @@ class ExchangeDataProvider(BaseDataProvider):
 
     Please see:
     https://github.com/Qiskit/qiskit-finance/blob/main/docs/tutorials/11_time_series.ipynb
-    for instructions on use, which involve obtaining a Quandl access token.
+    for instructions on use, which involve obtaining a Nasdaq Data Link access token.
     """
 
     def __init__(
@@ -38,7 +41,7 @@ class ExchangeDataProvider(BaseDataProvider):
     ) -> None:
         """
         Args:
-            token: Quandl access token
+            token: Nasdaq Data Link access token
             tickers: tickers
             stockmarket: LONDON, EURONEXT, or SINGAPORE
             start: first data point
@@ -78,8 +81,7 @@ class ExchangeDataProvider(BaseDataProvider):
         Loads data, thus enabling get_similarity_matrix and get_covariance_matrix
         methods in the base class.
         """
-        quandl.ApiConfig.api_key = self._token
-        quandl.ApiConfig.api_version = "2015-04-09"
+        nasdaqdatalink.ApiConfig.api_key = self._token
         self._data = []
         stocks_notfound = []
         stocks_forbidden = []
@@ -87,21 +89,25 @@ class ExchangeDataProvider(BaseDataProvider):
             stock_data = None
             name = self._stockmarket + "/" + ticker_name
             try:
-                stock_data = quandl.get(name, start_date=self._start, end_date=self._end)
-            except quandl.AuthenticationError as ex:
-                raise QiskitFinanceError("Quandl invalid token.") from ex
-            except quandl.NotFoundError:
+                stock_data = nasdaqdatalink.get(name, start_date=self._start, end_date=self._end)
+            except nasdaqdatalink.AuthenticationError as ex:
+                logger.debug(ex, exc_info=True)
+                raise QiskitFinanceError("Nasdaq Data Link invalid token.") from ex
+            except nasdaqdatalink.NotFoundError as ex:
+                logger.debug(ex, exc_info=True)
                 stocks_notfound.append(name)
                 continue
-            except quandl.ForbiddenError:
+            except nasdaqdatalink.ForbiddenError as ex:
+                logger.debug(ex, exc_info=True)
                 stocks_forbidden.append(name)
                 continue
-            except quandl.QuandlError as ex:
-                raise QiskitFinanceError(f"Quandl Error for '{name}'.") from ex
+            except nasdaqdatalink.DataLinkError as ex:
+                logger.debug(ex, exc_info=True)
+                raise QiskitFinanceError(f"Nasdaq Data Link Error for '{name}'.") from ex
             try:
                 self._data.append(stock_data["Close"])
             except KeyError as ex:
-                raise QiskitFinanceError(f"Cannot parse Quandl '{name}' output.") from ex
+                raise QiskitFinanceError(f"Cannot parse Nasdaq Data Link '{name}' output.") from ex
 
         if stocks_notfound or stocks_forbidden:
             err_msg = f"Stocks not found: {stocks_notfound}. " if stocks_notfound else ""

@@ -71,6 +71,9 @@ class QiskitFinanceTestCase(unittest.TestCase, ABC):
             # to INFO if it is not a valid level.
             level = logging._nameToLevel.get(os.getenv("LOG_LEVEL"), logging.INFO)
             cls.log.setLevel(level)
+            logger = logging.getLogger("qiskit_finance")
+            logger.addHandler(file_handler)
+            logger.setLevel(level)
 
     def get_resource_path(self, filename: str, path: Optional[str] = None) -> str:
         """Get the absolute path to a resource.

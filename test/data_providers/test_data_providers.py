@@ -13,6 +13,7 @@
 """ Test Data Providers """
 
 import unittest
+import warnings
 import os
 import datetime
 from test import QiskitFinanceTestCase
@@ -33,10 +34,21 @@ from qiskit_finance.data_providers import (
 class TestDataProviders(QiskitFinanceTestCase):
     """Tests data providers for the Portfolio Optimization and Diversification."""
 
+    logger = None
+
     def setUp(self):
         super().setUp()
-        self._quandl_token = os.getenv("QUANDL_TOKEN") if os.getenv("QUANDL_TOKEN") else ""
+        self._nasdaq_data_link_api_key = (
+            os.getenv("NASDAQ_DATA_LINK_API_KEY") if os.getenv("NASDAQ_DATA_LINK_API_KEY") else ""
+        )
         self._on_demand_token = os.getenv("ON_DEMAND_TOKEN") if os.getenv("ON_DEMAND_TOKEN") else ""
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        warnings.filterwarnings(action="ignore", module="urllib3", category=DeprecationWarning)
+
+    def tearDown(self):
+        super().tearDown()
+        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
+        warnings.filterwarnings(action="default", module="urllib3", category=DeprecationWarning)
 
     def test_random_wrong_use(self):
         """Random wrong use test"""
@@ -49,7 +61,7 @@ class TestDataProviders(QiskitFinanceTestCase):
         with self.subTest("test RandomDataProvider get_similarity_matrix"):
             self.assertRaises(QiskitFinanceError, rnd.get_similarity_matrix)
         wiki = WikipediaDataProvider(
-            token=self._quandl_token,
+            token=self._nasdaq_data_link_api_key,
             tickers=["GOOG", "AAPL"],
             start=datetime.datetime(2016, 1, 1),
             end=datetime.datetime(2016, 1, 30),
@@ -109,7 +121,7 @@ class TestDataProviders(QiskitFinanceTestCase):
         """wikipedia test"""
         try:
             wiki = WikipediaDataProvider(
-                token=self._quandl_token,
+                token=self._nasdaq_data_link_api_key,
                 tickers=["GOOG", "AAPL"],
                 start=datetime.datetime(2016, 1, 1),
                 end=datetime.datetime(2016, 1, 30),
@@ -131,11 +143,7 @@ class TestDataProviders(QiskitFinanceTestCase):
             self.skipTest(f"Test of WikipediaDataProvider skipped: {str(ex)}")
             # The trouble for automating testing is that after 50 tries
             # from one IP address within a day
-            # Quandl complains about the free usage tier limits:
-            # quandl.errors.quandl_error.LimitExceededError: (Status 429) (Quandl Error QELx01)
-            # You have exceeded the anonymous user limit of 50 calls per day. To make more calls
-            # today, please register for a free Quandl account and then include your API
-            # key with your requests.
+            # Nasdaq Data Link complains about the free usage tier limits.
             # This gets "dressed" as QiskitFinanceError.
             # This also introduces a couple of seconds of a delay.
 
@@ -156,7 +164,7 @@ class TestDataProviders(QiskitFinanceTestCase):
         """exchange data test"""
         try:
             lse = ExchangeDataProvider(
-                token=self._quandl_token,
+                token=self._nasdaq_data_link_api_key,
                 tickers=["AEO", "ABBY"],
                 stockmarket=StockMarket.LONDON,
                 start=datetime.datetime(2018, 1, 1),
