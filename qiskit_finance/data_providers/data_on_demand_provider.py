@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2021.
+# (C) Copyright IBM 2019, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -78,16 +78,17 @@ class DataOnDemandProvider(BaseDataProvider):
         http = urllib3.PoolManager(cert_reqs="CERT_REQUIRED", ca_certs=certifi.where())
         url = "https://dataondemand.nasdaq.com/api/v1/quotes?"
         self._data = []
-        for ticker in self._tickers:
-            values = {
-                "_Token": self._token,
-                "symbols": [ticker],
-                "start": self._start.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
-                "end": self._end.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
-                "next_cursor": 0,
-            }
-            encoded = url + urlencode(values)
-            try:
+        stocks_error = []
+        try:
+            for ticker in self._tickers:
+                values = {
+                    "_Token": self._token,
+                    "symbols": [ticker],
+                    "start": self._start.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
+                    "end": self._end.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
+                    "next_cursor": 0,
+                }
+                encoded = url + urlencode(values)
                 if self._verify is None:
                     response = http.request(
                         "POST", encoded
@@ -97,15 +98,21 @@ class DataOnDemandProvider(BaseDataProvider):
                     # or forces the certificate path (str)
                     response = http.request("POST", encoded, verify=self._verify)
                 if response.status != 200:
-                    msg = f"Accessing NASDAQ Data on Demand with parameters {values} encoded into "
-                    msg += encoded
-                    msg += " failed. Hint: Check the _Token. Check the spelling of tickers."
-                    raise QiskitFinanceError(msg)
+                    logger.debug(response.data.decode("utf-8"))
+                    stocks_error.append(ticker)
+                    continue
                 quotes = json.loads(response.data.decode("utf-8"))["quotes"]
                 price_evolution = []
                 for q in quotes:
                     price_evolution.append(q["ask_price"])
                 self._data.append(price_evolution)
-            except Exception as ex:  # pylint: disable=broad-except
-                raise QiskitFinanceError("Accessing NASDAQ Data on Demand failed.") from ex
+        finally:
             http.clear()
+
+        if stocks_error:
+            err_msg = (
+                f"Accessing NASDAQ Data on Demand with symbols: {stocks_error}, "
+                f"start: {self._start}, end: {self._end} failed. "
+                "Hint: Check the token. Check the spelling of ticker."
+            )
+            raise QiskitFinanceError(err_msg)
