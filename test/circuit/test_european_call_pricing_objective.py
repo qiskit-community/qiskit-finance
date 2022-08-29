@@ -16,7 +16,6 @@ import unittest
 from test import QiskitFinanceTestCase
 
 import numpy as np
-import qiskit
 from qiskit.utils import algorithm_globals, QuantumInstance, optionals
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import LinearAmplitudeFunction, TwoLocal
@@ -34,7 +33,6 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
 
     def test_ecev_circuit(self):
         """Test the expected circuit.
-
         If it equals the correct ``LinearAmplitudeFunction`` we know the circuit is correct.
         """
         num_qubits = 3
@@ -102,8 +100,11 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
             post_processing=european_call.post_processing,
         )
 
+        import importlib
+
+        aer = importlib.import_module("qiskit.providers.aer")
         q_i = QuantumInstance(
-            qiskit.providers.aer.Aer.get_backend("aer_simulator"),
+            aer.Aer.get_backend("aer_simulator"),
             seed_simulator=125,
             seed_transpiler=80,
         )

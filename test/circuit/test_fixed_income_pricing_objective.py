@@ -17,7 +17,6 @@ from test import QiskitFinanceTestCase
 
 import numpy as np
 
-import qiskit
 from qiskit import QuantumCircuit
 from qiskit.utils import QuantumInstance, optionals
 from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
@@ -89,8 +88,11 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
         )
 
         # run simulation
+        import importlib
+
+        aer = importlib.import_module("qiskit.providers.aer")
         q_i = QuantumInstance(
-            qiskit.providers.aer.Aer.get_backend("aer_simulator"),
+            aer.Aer.get_backend("aer_simulator"),
             seed_simulator=2,
             seed_transpiler=2,
         )

@@ -16,7 +16,6 @@ import unittest
 from test import QiskitFinanceTestCase
 
 import numpy as np
-import qiskit
 from qiskit.circuit.library import IntegerComparator
 from qiskit.quantum_info import Operator
 from qiskit.utils import QuantumInstance, optionals
@@ -31,7 +30,6 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
 
     def test_circuit(self):
         """Test the expected circuit.
-
         If it equals the correct ``IntegerComparator`` we know the circuit is correct.
         """
         num_qubits = 3
@@ -95,8 +93,11 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
         )
 
         # run amplitude estimation
+        import importlib
+
+        aer = importlib.import_module("qiskit.providers.aer")
         q_i = QuantumInstance(
-            qiskit.providers.aer.Aer.get_backend("aer_simulator"),
+            aer.Aer.get_backend("aer_simulator"),
             seed_simulator=125,
             seed_transpiler=80,
         )
