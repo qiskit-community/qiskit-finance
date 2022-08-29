@@ -6,5 +6,7 @@ psutil>=5
 fastdtw
 setuptools>=40.1.0
 pandas
-quandl
+nasdaq-data-link
 yfinance>=0.1.70
+certifi
+urllib3

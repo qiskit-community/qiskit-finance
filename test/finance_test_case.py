@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2018, 2021.
+# (C) Copyright IBM 2018, 2022.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -90,6 +90,9 @@ class QiskitFinanceTestCase(unittest.TestCase, ABC):
             # to INFO if it is not a valid level.
             level = logging._nameToLevel.get(os.getenv("LOG_LEVEL"), logging.INFO)
             cls.log.setLevel(level)
+            logger = logging.getLogger("qiskit_finance")
+            logger.addHandler(file_handler)
+            logger.setLevel(level)
 
     def get_resource_path(self, filename: str, path: Optional[str] = None) -> str:
         """Get the absolute path to a resource.

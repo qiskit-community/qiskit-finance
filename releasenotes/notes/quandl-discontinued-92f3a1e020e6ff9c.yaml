@@ -1,0 +1,9 @@
+---
+other:
+  - |
+    Data providers' usage of `Quandl` has been switched to `Nasdaq Data Link` since the
+    `Quandl` python client has been discontinued and was replaced by `Nasdaq Data Link`.
+    The previous `Quandl` url redirects to the new one at https://data.nasdaq.com/ .
+    The userid/password and token there were preserved.
+    There is no need to register again.
+    More information at https://pypi.org/project/Nasdaq-Data-Link/

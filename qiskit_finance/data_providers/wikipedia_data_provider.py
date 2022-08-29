@@ -13,19 +13,12 @@
 """ Wikipedia data provider. """
 
 from typing import Optional, Union, List
-import datetime
 import logging
+import datetime
+import nasdaqdatalink
 
-from qiskit.exceptions import MissingOptionalLibraryError
 from ._base_data_provider import BaseDataProvider
 from ..exceptions import QiskitFinanceError
-
-try:
-    import quandl
-
-    _HAS_QUANDL = True
-except ImportError:
-    _HAS_QUANDL = False
 
 logger = logging.getLogger(__name__)
 
@@ -47,21 +40,12 @@ class WikipediaDataProvider(BaseDataProvider):
     ) -> None:
         """
         Args:
-            token: quandl access token, which is not needed, strictly speaking
+            token: Nasdaq Data Link access token, which is not needed, strictly speaking
             tickers: tickers
             start: start time
             end: end time
-
-        Raises:
-            MissingOptionalLibraryError: Quandl not installed
         """
         super().__init__()
-        if not _HAS_QUANDL:
-            raise MissingOptionalLibraryError(
-                libname="Quandl",
-                name="WikipediaDataProvider",
-                pip_install="pip install quandl",
-            )
         self._tickers = None  # type: Optional[Union[str, List[str]]]
         tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):
@@ -81,27 +65,29 @@ class WikipediaDataProvider(BaseDataProvider):
         Loads data, thus enabling get_similarity_matrix and
         get_covariance_matrix methods in the base class.
         """
-        quandl.ApiConfig.api_key = self._token
-        quandl.ApiConfig.api_version = "2015-04-09"
+        nasdaqdatalink.ApiConfig.api_key = self._token
         self._data = []
         stocks_notfound = []
         for _, ticker_name in enumerate(self._tickers):
             stock_data = None
             name = "WIKI" + "/" + ticker_name
             try:
-                stock_data = quandl.get(name, start_date=self._start, end_date=self._end)
-            except quandl.AuthenticationError as ex:
-                raise QiskitFinanceError("Quandl invalid token.") from ex
-            except quandl.NotFoundError:
+                stock_data = nasdaqdatalink.get(name, start_date=self._start, end_date=self._end)
+            except nasdaqdatalink.AuthenticationError as ex:
+                logger.debug(ex, exc_info=True)
+                raise QiskitFinanceError("Nasdaq Data Link invalid token.") from ex
+            except nasdaqdatalink.NotFoundError as ex:
+                logger.debug(ex, exc_info=True)
                 stocks_notfound.append(name)
                 continue
-            except quandl.QuandlError as ex:
-                raise QiskitFinanceError(f"Quandl Error for '{name}'.") from ex
+            except nasdaqdatalink.DataLinkError as ex:
+                logger.debug(ex, exc_info=True)
+                raise QiskitFinanceError(f"Nasdaq Data Link Error for '{name}'.") from ex
 
             try:
                 self._data.append(stock_data["Adj. Close"])
             except KeyError as ex:
-                raise QiskitFinanceError("Cannot parse quandl output.") from ex
+                raise QiskitFinanceError("Cannot parse Nasdaq Data Link output.") from ex
 
         if stocks_notfound:
             raise QiskitFinanceError(f"Stocks not found: {stocks_notfound}. ")
