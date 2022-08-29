@@ -93,6 +93,9 @@ class ExchangeDataProvider(BaseDataProvider):
             except nasdaqdatalink.AuthenticationError as ex:
                 logger.debug(ex, exc_info=True)
                 raise QiskitFinanceError("Nasdaq Data Link invalid token.") from ex
+            except nasdaqdatalink.LimitExceededError as ex:
+                logger.debug(ex, exc_info=True)
+                raise QiskitFinanceError("Nasdaq Data Link limit exceeded.") from ex
             except nasdaqdatalink.NotFoundError as ex:
                 logger.debug(ex, exc_info=True)
                 stocks_notfound.append(name)
