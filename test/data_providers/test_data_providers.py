@@ -18,6 +18,7 @@ import os
 import datetime
 from test import QiskitFinanceTestCase
 from ddt import ddt, data, unpack
+import nasdaqdatalink
 import numpy as np
 from qiskit_finance import QiskitFinanceError
 from qiskit_finance.data_providers import (
@@ -39,9 +40,11 @@ class TestDataProviders(QiskitFinanceTestCase):
     def setUp(self):
         super().setUp()
         self._nasdaq_data_link_api_key = (
-            os.getenv("NASDAQ_DATA_LINK_API_KEY") if os.getenv("NASDAQ_DATA_LINK_API_KEY") else ""
+            os.getenv("NASDAQ_DATA_LINK_API_KEY") if os.getenv("NASDAQ_DATA_LINK_API_KEY") else None
         )
-        self._on_demand_token = os.getenv("ON_DEMAND_TOKEN") if os.getenv("ON_DEMAND_TOKEN") else ""
+        self._on_demand_token = (
+            os.getenv("ON_DEMAND_TOKEN") if os.getenv("ON_DEMAND_TOKEN") else None
+        )
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         warnings.filterwarnings(action="ignore", module="urllib3", category=DeprecationWarning)
 
@@ -140,15 +143,19 @@ class TestDataProviders(QiskitFinanceTestCase):
                     wiki.get_similarity_matrix(), similarity, decimal=3
                 )
         except QiskitFinanceError as ex:
-            self.skipTest(f"Test of WikipediaDataProvider skipped: {str(ex)}")
-            # The trouble for automating testing is that after 50 tries
-            # from one IP address within a day
-            # Nasdaq Data Link complains about the free usage tier limits.
-            # This gets "dressed" as QiskitFinanceError.
-            # This also introduces a couple of seconds of a delay.
+            if isinstance(ex.__cause__, nasdaqdatalink.LimitExceededError):
+                self.skipTest(f"Test of WikipediaDataProvider skipped: {str(ex)}")
+            else:
+                self.fail(f"Test of WikipediaDataProvider failed: {str(ex)}")
 
     def test_nasdaq(self):
         """nasdaq test"""
+        if self._on_demand_token is None:
+            self.skipTest(
+                "Skipped NASDAQ On Demand test since token was not provided in "
+                "env. variable ON_DEMAND_TOKEN"
+            )
+            return
         try:
             nasdaq = DataOnDemandProvider(
                 token=self._on_demand_token,
@@ -158,10 +165,16 @@ class TestDataProviders(QiskitFinanceTestCase):
             )
             nasdaq.run()
         except QiskitFinanceError as ex:
-            self.skipTest(f"Test of DataOnDemandProvider skipped {str(ex)}")
+            self.fail(f"Test of DataOnDemandProvider failed: {str(ex)}")
 
     def test_exchangedata(self):
         """exchange data test"""
+        if self._nasdaq_data_link_api_key is None:
+            self.skipTest(
+                "Skipped NASDAQ Data Link test since token was not provided in "
+                "env. variable NASDAQ_DATA_LINK_API_KEY"
+            )
+            return
         try:
             lse = ExchangeDataProvider(
                 token=self._nasdaq_data_link_api_key,
@@ -184,7 +197,7 @@ class TestDataProviders(QiskitFinanceTestCase):
                     lse.get_similarity_matrix(), similarity, decimal=3
                 )
         except QiskitFinanceError as ex:
-            self.skipTest(f"Test of ExchangeDataProvider skipped {str(ex)}")
+            self.fail(f"Test of ExchangeDataProvider failed: {str(ex)}")
 
     @data(
         [["AEO", "AEP"], [[7.0, 1.0], [1.0, 15.0]], [[1.0e00, 9.2e-05], [9.2e-05, 1.0e00]]],
@@ -209,7 +222,7 @@ class TestDataProviders(QiskitFinanceTestCase):
                     yahoo.get_similarity_matrix(), np.array(similarity), decimal=1
                 )
         except QiskitFinanceError as ex:
-            self.skipTest(f"Test of YahooDataProvider skipped {str(ex)}")
+            self.fail(f"Test of YahooDataProvider failed: {str(ex)}")
 
 
 if __name__ == "__main__":
