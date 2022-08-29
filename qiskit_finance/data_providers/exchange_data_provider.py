@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 class ExchangeDataProvider(BaseDataProvider):
     """Exchange data provider.
+
     Please see:
     https://github.com/Qiskit/qiskit-finance/blob/main/docs/tutorials/11_time_series.ipynb
     for instructions on use, which involve obtaining a Nasdaq Data Link access token.
@@ -45,6 +46,7 @@ class ExchangeDataProvider(BaseDataProvider):
             stockmarket: LONDON, EURONEXT, or SINGAPORE
             start: first data point
             end: last data point precedes this date
+
         Raises:
             QiskitFinanceError: provider doesn't support given stock market
         """

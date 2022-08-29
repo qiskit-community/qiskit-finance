@@ -33,6 +33,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
 
     def test_ecev_circuit(self):
         """Test the expected circuit.
+
         If it equals the correct ``LinearAmplitudeFunction`` we know the circuit is correct.
         """
         num_qubits = 3

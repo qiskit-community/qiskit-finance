@@ -30,6 +30,7 @@ class TestEuropeanCallDelta(QiskitFinanceTestCase):
 
     def test_circuit(self):
         """Test the expected circuit.
+
         If it equals the correct ``IntegerComparator`` we know the circuit is correct.
         """
         num_qubits = 3
