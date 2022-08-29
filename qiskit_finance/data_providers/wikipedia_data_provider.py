@@ -15,26 +15,11 @@
 from typing import Optional, Union, List
 import logging
 import datetime
-<<<<<<< HEAD
-import logging
-=======
 import nasdaqdatalink
->>>>>>> 88091bc (Quandl python client replaced by Nasdaq Data link (#197))
 
-from qiskit.exceptions import MissingOptionalLibraryError
 from ._base_data_provider import BaseDataProvider
 from ..exceptions import QiskitFinanceError
 
-<<<<<<< HEAD
-try:
-    import quandl
-
-    _HAS_QUANDL = True
-except ImportError:
-    _HAS_QUANDL = False
-
-=======
->>>>>>> 88091bc (Quandl python client replaced by Nasdaq Data link (#197))
 logger = logging.getLogger(__name__)
 
 
@@ -59,17 +44,8 @@ class WikipediaDataProvider(BaseDataProvider):
             tickers: tickers
             start: start time
             end: end time
-
-        Raises:
-            MissingOptionalLibraryError: Quandl not installed
         """
         super().__init__()
-        if not _HAS_QUANDL:
-            raise MissingOptionalLibraryError(
-                libname="Quandl",
-                name="WikipediaDataProvider",
-                pip_install="pip install quandl",
-            )
         self._tickers = None  # type: Optional[Union[str, List[str]]]
         tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):
