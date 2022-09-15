@@ -101,11 +101,10 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
             post_processing=european_call.post_processing,
         )
 
-        import importlib
+        from qiskit_aer import Aer
 
-        aer = importlib.import_module("qiskit.providers.aer")
         q_i = QuantumInstance(
-            aer.Aer.get_backend("aer_simulator"),
+            Aer.get_backend("aer_simulator"),
             seed_simulator=125,
             seed_transpiler=80,
         )
