@@ -112,7 +112,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.7, 3.8, 3.9, '3.10']
+        python-version: [3.7, 3.8, 3.9, '3.10.6']
         include:
           - os: macos-latest
             python-version: 3.8
@@ -306,7 +306,7 @@ jobs:
           path: /tmp/f39
       - uses: actions/download-artifact@v2
         with:
-          name: ubuntu-latest-3.10
+          name: ubuntu-latest-3.10.6
           path: /tmp/f310
       - uses: actions/download-artifact@v2
         with:
