@@ -200,16 +200,16 @@ class TestDataProviders(QiskitFinanceTestCase):
             self.fail(f"Test of ExchangeDataProvider failed: {str(ex)}")
 
     @data(
-        [["AEO", "AEP"], [[7.0, 1.0], [1.0, 15.0]], [[1.0e00, 9.2e-05], [9.2e-05, 1.0e00]]],
-        ["AEO", 7.0, [[1.0]]],
+        [["MSFT", "AAPL"], [[1375.0, 483.0], [483.0, 214.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
+        ["GOOG", 337.0, [[1.0]]],
     )
     @unpack
     def test_yahoo(self, tickers, covariance, similarity):
         """Yahoo data test"""
         yahoo = YahooDataProvider(
             tickers=tickers,
-            start=datetime.datetime(2018, 1, 1),
-            end=datetime.datetime(2018, 12, 31),
+            start=datetime.datetime(2021, 1, 1),
+            end=datetime.datetime(2021, 12, 31),
         )
         try:
             yahoo.run()
@@ -219,7 +219,7 @@ class TestDataProviders(QiskitFinanceTestCase):
                 )
             with self.subTest("test YahooDataProvider get_similarity_matrix"):
                 np.testing.assert_array_almost_equal(
-                    yahoo.get_similarity_matrix(), np.array(similarity), decimal=1
+                    yahoo.get_similarity_matrix(), np.array(similarity), decimal=6
                 )
         except QiskitFinanceError as ex:
             self.fail(f"Test of YahooDataProvider failed: {str(ex)}")
