@@ -201,7 +201,7 @@ class TestDataProviders(QiskitFinanceTestCase):
 
     @data(
         [["MSFT", "AAPL"], [[1375.0, 483.0], [483.0, 214.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
-        ["GOOG", 337.0, [[1.0]]],
+        ["MSFT", 1375.0, [[1.0]]],
     )
     @unpack
     def test_yahoo(self, tickers, covariance, similarity):
