@@ -219,7 +219,7 @@ class TestDataProviders(QiskitFinanceTestCase):
                 )
             with self.subTest("test YahooDataProvider get_similarity_matrix"):
                 np.testing.assert_array_almost_equal(
-                    yahoo.get_similarity_matrix(), np.array(similarity), decimal=1
+                    yahoo.get_similarity_matrix(), np.array(similarity), decimal=6
                 )
         except QiskitFinanceError as ex:
             self.fail(f"Test of YahooDataProvider failed: {str(ex)}")
