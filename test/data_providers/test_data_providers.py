@@ -208,8 +208,8 @@ class TestDataProviders(QiskitFinanceTestCase):
         """Yahoo data test"""
         yahoo = YahooDataProvider(
             tickers=tickers,
-            start=datetime.datetime(2018, 1, 1),
-            end=datetime.datetime(2018, 12, 31),
+            start=datetime.datetime(2021, 1, 1),
+            end=datetime.datetime(2021, 12, 31),
         )
         try:
             yahoo.run()
