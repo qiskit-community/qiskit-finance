@@ -115,7 +115,6 @@ html_css_files = ["style.css", "custom.css", "gallery.css"]
 nbsphinx_timeout = 360
 nbsphinx_execute = os.getenv("QISKIT_DOCS_BUILD_TUTORIALS", "never")
 nbsphinx_widgets_path = ""
-exclude_patterns = ["_build", "**.ipynb_checkpoints"]
 nbsphinx_thumbnails = {}
 
 spelling_word_list_filename = "../.pylintdict"
@@ -215,6 +214,7 @@ intersphinx_mapping = {
     "qiskit": ("https://qiskit.org/documentation", None),
 }
 
+html_context = {"analytics_enabled": True}
 # -- Extension configuration -------------------------------------------------
 
 

@@ -17,6 +17,6 @@ qiskit-aer
 mypy>=0.780
 mypy-extensions>=0.4.3
 nbsphinx
-qiskit_sphinx_theme
+qiskit_sphinx_theme>=1.10.*
 networkx>=2.2,<2.6
 types-certifi
