@@ -200,13 +200,8 @@ class TestDataProviders(QiskitFinanceTestCase):
             self.fail(f"Test of ExchangeDataProvider failed: {str(ex)}")
 
     @data(
-<<<<<<< HEAD
-        [["AEO", "AEP"], [[7.0, 1.0], [1.0, 15.0]], [[1.0e00, 9.2e-05], [9.2e-05, 1.0e00]]],
-        ["AEO", 7.0, [[1.0]]],
-=======
         [["MSFT", "AAPL"], [[1367.0, 481.0], [481.0, 213.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
         ["MSFT", 1367.0, [[1.0]]],
->>>>>>> 74b46f8 (Update docs to use new sphinx theme (#224))
     )
     @unpack
     def test_yahoo(self, tickers, covariance, similarity):
