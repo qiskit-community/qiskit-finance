@@ -26,7 +26,7 @@ on:
     - cron: '0 1 * * *'
 
 concurrency:
-  group: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}
+  group: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}-${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
@@ -39,27 +39,32 @@ jobs:
     steps:
       - name: Print Concurrency Group
         env:
-          CONCURRENCY_GROUP: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}
+          CONCURRENCY_GROUP: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}-${{ github.workflow }}
         run: |
           echo -e "\033[31;1;4mConcurrency Group\033[0m"
           echo -e "$CONCURRENCY_GROUP\n"
         shell: bash
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
       - uses: ./.github/actions/install-main-dependencies
         with:
           os: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
         with:
           os: ${{ matrix.os }}
       - name: Install Dependencies
         run: |
-          pip install jupyter sphinx_rtd_theme qiskit-terra[visualization]
+          pip install jupyter qiskit-terra[visualization]
           sudo apt-get -y install pandoc graphviz
           sudo apt-get -y install python3-enchant
           sudo apt-get -y install hunspell-en-us
@@ -69,7 +74,9 @@ jobs:
       - run:  pip check
         if: ${{ !cancelled() }}
         shell: bash
-      - run:  make copyright
+      - name: Copyright Check
+        run: |
+          python tools/check_copyright.py -check
         if: ${{ !cancelled() }}
         shell: bash
       - run:  make spell
@@ -84,14 +91,14 @@ jobs:
       - name: Run make html
         run:  |
           make clean_sphinx
-          make html SPHINXOPTS=-W
+          make html
           cd docs/_build/html
           mkdir artifacts
           tar -zcvf artifacts/documentation.tar.gz --exclude=./artifacts .
         if: ${{ !cancelled() }}
         shell: bash
       - name: Run upload documentation
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: documentation
           path: docs/_build/html/artifacts/documentation.tar.gz
@@ -105,39 +112,44 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.7, 3.8, 3.9, '3.10']
+        python-version: [3.7, 3.8, 3.9, '3.10.6']
         include:
           - os: macos-latest
             python-version: 3.8
           - os: macos-latest
             python-version: '3.10.6'
-          - os: windows-latest
+          - os: windows-2019
             python-version: 3.8
-          - os: windows-latest
+          - os: windows-2019
             python-version: '3.10'
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
       - name: install Windows dependencies
         run: |
           source "$CONDA/etc/profile.d/conda.sh"
           conda create -n scsenv python=${{ matrix.python-version }}
           conda activate scsenv
           conda install -y scs lapack cvxpy -c conda-forge
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ matrix.os == 'windows-2019' }}
         shell: bash
       - uses: ./.github/actions/install-main-dependencies
         with:
           os: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
         with:
           os: ${{ matrix.os }}
       - name: Run lint
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          if [ "${{ matrix.os }}" == "windows-2019" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -145,7 +157,7 @@ jobs:
         shell: bash
       - name: Run mypy
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          if [ "${{ matrix.os }}" == "windows-2019" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -154,7 +166,7 @@ jobs:
         shell: bash
       - name: Run lint latest version
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          if [ "${{ matrix.os }}" == "windows-2019" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -171,7 +183,7 @@ jobs:
         if: ${{ !cancelled() }}
       - name: Deprecation Messages
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          if [ "${{ matrix.os }}" == "windows-2019" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -180,7 +192,7 @@ jobs:
         shell: bash
       - name: Coverage combine
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          if [ "${{ matrix.os }}" == "windows-2019" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -188,7 +200,7 @@ jobs:
           mv .coverage ./ci-artifact-data/fin.dat
         if: ${{ matrix.python-version == 3.7 }}
         shell: bash
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.os }}-${{ matrix.python-version }}
           path: ./ci-artifact-data/*
@@ -200,22 +212,27 @@ jobs:
         os: [ubuntu-latest]
         python-version: [3.8, '3.10']
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
       - uses: ./.github/actions/install-main-dependencies
         with:
           os: ${{ matrix.os }}
+          python-version: ${{ matrix.python-version }}
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
       - uses: ./.github/actions/install-finance
         with:
           os: ${{ matrix.os }}
       - name: Install Dependencies
         run: |
-          pip install jupyter sphinx_rtd_theme qiskit-terra[visualization]
+          pip install jupyter qiskit-terra[visualization]
           sudo apt-get install -y pandoc graphviz
         shell: bash
       - name: Run Finance Tutorials
@@ -224,13 +241,13 @@ jobs:
           QISKIT_DOCS_BUILD_TUTORIALS: 'always'
         run: |
           echo "earliest_version: 0.1.0" >> releasenotes/config.yaml
-          make html SPHINXOPTS=-W
+          make html
           cd docs/_build/html
           mkdir artifacts
           tar -zcvf artifacts/tutorials.tar.gz --exclude=./artifacts .
         shell: bash
       - name: Run upload tutorials
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: tutorials${{ matrix.python-version }}
           path: docs/_build/html/artifacts/tutorials.tar.gz
@@ -253,18 +270,18 @@ jobs:
           echo "earliest_version: 0.1.0" >> releasenotes/config.yaml
           # ignore unreleased/untagged notes
           tools/ignore_untagged_notes.sh
-          make html SPHINXOPTS=-W
+          make html
           cd docs/_build/html
           mkdir artifacts
           tar -zcvf artifacts/tutorials.tar.gz --exclude=./artifacts .
-        if: ${{ matrix.python-version > 3.8 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
+        if: ${{ matrix.python-version == 3.8 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
         shell: bash
       - name: Run upload stable tutorials
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: tutorials-stable${{ matrix.python-version }}
           path: docs/_build/html/artifacts/tutorials.tar.gz
-        if: ${{ matrix.python-version > 3.8 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
+        if: ${{ matrix.python-version == 3.8 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
   Deprecation_Messages_and_Coverage:
     needs: [Checks, Finance, Tutorials]
     runs-on: ubuntu-latest
@@ -272,41 +289,41 @@ jobs:
       matrix:
         python-version: [3.7]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: ubuntu-latest-3.7
           path: /tmp/f37
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: ubuntu-latest-3.8
           path: /tmp/f38
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: ubuntu-latest-3.9
           path: /tmp/f39
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
-          name: ubuntu-latest-3.10
+          name: ubuntu-latest-3.10.6
           path: /tmp/f310
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: macos-latest-3.8
           path: /tmp/m38
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: macos-latest-3.10.6
           path: /tmp/m310
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
-          name: windows-latest-3.8
+          name: windows-2019-3.8
           path: /tmp/w38
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
-          name: windows-latest-3.10
+          name: windows-2019-3.10
           path: /tmp/w310
       - name: Install Dependencies
         run: pip install -U coverage coveralls diff-cover
