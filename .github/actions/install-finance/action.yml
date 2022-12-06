@@ -18,9 +18,9 @@ inputs:
     required: true
 runs:
   using: "composite"
-  steps: 
+  steps:
     - run : |
-        if [ "${{ inputs.os }}" == "windows-latest" ]; then
+        if [ "${{ inputs.os }}" == "windows-2019" ]; then
           source "$CONDA/etc/profile.d/conda.sh"
           conda activate scsenv
         fi

@@ -15,6 +15,10 @@ name: Deploy Docs
 on:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   docs_publish:
     if: ${{ startsWith(github.ref, 'refs/heads/stable') && contains('["manoelmarques","mtreinish","stefan-woerner","woodsp-ibm"]', github.actor) }}
@@ -23,10 +27,10 @@ jobs:
       matrix:
         python-version: [3.8]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/install-finance
@@ -34,7 +38,7 @@ jobs:
           os: ${{ matrix.os }}
       - name: Install Dependencies
         run: |
-          pip install jupyter sphinx_rtd_theme qiskit-terra[visualization]
+          pip install jupyter qiskit-terra[visualization]
           sudo apt-get install -y pandoc graphviz
         shell: bash
       - name: Build and publish
@@ -46,7 +50,7 @@ jobs:
         run: |
           echo "earliest_version: 0.1.0" >> releasenotes/config.yaml
           tools/ignore_untagged_notes.sh
-          make html SPHINXOPTS=-W
+          make html
           tools/deploy_documentation.sh
         shell: bash
   deploy-translatable-strings:
@@ -56,16 +60,16 @@ jobs:
       matrix:
         python-version: [3.8]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install jupyter sphinx_rtd_theme qiskit-terra[visualization] torchvision tox
+          pip install jupyter qiskit-terra[visualization] torchvision tox
           sudo apt-get install -y pandoc graphviz
         shell: bash
       - name: Build and publish
