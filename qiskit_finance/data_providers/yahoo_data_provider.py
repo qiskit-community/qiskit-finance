@@ -71,7 +71,7 @@ class YahooDataProvider(BaseDataProvider):
                 start=self._start,
                 end=self._end,
                 group_by="ticker",
-                # threads=False,
+                threads=False,
                 progress=logger.isEnabledFor(logging.DEBUG),
             )
             if len(self._tickers) == 1:
