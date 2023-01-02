@@ -72,6 +72,8 @@ mathbb
 mathcal
 meshgrid
 monte
+multiprocess
+multithread
 nakaji
 nasdaq
 ndarray
