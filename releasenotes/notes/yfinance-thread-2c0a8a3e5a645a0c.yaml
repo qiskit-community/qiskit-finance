@@ -1,0 +1,5 @@
+---
+fixes:
+  - |
+    Change the usage of the Y!Finance library to download multiple tickers in one thread and save
+    its cache file in a temporary folder in order to avoid multithread/multiprocess race conditions.
