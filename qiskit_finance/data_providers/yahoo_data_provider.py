@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2022.
+# (C) Copyright IBM 2020, 2023.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -15,12 +15,21 @@
 from typing import Optional, Union, List
 import datetime
 import logging
+import tempfile
 import yfinance as yf
 
 from ._base_data_provider import BaseDataProvider
 from ..exceptions import QiskitFinanceError
 
 logger = logging.getLogger(__name__)
+
+# Sets Y!Finance cache path in a new temp folder.
+# This is done to avoid race conditions in the same cache file
+# from different processes.
+# The path will be automatically deleted if this module unloads cleanly.
+# This needs to be done during yfinance initialization before any call
+_temp_dir = tempfile.TemporaryDirectory()  # pylint: disable=consider-using-with
+yf.set_tz_cache_location(_temp_dir.name)
 
 
 class YahooDataProvider(BaseDataProvider):
@@ -66,6 +75,8 @@ class YahooDataProvider(BaseDataProvider):
         self._data = []
         stocks_notfound = []
         try:
+            # download multiple tickers in single thread to avoid
+            # race condition
             stock_data = yf.download(
                 self._tickers,
                 start=self._start,
