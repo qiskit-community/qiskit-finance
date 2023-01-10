@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2020, 2022.
+# (C) Copyright IBM 2020, 2023.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -71,7 +71,7 @@ class YahooDataProvider(BaseDataProvider):
                 start=self._start,
                 end=self._end,
                 group_by="ticker",
-                # threads=False,
+                threads=False,
                 progress=logger.isEnabledFor(logging.DEBUG),
             )
             if len(self._tickers) == 1:
