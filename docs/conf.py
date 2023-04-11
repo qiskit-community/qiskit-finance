@@ -95,7 +95,6 @@ extensions = [
     "sphinx.ext.extlinks",
     "sphinx_design",
     "jupyter_sphinx",
-    "sphinx_autodoc_typehints",
     "reno.sphinxext",
     "sphinx.ext.doctest",
     "nbsphinx",
@@ -108,7 +107,9 @@ html_css_files = ["style.css", "custom.css", "gallery.css"]
 nbsphinx_timeout = 360
 nbsphinx_execute = os.getenv("QISKIT_DOCS_BUILD_TUTORIALS", "never")
 nbsphinx_widgets_path = ""
-nbsphinx_thumbnails = {}
+nbsphinx_thumbnails = {
+    "**": "_static/no_image.png",
+}
 
 spelling_word_list_filename = "../.pylintdict"
 spelling_filters = ["lowercase_filter.LowercaseFilter"]
@@ -123,6 +124,12 @@ autosummary_generate_overwrite = False
 # -----------------------------------------------------------------------------
 # Autodoc
 # -----------------------------------------------------------------------------
+# Move type hints from signatures to the parameter descriptions (except in overload cases, where
+# that's not possible).
+autodoc_typehints = "description"
+# Only add type hints from signature to description body if the parameter has documentation.  The
+# return type is always added to the description (if in the signature).
+autodoc_typehints_description_target = "documented_params"
 
 autodoc_default_options = {
     "inherited-members": None,
