@@ -36,13 +36,7 @@ Sphinx documentation builder
 
 import qiskit_sphinx_theme
 import qiskit_finance
-from custom_directives import (
-    IncludeDirective,
-    GalleryItemDirective,
-    CustomGalleryItemDirective,
-    CustomCalloutItemDirective,
-    CustomCardItemDirective,
-)
+from custom_directives import IncludeDirective, CustomCalloutItemDirective, CustomCardItemDirective
 
 # Set env flag so that we can doc functions that may otherwise not be loaded
 # see for example interactive visualizations in qiskit.visualization.
