@@ -5,6 +5,7 @@ from docutils.parsers.rst import Directive, directives
 from docutils.statemachine import StringList
 from docutils import nodes
 
+
 class CustomCalloutItemDirective(Directive):
     option_spec = {
         "header": directives.unchanged,
