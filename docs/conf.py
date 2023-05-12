@@ -36,7 +36,7 @@ Sphinx documentation builder
 
 import qiskit_sphinx_theme
 import qiskit_finance
-from custom_directives import IncludeDirective, CustomCalloutItemDirective, CustomCardItemDirective
+from custom_directives import CustomCalloutItemDirective
 
 # Set env flag so that we can doc functions that may otherwise not be loaded
 # see for example interactive visualizations in qiskit.visualization.
@@ -203,7 +203,5 @@ html_context = {"analytics_enabled": True}
 
 
 def setup(app):
-    app.add_directive("includenodoc", IncludeDirective)
-    app.add_directive("customcarditem", CustomCardItemDirective)
     app.add_directive("customcalloutitem", CustomCalloutItemDirective)
     app.setup_extension("versionutils")
