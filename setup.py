@@ -68,5 +68,10 @@ setuptools.setup(
     install_requires=REQUIREMENTS,
     include_package_data=True,
     python_requires=">=3.7",
+    project_urls={
+        "Bug Tracker": "https://github.com/Qiskit/qiskit-finance/issues",
+        "Documentation": "https://qiskit.org/ecosystem/finance/",
+        "Source Code": "https://github.com/Qiskit/qiskit-finance",
+    },
     zip_safe=False
 )
