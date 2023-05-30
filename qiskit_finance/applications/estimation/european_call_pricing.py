@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2018, 2021.
+# (C) Copyright IBM 2018, 2023.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -65,10 +65,10 @@ class EuropeanCallPricing(EstimationApplication):
 
     def to_estimation_problem(self) -> EstimationProblem:
         """Convert a problem instance into a
-        `qiskit.algorithms.amplitude_estimators.EstimationProblem`
+        :class:`qiskit.algorithms.EstimationProblem`
 
         Returns:
-            The `qiskit.algorithms.amplitude_estimators.EstimationProblem` created
+            The :class:`qiskit.algorithms.EstimationProblem` created
             from the European call pricing problem instance.
         """
         problem = EstimationProblem(
@@ -80,7 +80,7 @@ class EuropeanCallPricing(EstimationApplication):
 
     def interpret(self, result: AmplitudeEstimatorResult) -> float:
         """Convert the calculation result of the problem
-        (`qiskit.algorithms.amplitude_estimators.AmplitudeEstimatorResult`)
+        (:class:`qiskit.algorithms.AmplitudeEstimatorResult`)
         to the answer of the problem.
 
         Args:
