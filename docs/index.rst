@@ -24,7 +24,7 @@ Next Steps
     Tutorials <tutorials/index>
     API Reference <apidocs/qiskit_finance>
     Release Notes <release_notes>
-    GitHub <https://github.com/Qiskit/qiskit-finance>
+    GitHub <https://github.com/qiskit-community/qiskit-finance>
 
 
 .. Hiding - Indices and tables
