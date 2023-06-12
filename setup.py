@@ -44,7 +44,7 @@ setuptools.setup(
     description='Qiskit Finance: A library of quantum computing finance experiments',
     long_description=README,
     long_description_content_type="text/markdown",
-    url='https://github.com/Qiskit/qiskit-finance',
+    url='https://github.com/qiskit-community/qiskit-finance',
     author='Qiskit Finance Development Team',
     author_email='hello@qiskit.org',
     license='Apache-2.0',
@@ -69,9 +69,9 @@ setuptools.setup(
     include_package_data=True,
     python_requires=">=3.7",
     project_urls={
-        "Bug Tracker": "https://github.com/Qiskit/qiskit-finance/issues",
+        "Bug Tracker": "https://github.com/qiskit-community/qiskit-finance/issues",
         "Documentation": "https://qiskit.org/ecosystem/finance/",
-        "Source Code": "https://github.com/Qiskit/qiskit-finance",
+        "Source Code": "https://github.com/qiskit-community/qiskit-finance",
     },
     zip_safe=False
 )
