@@ -58,7 +58,7 @@ specific to Qiskit Finance.
 
           .. code:: sh
 
-             git clone https://github.com/Qiskit/qiskit-finance.git
+             git clone https://github.com/qiskit-community/qiskit-finance.git
 
        2. Cloning the repository creates a local folder called ``qiskit-finance``.
 
