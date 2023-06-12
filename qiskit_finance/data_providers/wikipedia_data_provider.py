@@ -1,6 +1,6 @@
 # This code is part of Qiskit.
 #
-# (C) Copyright IBM 2019, 2022.
+# (C) Copyright IBM 2019, 2023.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -27,7 +27,7 @@ class WikipediaDataProvider(BaseDataProvider):
     """Wikipedia data provider.
 
     Please see:
-    https://github.com/Qiskit/qiskit-finance/blob/main/docs/tutorials/11_time_series.ipynb
+    https://qiskit.org/ecosystem/finance/tutorials/11_time_series.html
     for instructions on use.
     """
 
