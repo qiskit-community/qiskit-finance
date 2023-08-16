@@ -1,4 +1,4 @@
-# This code is part of Qiskit.
+# This code is part of a Qiskit project.
 #
 # (C) Copyright IBM 2021, 2022.
 #
@@ -18,7 +18,7 @@ inputs:
     required: true
 runs:
   using: "composite"
-  steps: 
+  steps:
     - run : |
         if [ "${{ inputs.os }}" == "windows-2019" ]; then
           source "$CONDA/etc/profile.d/conda.sh"
