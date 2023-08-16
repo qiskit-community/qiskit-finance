@@ -31,6 +31,7 @@ concurrency:
 
 jobs:
   Checks:
+    if: github.repository_owner == 'qiskit-community'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -109,6 +110,7 @@ jobs:
         if: ${{ !cancelled() }}
         shell: bash
   Finance:
+    if: github.repository_owner == 'qiskit-community'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -199,6 +201,7 @@ jobs:
           name: ${{ matrix.os }}-${{ matrix.python-version }}
           path: ./ci-artifact-data/*
   Tutorials:
+    if: github.repository_owner == 'qiskit-community'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -256,7 +259,7 @@ jobs:
           # get current version
           version=$(pip show qiskit-finance | awk -F. '/^Version:/ { print substr($1,10), $2-1 }' OFS=.)
           # download stable version
-          wget https://codeload.github.com/Qiskit/qiskit-finance/zip/stable/$version -O /tmp/repo.zip
+          wget https://codeload.github.com/qiskit-community/qiskit-finance/zip/stable/$version -O /tmp/repo.zip
           unzip /tmp/repo.zip -d /tmp/
           # copy stable tutorials to main tutorials
           rm -rf docs/tutorials/*
@@ -278,6 +281,7 @@ jobs:
           path: docs/_build/html/artifacts/tutorials.tar.gz
         if: ${{ matrix.python-version == 3.8 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
   Deprecation_Messages_and_Coverage:
+    if: github.repository_owner == 'qiskit-community'
     needs: [Checks, Finance, Tutorials]
     runs-on: ubuntu-latest
     strategy:

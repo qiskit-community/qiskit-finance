@@ -242,7 +242,7 @@ particular will be located at `docs/_build/html/release_notes.html`
 ## Installing Qiskit Finance from source
 
 Please see the [Installing Qiskit Finance from
-Source](https://github.com/Qiskit/qiskit-finance#installatione)
+Source](https://github.com/qiskit-community/qiskit-finance#installatione)
 section of the Qiskit documentation.
 
 Note: Finance depends on Terra, and has optional dependence on Aer and IBM Q Provider, so
@@ -251,7 +251,7 @@ main branches so these should be installed from source too following the instruc
 the same location
 
 Finance also has some other optional dependents see 
-[Finance optional installs](https://github.com/Qiskit/qiskit-finance#optional-installs) for
+[Finance optional installs](https://github.com/qiskit-community/qiskit-finance#optional-installs) for
 further information. Unit tests that require any of the optional dependents will check
 and skip the test if not installed.
 
