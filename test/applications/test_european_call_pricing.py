@@ -24,9 +24,6 @@ from qiskit_finance.circuit.library.probability_distributions import UniformDist
 class TestEuropeanCallPricing(QiskitFinanceTestCase):
     """Tests the EuropeanCallPricing application"""
 
-    def setUp(self):
-        super().setUp()
-
     def test_to_estimation_problem(self):
         """Test the expected circuit."""
         num_qubits = 3

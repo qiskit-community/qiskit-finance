@@ -26,9 +26,6 @@ from qiskit_finance.circuit.library import EuropeanCallPricingObjective, NormalD
 class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
     """Tests EuropeanCallPricingObjective."""
 
-    def setUp(self):
-        super().setUp()
-
     def test_ecev_circuit(self):
         """Test the expected circuit.
 

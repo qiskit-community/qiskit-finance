@@ -27,9 +27,6 @@ from qiskit_finance.circuit.library.payoff_functions import FixedIncomePricingOb
 class TestFixedIncomePricing(QiskitFinanceTestCase):
     """Tests the FixedIncomePricing application"""
 
-    def setUp(self):
-        super().setUp()
-
     def test_to_estimation_problem(self):
         """Test the expected circuit."""
         num_qubits = [2, 2]
