@@ -1,4 +1,5 @@
 qiskit-terra>=0.20.0
+qiskit-algorithms
 qiskit-optimization>=0.2.0
 scipy>=1.4
 numpy>=1.17

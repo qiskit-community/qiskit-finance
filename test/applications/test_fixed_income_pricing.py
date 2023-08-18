@@ -19,7 +19,6 @@ import numpy as np
 
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import Operator
-from qiskit.utils import algorithm_globals
 from qiskit_finance.applications.estimation import FixedIncomePricing
 from qiskit_finance.circuit.library.probability_distributions import UniformDistribution
 from qiskit_finance.circuit.library.payoff_functions import FixedIncomePricingObjective
@@ -30,8 +29,6 @@ class TestFixedIncomePricing(QiskitFinanceTestCase):
 
     def setUp(self):
         super().setUp()
-        self.seed = 457
-        algorithm_globals.random_seed = self.seed
 
     def test_to_estimation_problem(self):
         """Test the expected circuit."""

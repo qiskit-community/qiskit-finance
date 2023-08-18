@@ -16,7 +16,7 @@ from typing import Tuple, List
 import numpy as np
 
 from qiskit.circuit import QuantumCircuit
-from qiskit.algorithms.amplitude_estimators import (
+from qiskit_algorithms import (
     EstimationProblem,
     AmplitudeEstimatorResult,
 )
@@ -83,10 +83,10 @@ class FixedIncomePricing(EstimationApplication):
 
     def to_estimation_problem(self) -> EstimationProblem:
         """Convert a problem instance into a
-        :class:`qiskit.algorithms.EstimationProblem`
+        :class:`qiskit_algorithms.EstimationProblem`
 
         Returns:
-            The :class:`qiskit.algorithms.EstimationProblem` created
+            The :class:`qiskit_algorithms.EstimationProblem` created
             from the Fixed problem instance.
         """
         problem = EstimationProblem(
@@ -98,7 +98,7 @@ class FixedIncomePricing(EstimationApplication):
 
     def interpret(self, result: AmplitudeEstimatorResult) -> float:
         """Convert the calculation result of the problem
-        (:class:`qiskit.algorithms.AmplitudeEstimatorResult`)
+        (:class:`qiskit_algorithms.AmplitudeEstimatorResult`)
         to the answer of the problem.
 
         Args:

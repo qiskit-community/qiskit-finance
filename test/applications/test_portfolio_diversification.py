@@ -17,7 +17,6 @@ import unittest
 from test import QiskitFinanceTestCase
 
 import numpy as np
-from qiskit.utils import algorithm_globals
 from qiskit_optimization.problems import QuadraticProgram, VarType
 from qiskit_finance.applications.optimization import PortfolioDiversification
 
@@ -30,7 +29,6 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
     def setUp(self):
         """Set up for the tests"""
         super().setUp()
-        algorithm_globals.random_seed = 100
         self.n = 2
         self.q = 1
         self.similarity_matrix = np.ones((self.n, self.n))
