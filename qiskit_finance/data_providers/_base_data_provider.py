@@ -20,7 +20,7 @@ from enum import Enum
 import numpy as np
 import fastdtw
 
-from qiskit.utils import algorithm_globals
+from qiskit_algorithms.utils import algorithm_globals
 from ..exceptions import QiskitFinanceError
 
 logger = logging.getLogger(__name__)
