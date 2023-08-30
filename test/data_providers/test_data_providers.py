@@ -200,8 +200,8 @@ class TestDataProviders(QiskitFinanceTestCase):
             self.fail(f"Test of ExchangeDataProvider failed: {str(ex)}")
 
     @data(
-        [["MSFT", "AAPL"], [[1355, 477.0], [477.0, 212.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
-        ["MSFT", 1355.0, [[1.0]]],
+        [["MSFT", "AAPL"], [[1349, 476.0], [476.0, 211.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
+        ["MSFT", 1349.0, [[1.0]]],
     )
     @unpack
     def test_yahoo(self, tickers, covariance, similarity):
