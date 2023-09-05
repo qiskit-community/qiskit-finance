@@ -35,7 +35,7 @@ class StockMarket(Enum):
 
 
 class BaseDataProvider(ABC):
-    """The abstract base class for data_provider modules within Qiskit's finance module.
+    """The abstract base class for data_provider modules within Qiskit Finance module.
 
     To create add-on data_provider module subclass the BaseDataProvider class in this module.
     Doing so requires that the required driver interface is implemented.
