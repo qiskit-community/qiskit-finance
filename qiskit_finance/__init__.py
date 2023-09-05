@@ -17,7 +17,8 @@ Qiskit Finance module (:mod:`qiskit_finance`)
 .. currentmodule:: qiskit_finance
 
 This is the Qiskit Finance module. It has applications based on
-`Amplitude Estimation <https://qiskit.org/ecosystem/algorithms/apidocs/qiskit_algorithms.html#amplitude-estimators>`__
+`Amplitude Estimation
+<https://qiskit.org/ecosystem/algorithms/apidocs/qiskit_algorithms.html#amplitude-estimators>`__
 and optimization using
 `Qiskit Optimization <https://qiskit.org/ecosystem/optimization/>`__,
 some library circuits useful for finance applications,
