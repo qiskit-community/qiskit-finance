@@ -16,6 +16,6 @@ from qiskit.exceptions import QiskitError
 
 
 class QiskitFinanceError(QiskitError):
-    """Class for errors returned by Qiskit's finance module."""
+    """Class for errors returned by Qiskit Finance module."""
 
     pass

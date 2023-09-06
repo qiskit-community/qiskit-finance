@@ -15,7 +15,6 @@
 import unittest
 from test import QiskitFinanceTestCase
 
-from qiskit.utils import algorithm_globals
 from qiskit.circuit.library import IntegerComparator
 from qiskit.quantum_info import Operator
 from qiskit_finance.applications.estimation import EuropeanCallDelta
@@ -24,11 +23,6 @@ from qiskit_finance.circuit.library.probability_distributions import UniformDist
 
 class TestEuropeanCallDelta(QiskitFinanceTestCase):
     """Tests the EuropeanCallDelta application"""
-
-    def setUp(self):
-        super().setUp()
-        self.seed = 457
-        algorithm_globals.random_seed = self.seed
 
     def test_to_estimation_problem(self):
         """Test the expected circuit."""

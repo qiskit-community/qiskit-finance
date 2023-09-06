@@ -16,20 +16,15 @@ import unittest
 from test import QiskitFinanceTestCase
 
 import numpy as np
-from qiskit.utils import algorithm_globals, QuantumInstance, optionals
-from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.circuit.library import LinearAmplitudeFunction, TwoLocal
 from qiskit.quantum_info import Operator
+from qiskit.primitives import Sampler
+from qiskit_algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit_finance.circuit.library import EuropeanCallPricingObjective, NormalDistribution
 
 
 class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
     """Tests EuropeanCallPricingObjective."""
-
-    def setUp(self):
-        super().setUp()
-        self.seed = 457
-        algorithm_globals.random_seed = self.seed
 
     def test_ecev_circuit(self):
         """Test the expected circuit.
@@ -59,7 +54,6 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
 
         self.assertTrue(Operator(ecev).equiv(linear_function))
 
-    @unittest.skipUnless(optionals.HAS_AER, "qiskit-aer is required to run this test")
     def test_application(self):
         """Test an end-to-end application."""
 
@@ -101,16 +95,10 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
             post_processing=european_call.post_processing,
         )
 
-        from qiskit_aer import Aer
-
-        q_i = QuantumInstance(
-            Aer.get_backend("aer_simulator"),
-            seed_simulator=125,
-            seed_transpiler=80,
-        )
-        iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, quantum_instance=q_i)
+        sampler = Sampler(options={"shots": 1024, "seed": 12})
+        iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, sampler=sampler)
         result = iae.estimate(problem)
-        self.assertAlmostEqual(result.estimation_processed, 1.0364776997977694)
+        self.assertAlmostEqual(result.estimation_processed, 1.0341976859652098)
 
 
 if __name__ == "__main__":

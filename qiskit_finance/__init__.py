@@ -10,15 +10,19 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 """
-===============================================
-Qiskit's finance module (:mod:`qiskit_finance`)
-===============================================
+=============================================
+Qiskit Finance module (:mod:`qiskit_finance`)
+=============================================
 
 .. currentmodule:: qiskit_finance
 
-This is the Qiskit`s finance module. There is an initial set of function here that
-will be built out over time. At present it has applications in the form of
-Ising Hamiltonians and data providers which supply a source of financial data.
+This is the Qiskit Finance module. It has applications based on
+`Amplitude Estimation
+<https://qiskit.org/ecosystem/algorithms/apidocs/qiskit_algorithms.html#amplitude-estimators>`__
+and optimization using
+`Qiskit Optimization <https://qiskit.org/ecosystem/optimization/>`__,
+some library circuits useful for finance applications,
+and data providers which supply a source of financial data.
 
 .. autosummary::
    :toctree: ../stubs/
@@ -26,8 +30,8 @@ Ising Hamiltonians and data providers which supply a source of financial data.
 
     QiskitFinanceError
 
-In addition to standard Python errors Qiskit's finance module will raise this error if
-circumstances are that it cannot proceed to completion.
+In addition to standard Python errors the Qiskit Finance module will raise this error
+if circumstances are that it cannot proceed to completion.
 
 Submodules
 ==========

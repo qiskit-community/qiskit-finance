@@ -17,18 +17,12 @@ from test import QiskitFinanceTestCase
 
 from qiskit.circuit.library import LinearAmplitudeFunction
 from qiskit.quantum_info import Operator
-from qiskit.utils import algorithm_globals
 from qiskit_finance.applications.estimation import EuropeanCallPricing
 from qiskit_finance.circuit.library.probability_distributions import UniformDistribution
 
 
 class TestEuropeanCallPricing(QiskitFinanceTestCase):
     """Tests the EuropeanCallPricing application"""
-
-    def setUp(self):
-        super().setUp()
-        self.seed = 457
-        algorithm_globals.random_seed = self.seed
 
     def test_to_estimation_problem(self):
         """Test the expected circuit."""

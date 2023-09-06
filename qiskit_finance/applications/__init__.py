@@ -16,7 +16,7 @@ Finance applications (:mod:`qiskit_finance.applications`)
 
 .. currentmodule:: qiskit_finance.applications
 
-Applications for Qiskit's finance module.
+Qiskit Finance ready-made applications.
 
 Optimization Applications
 =========================

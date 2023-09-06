@@ -18,9 +18,9 @@ from test import QiskitFinanceTestCase
 import numpy as np
 
 from qiskit import QuantumCircuit
-from qiskit.utils import QuantumInstance, optionals
-from qiskit.algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit.quantum_info import Operator
+from qiskit.primitives import Sampler
+from qiskit_algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit_finance.circuit.library import NormalDistribution
 from qiskit_finance.circuit.library.payoff_functions import FixedIncomePricingObjective
 
@@ -50,7 +50,6 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
 
         self.assertTrue(Operator(circuit).equiv(expected))
 
-    @unittest.skipUnless(optionals.HAS_AER, "qiskit-aer is required to run this test")
     def test_application(self):
         """Test an end-to-end application."""
 
@@ -87,19 +86,12 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
             post_processing=fixed_income.post_processing,
         )
 
-        # run simulation
-        from qiskit_aer import Aer
-
-        q_i = QuantumInstance(
-            Aer.get_backend("aer_simulator"),
-            seed_simulator=2,
-            seed_transpiler=2,
-        )
-        iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, quantum_instance=q_i)
+        sampler = Sampler(options={"shots": 1024, "seed": 12})
+        iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, sampler=sampler)
         result = iae.estimate(problem)
 
         # compare to precomputed solution
-        self.assertAlmostEqual(result.estimation_processed, 2.3389012822103044)
+        self.assertAlmostEqual(result.estimation_processed, 2.329154511815111)
 
 
 if __name__ == "__main__":

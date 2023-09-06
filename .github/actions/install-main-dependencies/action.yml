@@ -28,7 +28,7 @@ runs:
     - name: Get main last commit ids
       run: |
         echo "QISKIT_HASH=$(git ls-remote --heads https://github.com/Qiskit/qiskit.git refs/heads/main  | awk '{print $1}')" >> $GITHUB_ENV
-        echo "OPTIMIZATION_HASH=$(git ls-remote --heads https://github.com/Qiskit/qiskit-optimization.git refs/heads/main  | awk '{print $1}')" >> $GITHUB_ENV
+        echo "OPTIMIZATION_HASH=$(git ls-remote --heads https://github.com/qiskit-community/qiskit-optimization.git refs/heads/main  | awk '{print $1}')" >> $GITHUB_ENV
       shell: bash
     - name: Qiskit Cache
       env:
@@ -127,7 +127,7 @@ runs:
         if [ "$build_from_main" == "true" ]; then
           echo 'Create wheel file from main'
           pip install -U wheel
-          git clone --depth 1 --branch main https://github.com/Qiskit/qiskit-optimization.git /tmp/qiskit-optimization
+          git clone --depth 1 --branch main https://github.com/qiskit-community/qiskit-optimization.git /tmp/qiskit-optimization
           pushd /tmp/qiskit-optimization
           python setup.py bdist_wheel
           popd

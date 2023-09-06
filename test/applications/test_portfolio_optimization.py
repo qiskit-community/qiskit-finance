@@ -18,7 +18,6 @@ from test import QiskitFinanceTestCase
 from ddt import ddt, data, unpack
 import numpy as np
 
-from qiskit.utils import algorithm_globals
 from qiskit_optimization.problems import QuadraticProgram
 from qiskit_finance.applications.optimization import PortfolioOptimization
 from qiskit_finance.exceptions import QiskitFinanceError
@@ -33,7 +32,6 @@ class TestPortfolioDiversification(QiskitFinanceTestCase):
     def setUp(self):
         """Set up for the tests"""
         super().setUp()
-        algorithm_globals.random_seed = 100
         self.num_assets = 4
         self.expected_returns = [0.01528439, -0.00078095, 0.00051792, 0.00087001]
         self.covariances = [
