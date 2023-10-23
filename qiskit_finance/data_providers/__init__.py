@@ -21,7 +21,7 @@ an external service that sources the actual data; please refer to the
 specific provider class below, for more information in that regard.
 
 Data Provider Base Class
-========================
+------------------------
 
 .. autosummary::
    :toctree: ../stubs/
@@ -30,7 +30,7 @@ Data Provider Base Class
    BaseDataProvider
 
 Data Provider Types
-===================
+-------------------
 
 .. autosummary::
    :toctree: ../stubs/
@@ -39,7 +39,7 @@ Data Provider Types
     StockMarket
 
 Data Providers
-==============
+--------------
 
 .. autosummary::
    :toctree: ../stubs/

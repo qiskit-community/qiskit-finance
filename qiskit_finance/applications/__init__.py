@@ -19,7 +19,7 @@ Finance applications (:mod:`qiskit_finance.applications`)
 Qiskit Finance ready-made applications.
 
 Optimization Applications
-=========================
+-------------------------
 
 .. autosummary::
    :toctree: ../stubs/
@@ -29,7 +29,7 @@ Optimization Applications
    PortfolioDiversification
 
 Estimation Applications
-=======================
+-----------------------
 
 .. autosummary::
    :toctree: ../stubs/

@@ -12,8 +12,8 @@
 
 
 """
-Circuit library (:mod:`qiskit_finance.circuit`)
-===============================================
+Circuit (:mod:`qiskit_finance.circuit`)
+=======================================
 
 .. currentmodule:: qiskit_finance.circuit
 
