@@ -19,7 +19,7 @@ Circuit Library (:mod:`qiskit_finance.circuit.library`)
 .. currentmodule:: qiskit_finance.circuit.library
 
 Payoff functions
-================
+----------------
 
 .. autosummary::
    :toctree: ../stubs/
@@ -31,7 +31,7 @@ Payoff functions
    FixedIncomePricingObjective
 
 Probability distributions
-=========================
+-------------------------
 
 .. autosummary::
    :toctree: ../stubs/
