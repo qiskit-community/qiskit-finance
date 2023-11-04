@@ -52,7 +52,7 @@ runs:
       run: |
         if [ "${{ inputs.qiskit-main }}" == "true" ]; then
           echo 'Install Qiskit from Main'
-          if [ "${{ inputs.os }}" == "windows-2019" ]; then
+          if [ "${{ inputs.os }}" == "windows-latest" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -86,7 +86,7 @@ runs:
           fi
         else
           echo 'Install Qiskit from Stable'
-          if [ "${{ inputs.os }}" == "windows-2019" ]; then
+          if [ "${{ inputs.os }}" == "windows-latest" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -96,7 +96,7 @@ runs:
     - name: Install stable Aer
       run: |
         echo 'Install stable Aer'
-        if [ "${{ inputs.os }}" == "windows-2019" ]; then
+        if [ "${{ inputs.os }}" == "windows-latest" ]; then
           source "$CONDA/etc/profile.d/conda.sh"
           conda activate scsenv
         fi
@@ -105,7 +105,7 @@ runs:
     - name: Install Optimization from Main
       run: |
         echo 'Install Optimization from Main'
-        if [ "${{ inputs.os }}" == "windows-2019" ]; then
+        if [ "${{ inputs.os }}" == "windows-latest" ]; then
           source "$CONDA/etc/profile.d/conda.sh"
           conda activate scsenv
         fi

@@ -122,9 +122,9 @@ jobs:
             python-version: 3.8
           - os: macos-latest
             python-version: 3.11
-          - os: windows-2019
+          - os: windows-latest
             python-version: 3.8
-          - os: windows-2019
+          - os: windows-latest
             python-version: '3.10'
     steps:
       - uses: actions/checkout@v3
@@ -142,7 +142,7 @@ jobs:
           conda create -y -n scsenv python=${{ matrix.python-version }}
           conda activate scsenv
           conda install -y scs lapack cvxpy -c conda-forge
-        if: ${{ matrix.os == 'windows-2019' }}
+        if: ${{ matrix.os == 'windows-latest' }}
         shell: bash
       - uses: ./.github/actions/install-main-dependencies
         with:
@@ -154,7 +154,7 @@ jobs:
           os: ${{ matrix.os }}
       - name: Run lint
         run: |
-          if [ "${{ matrix.os }}" == "windows-2019" ]; then
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -162,7 +162,7 @@ jobs:
         shell: bash
       - name: Run mypy
         run: |
-          if [ "${{ matrix.os }}" == "windows-2019" ]; then
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -179,7 +179,7 @@ jobs:
         if: ${{ !cancelled() }}
       - name: Deprecation Messages
         run: |
-          if [ "${{ matrix.os }}" == "windows-2019" ]; then
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -188,7 +188,7 @@ jobs:
         shell: bash
       - name: Coverage combine
         run: |
-          if [ "${{ matrix.os }}" == "windows-2019" ]; then
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
             source "$CONDA/etc/profile.d/conda.sh"
             conda activate scsenv
           fi
@@ -318,11 +318,11 @@ jobs:
           path: /tmp/m311
       - uses: actions/download-artifact@v3
         with:
-          name: windows-2019-3.8
+          name: windows-latest-3.8
           path: /tmp/w38
       - uses: actions/download-artifact@v3
         with:
-          name: windows-2019-3.10
+          name: windows-latest-3.10
           path: /tmp/w310
       - name: Install Dependencies
         run: pip install -U coverage coveralls diff-cover
