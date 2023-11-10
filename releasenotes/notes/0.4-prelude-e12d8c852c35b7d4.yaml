@@ -13,8 +13,5 @@ prelude: >
     #. Otherwise, you need to migrate your code immediately. If you cannot do that, or want to continue using some
        of the features that were removed, you should pin your version of Qiskit Finance to 0.3.4
 
-  You can check out the `migration guides <https://qiskit.org/ecosystem/optimization/migration/index.html>`_
-  for details on how to update your code.
-
   For more context on the changes around Qiskit Finance and the other application projects as well as the algorithms
   library in Qiskit, be sure to read this `blog post <https://ibm.biz/BdSyNm>`_.
