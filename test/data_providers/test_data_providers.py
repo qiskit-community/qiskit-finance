@@ -200,12 +200,15 @@ class TestDataProviders(QiskitFinanceTestCase):
             self.fail(f"Test of ExchangeDataProvider failed: {str(ex)}")
 
     @data(
-        [["MSFT", "AAPL"], [[1349, 476.0], [476.0, 211.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
-        ["MSFT", 1349.0, [[1.0]]],
+        [["MSFT", "AAPL"], [[1344, 474.0], [474.0, 211.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
+        ["MSFT", 1344.0, [[1.0]]],
     )
     @unpack
     def test_yahoo(self, tickers, covariance, similarity):
-        """Yahoo data test"""
+        """Yahoo data test."""
+        # Note: Unit test reference values above seem to need updating periodically as the
+        #       data fetched seems to differ slightly presumably due to database being updated and
+        #       maybe historical data compressed or something.
         yahoo = YahooDataProvider(
             tickers=tickers,
             start=datetime.datetime(2021, 1, 1),
