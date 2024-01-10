@@ -93,7 +93,7 @@ extensions = [
 ]
 templates_path = ["_templates"]
 
-docs_url_prefix = "ecosystem/finance"
+docs_url_prefix = "qiskit-finance"
 
 nbsphinx_timeout = 360
 nbsphinx_execute = os.getenv("QISKIT_DOCS_BUILD_TUTORIALS", "never")
