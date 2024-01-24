@@ -1,0 +1,41 @@
+﻿
+
+PortfolioOptimization
+=================================================
+
+.. currentmodule:: qiskit_finance.applications
+
+.. autoclass:: PortfolioOptimization
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+
+   .. rubric:: Attributes
+
+   
+   .. autoattribute:: PortfolioOptimization.bounds
+   .. autoattribute:: PortfolioOptimization.budget
+   .. autoattribute:: PortfolioOptimization.covariances
+   .. autoattribute:: PortfolioOptimization.expected_returns
+   .. autoattribute:: PortfolioOptimization.risk_factor
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: PortfolioOptimization.interpret
+   .. automethod:: PortfolioOptimization.portfolio_expected_value
+   .. automethod:: PortfolioOptimization.portfolio_variance
+   .. automethod:: PortfolioOptimization.sample_most_likely
+   .. automethod:: PortfolioOptimization.to_quadratic_program
+
+   
+   

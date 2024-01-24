@@ -1,0 +1,33 @@
+﻿
+
+ExchangeDataProvider
+==================================================
+
+.. currentmodule:: qiskit_finance.data_providers
+
+.. autoclass:: ExchangeDataProvider
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: ExchangeDataProvider.get_coordinates
+   .. automethod:: ExchangeDataProvider.get_covariance_matrix
+   .. automethod:: ExchangeDataProvider.get_mean_vector
+   .. automethod:: ExchangeDataProvider.get_period_return_covariance_matrix
+   .. automethod:: ExchangeDataProvider.get_period_return_mean_vector
+   .. automethod:: ExchangeDataProvider.get_similarity_matrix
+   .. automethod:: ExchangeDataProvider.run
+
+   
+   

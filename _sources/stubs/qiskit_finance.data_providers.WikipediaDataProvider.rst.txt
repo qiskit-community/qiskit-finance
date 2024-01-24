@@ -1,0 +1,33 @@
+﻿
+
+WikipediaDataProvider
+===================================================
+
+.. currentmodule:: qiskit_finance.data_providers
+
+.. autoclass:: WikipediaDataProvider
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: WikipediaDataProvider.get_coordinates
+   .. automethod:: WikipediaDataProvider.get_covariance_matrix
+   .. automethod:: WikipediaDataProvider.get_mean_vector
+   .. automethod:: WikipediaDataProvider.get_period_return_covariance_matrix
+   .. automethod:: WikipediaDataProvider.get_period_return_mean_vector
+   .. automethod:: WikipediaDataProvider.get_similarity_matrix
+   .. automethod:: WikipediaDataProvider.run
+
+   
+   

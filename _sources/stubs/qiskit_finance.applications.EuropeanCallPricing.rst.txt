@@ -1,0 +1,28 @@
+﻿
+
+EuropeanCallPricing
+===============================================
+
+.. currentmodule:: qiskit_finance.applications
+
+.. autoclass:: EuropeanCallPricing
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: EuropeanCallPricing.interpret
+   .. automethod:: EuropeanCallPricing.to_estimation_problem
+
+   
+   

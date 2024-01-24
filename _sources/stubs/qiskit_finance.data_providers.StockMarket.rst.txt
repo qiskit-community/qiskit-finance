@@ -1,0 +1,28 @@
+﻿
+
+StockMarket
+=========================================
+
+.. currentmodule:: qiskit_finance.data_providers
+
+.. autoclass:: StockMarket
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+
+   .. rubric:: Attributes
+
+   
+   .. autoattribute:: StockMarket.LONDON
+   .. autoattribute:: StockMarket.EURONEXT
+   .. autoattribute:: StockMarket.SINGAPORE
+   
+   
+
+   
+   
+   

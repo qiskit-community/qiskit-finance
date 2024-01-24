@@ -1,0 +1,33 @@
+﻿
+
+BaseDataProvider
+==============================================
+
+.. currentmodule:: qiskit_finance.data_providers
+
+.. autoclass:: BaseDataProvider
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: BaseDataProvider.get_coordinates
+   .. automethod:: BaseDataProvider.get_covariance_matrix
+   .. automethod:: BaseDataProvider.get_mean_vector
+   .. automethod:: BaseDataProvider.get_period_return_covariance_matrix
+   .. automethod:: BaseDataProvider.get_period_return_mean_vector
+   .. automethod:: BaseDataProvider.get_similarity_matrix
+   .. automethod:: BaseDataProvider.run
+
+   
+   

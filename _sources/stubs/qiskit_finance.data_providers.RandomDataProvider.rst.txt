@@ -1,0 +1,33 @@
+﻿
+
+RandomDataProvider
+================================================
+
+.. currentmodule:: qiskit_finance.data_providers
+
+.. autoclass:: RandomDataProvider
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: RandomDataProvider.get_coordinates
+   .. automethod:: RandomDataProvider.get_covariance_matrix
+   .. automethod:: RandomDataProvider.get_mean_vector
+   .. automethod:: RandomDataProvider.get_period_return_covariance_matrix
+   .. automethod:: RandomDataProvider.get_period_return_mean_vector
+   .. automethod:: RandomDataProvider.get_similarity_matrix
+   .. automethod:: RandomDataProvider.run
+
+   
+   

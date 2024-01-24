@@ -1,0 +1,33 @@
+﻿
+
+YahooDataProvider
+===============================================
+
+.. currentmodule:: qiskit_finance.data_providers
+
+.. autoclass:: YahooDataProvider
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: YahooDataProvider.get_coordinates
+   .. automethod:: YahooDataProvider.get_covariance_matrix
+   .. automethod:: YahooDataProvider.get_mean_vector
+   .. automethod:: YahooDataProvider.get_period_return_covariance_matrix
+   .. automethod:: YahooDataProvider.get_period_return_mean_vector
+   .. automethod:: YahooDataProvider.get_similarity_matrix
+   .. automethod:: YahooDataProvider.run
+
+   
+   

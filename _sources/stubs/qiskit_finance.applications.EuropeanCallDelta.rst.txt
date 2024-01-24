@@ -1,0 +1,28 @@
+﻿
+
+EuropeanCallDelta
+=============================================
+
+.. currentmodule:: qiskit_finance.applications
+
+.. autoclass:: EuropeanCallDelta
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: EuropeanCallDelta.interpret
+   .. automethod:: EuropeanCallDelta.to_estimation_problem
+
+   
+   

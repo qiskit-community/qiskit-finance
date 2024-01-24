@@ -1,0 +1,33 @@
+﻿
+
+DataOnDemandProvider
+==================================================
+
+.. currentmodule:: qiskit_finance.data_providers
+
+.. autoclass:: DataOnDemandProvider
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: DataOnDemandProvider.get_coordinates
+   .. automethod:: DataOnDemandProvider.get_covariance_matrix
+   .. automethod:: DataOnDemandProvider.get_mean_vector
+   .. automethod:: DataOnDemandProvider.get_period_return_covariance_matrix
+   .. automethod:: DataOnDemandProvider.get_period_return_mean_vector
+   .. automethod:: DataOnDemandProvider.get_similarity_matrix
+   .. automethod:: DataOnDemandProvider.run
+
+   
+   
