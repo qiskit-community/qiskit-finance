@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="検索" href="../search.html" /><link rel="next" title="Qiskit Finance API Reference" href="../apidocs/qiskit_finance.html" /><link rel="prev" title="Option Pricing with qGANs" href="10_qgan_option_pricing.html" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="検索" href="../search.html" /><link rel="next" title="Qiskit Finance API Reference" href="../apidocs/qiskit_finance.html" /><link rel="prev" title="qGANs によるオプション価格推定" href="10_qgan_option_pricing.html" />
 
     <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
-        <title>Loading and Processing Stock-Market Time-Series Data - Qiskit Finance 0.4.0</title>
+        <title>株式市場時系列データの読み込みと処理 - Qiskit Finance 0.4.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-sphinx-theme.css?v=fe84956c" />
@@ -241,24 +241,24 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">Quantum Amplitude Estimation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">Portfolio Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_portfolio_diversification.html">Portfolio Diversification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">Pricing European Call Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">Pricing European Put Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_bull_spread_pricing.html">Pricing Bull Spreads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">Pricing Basket Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">Pricing Asian Barrier Spreads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html">Pricing Fixed-Income Assets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="09_credit_risk_analysis.html">Credit Risk Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_qgan_option_pricing.html">Option Pricing with qGANs</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Loading and Processing Stock-Market Time-Series Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">はじめに</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">チュートリアル</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of チュートリアル</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">量子振幅推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">ポートフォリオの最適化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_portfolio_diversification.html">ポートフォリオの分散</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">ヨーロピアン・コール・オプションの価格推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">ヨーロピアン・プット・オプションの価格推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_bull_spread_pricing.html">ブル・スプレッドの価格推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">バスケット・オプションの価格推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">アジアン・バリア・スプレッドの価格推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html">固定収入資産の価格推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09_credit_risk_analysis.html">信用リスク分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_qgan_option_pricing.html">qGANs によるオプション価格推定</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">株式市場時系列データの読み込みと処理</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">API リファレンス</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API リファレンス</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../stubs/qiskit_finance.QiskitFinanceError.html">QiskitFinanceError</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.html">Circuit (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Circuit (qiskit_finance.circuit)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.library.html">Circuit Library (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit.library</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Circuit Library (qiskit_finance.circuit.library)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -275,7 +275,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">リリースノート</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/qiskit-community/qiskit-finance">GitHub</a></li>
 </ul>
 
@@ -345,13 +345,13 @@
         <article role="main">
           <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>This page was generated from <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/11_time_series.ipynb">docs/tutorials/11_time_series.ipynb</a>.</p>
+<p>このページは <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/11_time_series.ipynb">docs/tutorials/11_time_series.ipynb</a> から生成されました。</p>
 </div>
-<section id="Loading-and-Processing-Stock-Market-Time-Series-Data">
-<h1>Loading and Processing Stock-Market Time-Series Data<a class="headerlink" href="#Loading-and-Processing-Stock-Market-Time-Series-Data" title="この見出しへのパーマリンク">#</a></h1>
-<section id="Introduction">
-<h2>Introduction<a class="headerlink" href="#Introduction" title="この見出しへのパーマリンク">#</a></h2>
-<p>Across many problems in finance, one starts with time series. Here, we showcase how to generate pseudo-random time-series, download actual stock-market time series from a number of common providers, and how to compute time-series similarity measures.</p>
+<section id="株式市場時系列データの読み込みと処理">
+<h1>株式市場時系列データの読み込みと処理<a class="headerlink" href="#株式市場時系列データの読み込みと処理" title="この見出しへのパーマリンク">#</a></h1>
+<section id="はじめに">
+<h2>はじめに<a class="headerlink" href="#はじめに" title="この見出しへのパーマリンク">#</a></h2>
+<p>金融分野の多くの問題では、まず時系列から始まります。ここでは、疑似ランダム時系列を生成する方法、多くの一般的なプロバイダーから実際の株式市場の時系列をダウンロードする方法、そして時系列の類似度を計算する方法を紹介します。</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -381,7 +381,7 @@
 </pre></div>
 </div>
 </div>
-<p>Once the data are loaded, you can run a variety of algorithms on those to aggregate the data. Notably, you can compute the covariance matrix or a variant, which would consider alternative time-series similarity measures based on <a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_time_warping">dynamic time warping</a> (DTW). In DTW, changes that vary in speed, e.g., one stock’s price following another stock’s price with a small delay, can be accommodated.</p>
+<p>データがロードされると、データを集約するために、さまざまなアルゴリズムを実行することができます。特に注目すべきは、共分散行列や、動的時間伸縮法 <a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_time_warping">dynamic time warping</a> (DTW) に基づく代替の時系列類似性測定を考慮した確率変数を計算することができます。DTWでは、例えば、ある銘柄の価格が別の銘柄の価格にわずかな遅れで追随するような、速度の変化に対応することができます。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -440,7 +440,7 @@ A covariance matrix:
 <img alt="../_images/tutorials_11_time_series_5_3.png" src="../_images/tutorials_11_time_series_5_3.png" />
 </div>
 </div>
-<p>If you wish, you can look into the underlying pseudo-random time-series using. Please note that the private class members (starting with underscore) may change in future releases of Qiskit.</p>
+<p>ご希望であれば、元になる疑似ランダム時系列を調べることができます。なお、プライベートクラスのメンバー（アンダースコアで始まる）は、Qiskitの将来のリリースで変更される可能性があることに注意してください。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -484,7 +484,7 @@ TICKER2
 [96.8774156647853, 98.99525441983634, 97.88323365714406, 97.50562865001707, 99.5484002575094, 100.19510325371124, 100.85816662608751, 100.34416025440004, 98.69608508354439, 98.86354982776713, 98.97256391558868, 97.7452118613441, 97.06198519956354, 96.98994151983632, 96.04518989677554, 95.94691992892332, 96.04240295639278, 96.07798919344826, 95.57169753513395, 96.16544560691977, 97.0566125612021, 97.37746086576867, 96.55923063837835, 97.29088292216379, 96.78944290369674, 97.66860352198472, 96.59681610510728, 97.51128330823606, 97.49121985362058]
 </pre></div></div>
 </div>
-<p>Clearly, you can adapt the number and names of tickers and the range of dates:</p>
+<p>この場合、ティッカーの数と名前、日付の範囲を調整することができます。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -512,10 +512,9 @@ TICKER2
 </div>
 </div>
 </section>
-<section id="Access-to-closing-price-time-series">
-<h2>Access to closing-price time-series<a class="headerlink" href="#Access-to-closing-price-time-series" title="この見出しへのパーマリンク">#</a></h2>
-<p>While the access to real-time data usually requires a payment, it is possible to access historical (adjusted) closing prices via Wikipedia and Nasdaq Data Link free of charge, following registration at: <a class="reference external" href="https://data.nasdaq.com/sign-up">https://data.nasdaq.com/sign-up</a> In the code below, one needs to specify actual tickers of actual NASDAQ issues and the access token you obtain from Nasdaq Data Link; by running the code below, you agree to the Nasdaq Data Link terms and conditions, including a liability waiver. Notice that at
-least two tickers are required for the computation of covariance and time-series matrices, but hundreds of tickers may go beyond the fair usage limits of Nasdaq Data Link.</p>
+<section id="終値の時系列へのアクセス">
+<h2>終値の時系列へのアクセス<a class="headerlink" href="#終値の時系列へのアクセス" title="この見出しへのパーマリンク">#</a></h2>
+<p>リアルタイムデータへのアクセスには通常支払いが必要ですが、WikipediaとNasdaq Data Linkを経由して過去の(調整済みの)終値に無料でアクセスすることができます。 <a class="reference external" href="https://data.nasdaq.com/sign-up">https://data.nasdaq.com/sign-up</a> に登録が必要です。 以下のコードでは、実際のナスダック銘柄の実際のティッカーとNasdaq Data Linkから取得するアクセストークンを指定する必要があります; 以下のコードを実行することで、免責同意書を含むNasdaq Data Linkの利用規約に同意したことになります。共分散行列と時系列行列の計算には少なくとも2つのティッカーが必要ですが、数百のティッカーはNasdaq Data Linkの公正な使用制限を超えている可能性があることに注意してください。</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -538,7 +537,7 @@ least two tickers are required for the computation of covariance and time-series
 </pre></div>
 </div>
 </div>
-<p>Once the data are loaded, you can again compute the covariance matrix or its DTW variants.</p>
+<p>データがロードされると、共分散行列またはその DTW確率変数を再び計算できます。</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -566,7 +565,7 @@ least two tickers are required for the computation of covariance and time-series
 </pre></div>
 </div>
 </div>
-<p>If you wish, you can look into the underlying time-series using:</p>
+<p>必要であれば、以下のような方法で時系列を調べることができます。</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -589,12 +588,11 @@ least two tickers are required for the computation of covariance and time-series
 </div>
 </div>
 </section>
-<section id="[Optional]-Setup-token-to-access-recent,-fine-grained-time-series">
-<h2>[Optional] Setup token to access recent, fine-grained time-series<a class="headerlink" href="#[Optional]-Setup-token-to-access-recent,-fine-grained-time-series" title="この見出しへのパーマリンク">#</a></h2>
-<p>If you would like to download professional data, you will have to set-up a token with one of the major providers. Let us now illustrate the data with NASDAQ Data on Demand, which can supply bid and ask prices in arbitrary resolution, as well as aggregates such as daily adjusted closing prices, for NASDAQ and NYSE issues.</p>
-<p>If you don’t have NASDAQ Data on Demand license, you can contact NASDAQ (cf. <a class="reference external" href="https://business.nasdaq.com/intel/GIS/Nasdaq-Data-on-Demand.html">https://business.nasdaq.com/intel/GIS/Nasdaq-Data-on-Demand.html</a>) to obtain a trial or paid license.</p>
-<p>If and when you have access to NASDAQ Data on Demand using your own token, you should replace REPLACE-ME below with the token. To assure the security of the connection, you should also have your own means of validating NASDAQ’s certificates. The DataOnDemandProvider constructor has an optional argument <code class="docutils literal notranslate"><span class="pre">verify</span></code>, which can be <code class="docutils literal notranslate"><span class="pre">None</span></code> or a string or a boolean. If it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, certify certificates will be used (default). If verify is a string, it should be pointing to a certificate for the
-HTTPS connection to NASDAQ (dataondemand.nasdaq.com), either in the form of a CA_BUNDLE file or a directory wherein to look.</p>
+<section id="[Optional]-最近の細かい時系列にアクセスするためのセットアップトークン">
+<h2>[Optional] 最近の細かい時系列にアクセスするためのセットアップトークン<a class="headerlink" href="#[Optional]-最近の細かい時系列にアクセスするためのセットアップトークン" title="この見出しへのパーマリンク">#</a></h2>
+<p>プロフェッショナル・データをダウンロードしたい場合は、主要プロバイダーの 1 つを使用してトークンをセットアップする必要があります。 ここでは、NASDAQとNYSEの銘柄について、任意の解像度で買値と売値、日次修正終値などの集計を供給できるNASDAQ Data on Demandを使ってデータを説明しましょう。</p>
+<p>NASDAQ Data on Demandライセンスをお持ちでない場合は、NASDAQ (<a class="reference external" href="https://business.nasdaq.com/intel/GIS/Nasdaq-Data-on-Demand.html">https://business.nasdaq.com/intel/GIS/Nasdaq-Data-on-Demand.html</a>)に連絡して、トライアルライセンスまたは有料ライセンスを取得できます。</p>
+<p>あなた自身のトークンを使用してNASDAQデータオンデマンドにアクセスできる場合は、以下のREPLACE-MEをトークンに置き換える必要があります。 接続のセキュリティを確保するには、NASDAQの証明書を検証する独自の手段を持っている必要があります。 DataOnDemandProviderのコンストラクタにはオプションの引数 <code class="docutils literal notranslate"><span class="pre">verify</span></code> があります。もし <code class="docutils literal notranslate"><span class="pre">None</span></code> を指定した場合は、証明書を使用します(デフォルト)。verifyが文字列の場合は、NASDAQ (dataondemand.nasdaq.com)へのHTTPS接続用の、CA_BUNDLEファイルの形式か、あるいはルックするディレクトリのいずれかの形式の証明書を指している必要があります。</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -620,8 +618,8 @@ HTTPS connection to NASDAQ (dataondemand.nasdaq.com), either in the form of a CA
 </pre></div>
 </div>
 </div>
-<p>Another major vendor of stock market data is Exchange Data International (EDI), whose API can be used to query over 100 emerging and frontier markets that are Africa, Asia, Far East, Latin America and Middle East, as well as the more established ones. See: <a class="reference external" href="https://www.exchange-data.com/">https://www.exchange-data.com/</a> for an overview of the coverage.</p>
-<p>The access again requires a valid access token to replace REPLACE-ME below. The token can be obtained on a trial or paid-for basis at: <a class="reference external" href="https://data.nasdaq.com/sign-up">https://data.nasdaq.com/sign-up</a></p>
+<p>もう 1 つの主要な株式市場データのベンダーは、 Exchange Data International (EDI)であり、その API を利用して、既存の市場だけでなく、アフリカ、アジア、極東、ラテンアメリカ、中東など 100 を超える新興市場やフロンティア市場を照会することができます。 対象範囲の概要については、 <a class="reference external" href="https://www.exchange-data.com/">https://www.exchange-data.com/</a> を参照してください。</p>
+<p>このアクセスには、 REPLACE-ME を置き換えるための有効なアクセス・トークンが再度必要です。 このトークンは、試用版または有料で次のサイトから入手できます： <a class="reference external" href="https://data.nasdaq.com/sign-up">https://data.nasdaq.com/sign-up</a></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -648,7 +646,7 @@ HTTPS connection to NASDAQ (dataondemand.nasdaq.com), either in the form of a CA
 </pre></div>
 </div>
 </div>
-<p>One can also access Yahoo Finance Data, no token needed, from Yahoo! Finance.</p>
+<p>Yahoo! ファイナンスからYahooファイナンスデータに、トークン無しで、アクセスすることもできます。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -678,7 +676,7 @@ HTTPS connection to NASDAQ (dataondemand.nasdaq.com), either in the form of a CA
 <img alt="../_images/tutorials_11_time_series_22_0.png" src="../_images/tutorials_11_time_series_22_0.png" />
 </div>
 </div>
-<p>For the actual use of the data, please see the portfolio_optimization or portfolio_diversification notebooks.</p>
+<p>データの実際の使用については、portfolio_optimizationまたは portfolio_diversification ノートブックを参照してください。</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
@@ -746,7 +744,7 @@ HTTPS connection to NASDAQ (dataondemand.nasdaq.com), either in the form of a CA
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Option Pricing with qGANs</div>
+                <div class="title">qGANs によるオプション価格推定</div>
                 
               </div>
             </a>
@@ -780,10 +778,10 @@ HTTPS connection to NASDAQ (dataondemand.nasdaq.com), either in the form of a CA
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Loading and Processing Stock-Market Time-Series Data</a><ul>
-<li><a class="reference internal" href="#Introduction">Introduction</a></li>
-<li><a class="reference internal" href="#Access-to-closing-price-time-series">Access to closing-price time-series</a></li>
-<li><a class="reference internal" href="#[Optional]-Setup-token-to-access-recent,-fine-grained-time-series">[Optional] Setup token to access recent, fine-grained time-series</a></li>
+<li><a class="reference internal" href="#">株式市場時系列データの読み込みと処理</a><ul>
+<li><a class="reference internal" href="#はじめに">はじめに</a></li>
+<li><a class="reference internal" href="#終値の時系列へのアクセス">終値の時系列へのアクセス</a></li>
+<li><a class="reference internal" href="#[Optional]-最近の細かい時系列にアクセスするためのセットアップトークン">[Optional] 最近の細かい時系列にアクセスするためのセットアップトークン</a></li>
 </ul>
 </li>
 </ul>

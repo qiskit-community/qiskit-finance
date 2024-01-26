@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Índice" href="../genindex.html" /><link rel="search" title="Búsqueda" href="../search.html" /><link rel="next" title="Pricing Basket Options" href="06_basket_option_pricing.html" /><link rel="prev" title="Pricing European Put Options" href="04_european_put_option_pricing.html" />
+<link rel="index" title="Índice" href="../genindex.html" /><link rel="search" title="Búsqueda" href="../search.html" /><link rel="next" title="Fijación de Precios de Opciones de Canasta" href="06_basket_option_pricing.html" /><link rel="prev" title="Fijación de Precios de Opciones de Venta Europeas" href="04_european_put_option_pricing.html" />
 
     <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
-        <title>Pricing Bull Spreads - Qiskit Finance 0.4.0</title>
+        <title>Fijación de Precios de Márgenes Alcistas - Qiskit Finance 0.4.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-sphinx-theme.css?v=fe84956c" />
@@ -241,24 +241,24 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">Quantum Amplitude Estimation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">Portfolio Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_portfolio_diversification.html">Portfolio Diversification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">Pricing European Call Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">Pricing European Put Options</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Pricing Bull Spreads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">Pricing Basket Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">Pricing Asian Barrier Spreads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html">Pricing Fixed-Income Assets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="09_credit_risk_analysis.html">Credit Risk Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_qgan_option_pricing.html">Option Pricing with qGANs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_time_series.html">Loading and Processing Stock-Market Time-Series Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Descripción General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Primeros Pasos</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutoriales</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutoriales</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">Estimación de Amplitud Cuántica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">Optimización de Cartera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_portfolio_diversification.html">Diversificación de Cartera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">Fijación de Precios de Opciones de Compra Europeas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">Fijación de Precios de Opciones de Venta Europeas</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Fijación de Precios de Márgenes Alcistas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">Fijación de Precios de Opciones de Canasta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">Fijación de Precios de Márgenes de Barrera Asiáticos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html">Fijación de Precios de Activos de Renta Fija</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09_credit_risk_analysis.html">Análisis de Riesgo Crediticio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_qgan_option_pricing.html">Fijación de Precios de Opciones con qGANs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_time_series.html">Carga y Procesamiento de Datos de Series Temporales del Mercado de Valores</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">Referencia de la API</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Referencia de la API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../stubs/qiskit_finance.QiskitFinanceError.html">QiskitFinanceError</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.html">Circuit (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Circuit (qiskit_finance.circuit)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.library.html">Circuit Library (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit.library</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Circuit Library (qiskit_finance.circuit.library)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -275,7 +275,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Notas de la Versión</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/qiskit-community/qiskit-finance">GitHub</a></li>
 </ul>
 
@@ -345,28 +345,28 @@
         <article role="main">
           <div class="admonition note">
 <p class="admonition-title">Nota</p>
-<p>This page was generated from <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/05_bull_spread_pricing.ipynb">docs/tutorials/05_bull_spread_pricing.ipynb</a>.</p>
+<p>Esta página fue generada a partir de <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/05_bull_spread_pricing.ipynb">docs/tutorials/05_bull_spread_pricing.ipynb</a>.</p>
 </div>
-<section id="Pricing-Bull-Spreads">
-<h1>Pricing Bull Spreads<a class="headerlink" href="#Pricing-Bull-Spreads" title="Enlace permanente a este encabezado">#</a></h1>
-<section id="Introduction">
-<h2>Introduction<a class="headerlink" href="#Introduction" title="Enlace permanente a este encabezado">#</a></h2>
-<p>Suppose a <a class="reference external" href="http://www.theoptionsguide.com/bull-call-spread.aspx">bull spread</a> with strike prices <span class="math notranslate nohighlight">\(K_1 &lt; K_2\)</span> and an underlying asset whose spot price at maturity <span class="math notranslate nohighlight">\(S_T\)</span> follows a given random distribution. The corresponding payoff function is defined as:</p>
+<section id="Fijación-de-Precios-de-Márgenes-Alcistas">
+<h1>Fijación de Precios de Márgenes Alcistas<a class="headerlink" href="#Fijación-de-Precios-de-Márgenes-Alcistas" title="Enlace permanente a este encabezado">#</a></h1>
+<section id="Introducción">
+<h2>Introducción<a class="headerlink" href="#Introducción" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Supón un <a class="reference external" href="http://www.theoptionsguide.com/bull-call-spread.aspx">margen alcista</a> con precios de ejercicio <span class="math notranslate nohighlight">\(K_1 &lt; K_2\)</span> y un activo subyacente cuyo precio al contado al vencimiento <span class="math notranslate nohighlight">\(S_T\)</span> sigue una distribución aleatoria dada. La función de rendimiento correspondiente se define como:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\min\{\max\{S_T - K_1, 0\}, K_2 - K_1\}\]</div>
 </div>
-<p>In the following, a quantum algorithm based on amplitude estimation is used to estimate the expected payoff, i.e., the fair price before discounting, for the option:</p>
+<p>A continuación, se utiliza un algoritmo cuántico basado en la estimación de amplitud para estimar el rendimiento esperado, es decir, el precio justo antes del descuento, para la opción:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\mathbb{E}\left[ \min\{\max\{S_T - K_1, 0\}, K_2 - K_1\} \right]\]</div>
 </div>
-<p>as well as the corresponding <span class="math notranslate nohighlight">\(\Delta\)</span>, i.e., the derivative of the option price with respect to the spot price, defined as:</p>
+<p>así como la correspondiente <span class="math notranslate nohighlight">\(\Delta\)</span>, es decir, el derivado del precio de la opción con respecto al precio al contado, definido como:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\Delta = \mathbb{P}\left[K_1 \leq S \leq K_2\right]\]</div>
 </div>
-<p>The approximation of the objective function and a general introduction to option pricing and risk analysis on quantum computers are given in the following papers:</p>
+<p>La aproximación de la función objetivo y una introducción general a la fijación de precios de opciones y el análisis de riesgos en computadoras cuánticas se dan en los siguientes artículos:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://arxiv.org/abs/1806.06893">Quantum Risk Analysis. Woerner, Egger. 2018.</a></p></li>
 <li><p><a class="reference external" href="https://arxiv.org/abs/1905.02666">Option Pricing using Quantum Computers. Stamatopoulos et al. 2019.</a></p></li>
@@ -388,14 +388,14 @@
 </div>
 </div>
 </section>
-<section id="Uncertainty-Model">
-<h2>Uncertainty Model<a class="headerlink" href="#Uncertainty-Model" title="Enlace permanente a este encabezado">#</a></h2>
-<p>We construct a circuit to load a log-normal random distribution into a quantum state. The distribution is truncated to a given interval <span class="math notranslate nohighlight">\([\text{low}, \text{high}]\)</span> and discretized using <span class="math notranslate nohighlight">\(2^n\)</span> grid points, where <span class="math notranslate nohighlight">\(n\)</span> denotes the number of qubits used. The unitary operator corresponding to the circuit implements the following:</p>
+<section id="Modelo-de-Incertidumbre">
+<h2>Modelo de Incertidumbre<a class="headerlink" href="#Modelo-de-Incertidumbre" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Construimos un circuito para cargar una distribución aleatoria logarítmica normal en un estado cuántico. La distribución se trunca a un intervalo dado <span class="math notranslate nohighlight">\([\text{low}, \text{high}]\)</span> y discretiza usando una cuadrícula con <span class="math notranslate nohighlight">\(2^n\)</span> puntos, donde <span class="math notranslate nohighlight">\(n\)</span> denota el número de qubits utilizados. El operador unitario correspondiente al circuito implementa lo siguiente:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\big|0\rangle_{n} \mapsto \big|\psi\rangle_{n} = \sum_{i=0}^{2^n-1} \sqrt{p_i}\big|i\rangle_{n},\]</div>
 </div>
-<p>where <span class="math notranslate nohighlight">\(p_i\)</span> denote the probabilities corresponding to the truncated and discretized distribution and where <span class="math notranslate nohighlight">\(i\)</span> is mapped to the right interval using the affine map:</p>
+<p>donde <span class="math notranslate nohighlight">\(p_i\)</span> denota las probabilidades correspondientes a la distribución truncada y discretizada y donde <span class="math notranslate nohighlight">\(i\)</span> se asigna al intervalo correcto usando el mapa afín:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\{0, \ldots, 2^n-1\} \ni i \mapsto \frac{\text{high} - \text{low}}{2^n - 1} * i + \text{low} \in [\text{low}, \text{high}].\]</div>
@@ -456,23 +456,23 @@
 </div>
 </div>
 </section>
-<section id="Payoff-Function">
-<h2>Payoff Function<a class="headerlink" href="#Payoff-Function" title="Enlace permanente a este encabezado">#</a></h2>
-<p>The payoff function equals zero as long as the spot price at maturity <span class="math notranslate nohighlight">\(S_T\)</span> is less than the strike price <span class="math notranslate nohighlight">\(K_1\)</span>, then increases linearly, and is bounded by <span class="math notranslate nohighlight">\(K_2\)</span>. The implementation uses two comparators, that flip an ancilla qubit each from <span class="math notranslate nohighlight">\(\big|0\rangle\)</span> to <span class="math notranslate nohighlight">\(\big|1\rangle\)</span> if <span class="math notranslate nohighlight">\(S_T \geq K_1\)</span> and <span class="math notranslate nohighlight">\(S_T \leq K_2\)</span>, and these ancillas are used to control the linear part of the payoff function.</p>
-<p>The linear part itself is then approximated as follows. We exploit the fact that <span class="math notranslate nohighlight">\(\sin^2(y + \pi/4) \approx y + 1/2\)</span> for small <span class="math notranslate nohighlight">\(|y|\)</span>. Thus, for a given approximation rescaling factor <span class="math notranslate nohighlight">\(c_\text{approx} \in [0, 1]\)</span> and <span class="math notranslate nohighlight">\(x \in [0, 1]\)</span> we consider</p>
+<section id="Función-de-Rendimiento">
+<h2>Función de Rendimiento<a class="headerlink" href="#Función-de-Rendimiento" title="Enlace permanente a este encabezado">#</a></h2>
+<p>La función de rendimiento es igual a cero siempre que el precio al contado al vencimiento <span class="math notranslate nohighlight">\(S_T\)</span> sea menor que el precio de ejercicio <span class="math notranslate nohighlight">\(K_1\)</span>, luego aumenta linealmente y está delimitado por <span class="math notranslate nohighlight">\(K_2\)</span>. La implementación usa dos comparadores, que cambian un qubit ancilla cada uno de <span class="math notranslate nohighlight">\(\big|0\rangle\)</span> a <span class="math notranslate nohighlight">\(\big|1\rangle\)</span> si <span class="math notranslate nohighlight">\(S_T \geq K_1\)</span> y <span class="math notranslate nohighlight">\(S_T \leq K_2\)</span>, y estas ancillas se utilizan para controlar la parte lineal de la función de rendimiento.</p>
+<p>La parte lineal en sí es entonces aproximada de la siguiente manera. Explotamos el hecho de que <span class="math notranslate nohighlight">\(\sin^2(y + \pi/4) \approx y + 1/2\)</span> para pequeños <span class="math notranslate nohighlight">\(|y|\)</span>. Por lo tanto, para un factor de reescalado de aproximación dado <span class="math notranslate nohighlight">\(c_\text{approx} \in [0, 1]\)</span> y <span class="math notranslate nohighlight">\(x \in [0, 1]\)</span> consideramos</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\sin^2( \pi/2 * c_\text{approx} * ( x - 1/2 ) + \pi/4) \approx \pi/2 * c_\text{approx} * ( x - 1/2 ) + 1/2\]</div>
 </div>
-<p>for small <span class="math notranslate nohighlight">\(c_\text{approx}\)</span>.</p>
-<p>We can easily construct an operator that acts as</p>
+<p>para pequeños <span class="math notranslate nohighlight">\(c_\text{approx}\)</span>.</p>
+<p>Podemos construir fácilmente un operador que actúe como</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\big|x\rangle \big|0\rangle \mapsto \big|x\rangle \left( \cos(a*x+b) \big|0\rangle + \sin(a*x+b) \big|1\rangle \right),\]</div>
 </div>
-<p>using controlled Y-rotations.</p>
-<p>Eventually, we are interested in the probability of measuring <span class="math notranslate nohighlight">\(\big|1\rangle\)</span> in the last qubit, which corresponds to <span class="math notranslate nohighlight">\(\sin^2(a*x+b)\)</span>. Together with the approximation above, this allows to approximate the values of interest. The smaller we choose <span class="math notranslate nohighlight">\(c_\text{approx}\)</span>, the better the approximation. However, since we are then estimating a property scaled by <span class="math notranslate nohighlight">\(c_\text{approx}\)</span>, the number of evaluation qubits <span class="math notranslate nohighlight">\(m\)</span> needs to be adjusted accordingly.</p>
-<p>For more details on the approximation, we refer to: <a class="reference external" href="https://arxiv.org/abs/1806.06893">Quantum Risk Analysis. Woerner, Egger. 2018.</a></p>
+<p>utilizando rotaciones Y controladas.</p>
+<p>Finalmente, nos interesa la probabilidad de medir <span class="math notranslate nohighlight">\(\big|1\rangle\)</span> en el último qubit, que corresponde a <span class="math notranslate nohighlight">\(\sin^2(a*x+b)\)</span>. Junto con la aproximación anterior, esto permite aproximar los valores de interés. Cuanto más pequeño elijamos <span class="math notranslate nohighlight">\(c_\text{approx}\)</span>, mejor será la aproximación. Sin embargo, dado que estamos estimando una propiedad escalada por <span class="math notranslate nohighlight">\(c_\text{approx}\)</span>, el número de qubits de evaluación <span class="math notranslate nohighlight">\(m\)</span> debe ajustarse en consecuencia.</p>
+<p>Para más detalles sobre la aproximación, nos referimos a: <a class="reference external" href="https://arxiv.org/abs/1806.06893">Quantum Risk Analysis. Woerner, Egger. 2018.</a></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -555,8 +555,8 @@ exact delta value:      0.9291
 </pre></div></div>
 </div>
 </section>
-<section id="Evaluate-Expected-Payoff">
-<h2>Evaluate Expected Payoff<a class="headerlink" href="#Evaluate-Expected-Payoff" title="Enlace permanente a este encabezado">#</a></h2>
+<section id="Evaluar-el-Rendimiento-Esperado">
+<h2>Evaluar el Rendimiento Esperado<a class="headerlink" href="#Evaluar-el-Rendimiento-Esperado" title="Enlace permanente a este encabezado">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -607,9 +607,9 @@ Confidence interval:    [0.5610, 0.5763]
 </pre></div></div>
 </div>
 </section>
-<section id="Evaluate-Delta">
-<h2>Evaluate Delta<a class="headerlink" href="#Evaluate-Delta" title="Enlace permanente a este encabezado">#</a></h2>
-<p>The Delta is a bit simpler to evaluate than the expected payoff. Similarly to the expected payoff, we use comparator circuits and ancilla qubits to identify the cases where <span class="math notranslate nohighlight">\(K_1 \leq S_T \leq K_2\)</span>. However, since we are only interested in the probability of this condition being true, we can directly use an ancilla qubit as the objective qubit in amplitude estimation without any further approximation.</p>
+<section id="Evaluar-Delta">
+<h2>Evaluar Delta<a class="headerlink" href="#Evaluar-Delta" title="Enlace permanente a este encabezado">#</a></h2>
+<p>La Delta es un poco más simple de evaluar que el rendimiento esperado. De manera similar al rendimiento esperado, usamos circuitos comparadores y qubits ancilla para identificar los casos donde <span class="math notranslate nohighlight">\(K_1 \leq S_T \leq K_2\)</span>. Sin embargo, dado que solo nos interesa la probabilidad de que esta condición sea cierta, podemos usar directamente un qubit ancilla como el qubit objetivo en la estimación de amplitud sin ninguna aproximación adicional.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -738,7 +738,7 @@ Confidence interval:    [0.9269, 0.9312]
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Pricing Basket Options</div>
+                <div class="title">Fijación de Precios de Opciones de Canasta</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -749,7 +749,7 @@ Confidence interval:    [0.9269, 0.9312]
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Pricing European Put Options</div>
+                <div class="title">Fijación de Precios de Opciones de Venta Europeas</div>
                 
               </div>
             </a>
@@ -783,12 +783,12 @@ Confidence interval:    [0.9269, 0.9312]
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Pricing Bull Spreads</a><ul>
-<li><a class="reference internal" href="#Introduction">Introduction</a></li>
-<li><a class="reference internal" href="#Uncertainty-Model">Uncertainty Model</a></li>
-<li><a class="reference internal" href="#Payoff-Function">Payoff Function</a></li>
-<li><a class="reference internal" href="#Evaluate-Expected-Payoff">Evaluate Expected Payoff</a></li>
-<li><a class="reference internal" href="#Evaluate-Delta">Evaluate Delta</a></li>
+<li><a class="reference internal" href="#">Fijación de Precios de Márgenes Alcistas</a><ul>
+<li><a class="reference internal" href="#Introducción">Introducción</a></li>
+<li><a class="reference internal" href="#Modelo-de-Incertidumbre">Modelo de Incertidumbre</a></li>
+<li><a class="reference internal" href="#Función-de-Rendimiento">Función de Rendimiento</a></li>
+<li><a class="reference internal" href="#Evaluar-el-Rendimiento-Esperado">Evaluar el Rendimiento Esperado</a></li>
+<li><a class="reference internal" href="#Evaluar-Delta">Evaluar Delta</a></li>
 </ul>
 </li>
 </ul>

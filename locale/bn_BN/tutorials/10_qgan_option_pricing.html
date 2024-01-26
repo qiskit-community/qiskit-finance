@@ -3,17 +3,17 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="ইনডেক্স" href="../genindex.html" /><link rel="search" title="অনুসন্ধান" href="../search.html" /><link rel="next" title="Loading and Processing Stock-Market Time-Series Data" href="11_time_series.html" /><link rel="prev" title="Credit Risk Analysis" href="09_credit_risk_analysis.html" />
+<link rel="index" title="ইনডেক্স" href="../genindex.html" /><link rel="search" title="অনুসন্ধান" href="../search.html" /><link rel="next" title="পুঁজিবাজার কালীন-সারি (টাইম-সিরিজ) সংক্রান্ত তথ্য লোডিং এবং প্রক্রিয়াকরণ" href="11_time_series.html" /><link rel="prev" title="ক্রেডিট ঝুঁকি বিশ্লেষণ" href="09_credit_risk_analysis.html" />
 
     <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
-        <title>Option Pricing with qGANs - Qiskit Finance 0.4.0</title>
+        <title>qGANs দিয়ে বিকল্প মূল্য নির্ধারণ - Qiskit Finance 0.4.0</title>
       <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-sphinx-theme.css?v=fe84956c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-ecosystem.css?v=745c5aa7" />
-    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css?v=572af1d6" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
@@ -242,23 +242,23 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">Quantum Amplitude Estimation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">Portfolio Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_portfolio_diversification.html">Portfolio Diversification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">Pricing European Call Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">Pricing European Put Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_bull_spread_pricing.html">Pricing Bull Spreads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">Pricing Basket Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">Pricing Asian Barrier Spreads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html">Pricing Fixed-Income Assets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="09_credit_risk_analysis.html">Credit Risk Analysis</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Option Pricing with qGANs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_time_series.html">Loading and Processing Stock-Market Time-Series Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">শুরুর নির্দেশনা</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">পাঠসমূহ</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of পাঠসমূহ</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">কোয়ান্টাম বিস্তার অনুমান</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">পোর্টফোলিও অপটিমাইজেশন</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_portfolio_diversification.html">পোর্টফোলিও ডাইভারসিফিকেশন বা দপ্তর বৈচিত্র্যকরণ।</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">ইউরোপীয় কল বিকল্পগুলির মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">ইউরোপীয় পুট বিকল্পের মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_bull_spread_pricing.html">বুল স্প্রেডের মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">প্রাইসিং বাস্কেট অপশন</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">এশিয়ান ব্যারিয়ার স্প্রেডের মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html"><em>Pricing Fixed-Income Assets</em> (<em>নির্দিষ্ট আয় সম্পদ মূল্য নির্ধারণ</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09_credit_risk_analysis.html">ক্রেডিট ঝুঁকি বিশ্লেষণ</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">qGANs দিয়ে বিকল্প মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_time_series.html">পুঁজিবাজার কালীন-সারি (টাইম-সিরিজ) সংক্রান্ত তথ্য লোডিং এবং প্রক্রিয়াকরণ</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">এপিআই (এপ্লিকেশন প্রোগ্রামিং ইন্টারফেস) এর তথ্যসূত্র</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of এপিআই (এপ্লিকেশন প্রোগ্রামিং ইন্টারফেস) এর তথ্যসূত্র</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../stubs/qiskit_finance.QiskitFinanceError.html">QiskitFinanceError</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.html">Circuit (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Circuit (qiskit_finance.circuit)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.library.html">Circuit Library (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit.library</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Circuit Library (qiskit_finance.circuit.library)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -275,7 +275,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">অব্যাহতি পত্র</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/qiskit-community/qiskit-finance">GitHub</a></li>
 </ul>
 
@@ -345,14 +345,13 @@
         <article role="main">
           <div class="admonition note">
 <p class="admonition-title">নোট</p>
-<p>This page was generated from <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/10_qgan_option_pricing.ipynb">docs/tutorials/10_qgan_option_pricing.ipynb</a>.</p>
+<p>এই পৃষ্ঠাটি <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/10_qgan_option_pricing.ipynb">docs/tutorials/10_qgan_option_pricing.ipynb</a> থেকে নেয়া হয়েছে।</p>
 </div>
-<section id="Option-Pricing-with-qGANs">
-<h1>Option Pricing with qGANs<a class="headerlink" href="#Option-Pricing-with-qGANs" title="Permalink to this heading">#</a></h1>
-<section id="Introduction">
-<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this heading">#</a></h2>
-<p>In this notebook, we discuss how a Quantum Machine Learning Algorithm, namely a quantum Generative Adversarial Network (qGAN), can facilitate the pricing of a European call option. More specifically, a qGAN can be trained such that a quantum circuit models the spot price of an asset underlying a European call option. The resulting model can then be integrated into a Quantum Amplitude Estimation based algorithm to evaluate the expected payoff - see <a class="reference internal" href="03_european_call_option_pricing.html"><span class="doc">European Call Option
-Pricing</span></a>. For further details on learning and loading random distributions by training a qGAN please refer to <a class="reference external" href="https://www.nature.com/articles/s41534-019-0223-2">Quantum Generative Adversarial Networks for Learning and Loading Random Distributions. Zoufal, Lucchi, Woerner. 2019.</a></p>
+<section id="qGANs-দিয়ে-বিকল্প-মূল্য-নির্ধারণ">
+<h1>qGANs দিয়ে বিকল্প মূল্য নির্ধারণ<a class="headerlink" href="#qGANs-দিয়ে-বিকল্প-মূল্য-নির্ধারণ" title="Permalink to this heading">#</a></h1>
+<section id="ভূমিকা">
+<h2>ভূমিকা<a class="headerlink" href="#ভূমিকা" title="Permalink to this heading">#</a></h2>
+<p>এখন আমরা আলোচনা করব কোয়ান্টাম জেনারেটিভ অ্যাডভারসারিয়াল নেটওয়ার্ক (qGAN) নামে একটি কোয়ান্টাম মেশিন লার্নিং ধারাক্রম (অ্যালগরিদম)। এর একটি ব্যবহারিক প্রয়োগ দেখানো হবে যেখানে qGAN ব্যবহার করে একটি কোয়ান্টাম সার্কিট মডেল করা হবে যা ইউরোপিয়ান কল অপশনের মূল্য নির্ধারন করতে পারবে। এই মডেলটিকে কোয়ান্টাম বিস্তার এস্টিমেশন এলগোরিদম দ্বারা যাচাই করা যাবে, যা থেকে গড় মূল্যের মান নির্ণয় করা যাবে। বিস্তারিত জানতে <a class="reference internal" href="03_european_call_option_pricing.html"><span class="doc">European Call Option Pricing</span></a> এই নোটবুক ফাইল ব্যবহারের অনুরোধ রইল। একটি qGAN প্রশিক্ষণ দিয়ে দৈব বণ্টন শেখার এবং লোড করার বিষয়ে আরও বিস্তারিত জানার জন্য অনুগ্রহ করে এই সহায়িকা গবেষণাপত্রটি পড়ুন <a class="reference external" href="https://www.nature.com/articles/s41534-019-0223-2">Quantum Generative Adversarial Networks for Learning and Loading Random Distributions. Zoufal, Lucchi, Woerner. 2019.</a></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -371,14 +370,14 @@ Pricing</span></a>. For further details on learning and loading random distribut
 </pre></div>
 </div>
 </div>
-<section id="Uncertainty-Model">
-<h3>Uncertainty Model<a class="headerlink" href="#Uncertainty-Model" title="Permalink to this heading">#</a></h3>
-<p>The Black-Scholes model assumes that the spot price at maturity <span class="math notranslate nohighlight">\(S_T\)</span> for a European call option is log-normally distributed. Thus, we can train a qGAN on samples from a log-normal distribution and use the result as an uncertainty model underlying the option. In the following, we construct a quantum circuit that loads the uncertainty model. The circuit output reads</p>
+<section id="অনিশ্চয়তা-মডেল">
+<h3>অনিশ্চয়তা মডেল<a class="headerlink" href="#অনিশ্চয়তা-মডেল" title="Permalink to this heading">#</a></h3>
+<p>ব্ল্যাক-স্কোলস মডেল অনুমান করে যে পরিপক্কতার সময় স্পট মূল্য <span class="math notranslate nohighlight">\(S_T\)</span> একটি ইউরোপীয় কল বিকল্পের জন্য log-normally distributed হয়। এইভাবে, আমরা একটি লগ-নরমাল ডিস্ট্রিবিউশন থেকে নমুনার উপর একটি qGAN প্রশিক্ষণ দিতে পারি এবং ফলাফলটিকে একটি অনিশ্চয়তা মডেল হিসেবে ব্যবহার করতে পারি। নিম্নলিখিতগুলিতে, আমরা একটি কোয়ান্টাম সার্কিট তৈরি করি যা অনিশ্চয়তা মডেল লোড করে। সার্কিট আউটপুটটি এইটা পড়ে</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\big| g_{\theta}\rangle = \sum_{j=0}^{2^n-1}\sqrt{p_{\theta}^{j}} \big| j \rangle ,\]</div>
 </div>
-<p>where the probabilities <span class="math notranslate nohighlight">\(p_{\theta}^{j}\)</span>, for <span class="math notranslate nohighlight">\(j\in \left\{0, \ldots, {2^n-1} \right\}\)</span>, represent a model of the target distribution.</p>
+<p>যেখানে সম্ভাব্যতা <span class="math notranslate nohighlight">\(p_{\theta}^{j}\)</span>, for <span class="math notranslate nohighlight">\(j\in \left\{0, \ldots, {2^n-1} \right\}\)</span>, একটি লক্ষ্য বণ্টনের (টার্গেট ডিস্ট্রিবিউশন) মডেল প্রতিনিধিত্ব করে।</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -407,8 +406,8 @@ Pricing</span></a>. For further details on learning and loading random distribut
 </div>
 </div>
 </section>
-<section id="Evaluate-Expected-Payoff">
-<h3>Evaluate Expected Payoff<a class="headerlink" href="#Evaluate-Expected-Payoff" title="Permalink to this heading">#</a></h3>
+<section id="গড়-বেতন-মূল্য-নির্ধারণ-কর">
+<h3>গড় বেতন মূল্য নির্ধারণ কর<a class="headerlink" href="#গড়-বেতন-মূল্য-নির্ধারণ-কর" title="Permalink to this heading">#</a></h3>
 <p>Now, the trained uncertainty model can be used to evaluate the expectation value of the option’s payoff function with Quantum Amplitude Estimation.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -423,9 +422,9 @@ Pricing</span></a>. For further details on learning and loading random distribut
 </div>
 </div>
 </section>
-<section id="Plot-the-probability-distribution">
-<h3>Plot the probability distribution<a class="headerlink" href="#Plot-the-probability-distribution" title="Permalink to this heading">#</a></h3>
-<p>Next, we plot the trained probability distribution and, for reasons of comparison, also the target probability distribution.</p>
+<section id="সম্ভাব্যতা-বণ্টনের-লেখচিত্র-অঙ্কন-কর">
+<h3>সম্ভাব্যতা বণ্টনের লেখচিত্র অঙ্কন কর<a class="headerlink" href="#সম্ভাব্যতা-বণ্টনের-লেখচিত্র-অঙ্কন-কর" title="Permalink to this heading">#</a></h3>
+<p>তারপর, আমরা প্রশিক্ষিত (ট্রেইনড) সম্ভাব্যতা বিস্তারের লেখচিত্র এবং তুলনা করার জন্য লক্ষ্য (টার্গেট) সম্ভাব্যতা বিস্তারের লেখচিত্রটিও অঙ্কন করি।</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -479,7 +478,7 @@ Pricing</span></a>. For further details on learning and loading random distribut
 </div>
 </section>
 <section id="id2">
-<h3>Evaluate Expected Payoff<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<h3>গড় বেতন মূল্য নির্ধারণ কর<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>Now, the trained uncertainty model can be used to evaluate the expectation value of the option’s payoff function analytically and with Quantum Amplitude Estimation.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
@@ -639,7 +638,7 @@ Confidence interval:    [0.9883, 1.0394]
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Loading and Processing Stock-Market Time-Series Data</div>
+                <div class="title">পুঁজিবাজার কালীন-সারি (টাইম-সিরিজ) সংক্রান্ত তথ্য লোডিং এবং প্রক্রিয়াকরণ</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -650,7 +649,7 @@ Confidence interval:    [0.9883, 1.0394]
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Credit Risk Analysis</div>
+                <div class="title">ক্রেডিট ঝুঁকি বিশ্লেষণ</div>
                 
               </div>
             </a>
@@ -684,12 +683,12 @@ Confidence interval:    [0.9883, 1.0394]
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Option Pricing with qGANs</a><ul>
-<li><a class="reference internal" href="#Introduction">Introduction</a><ul>
-<li><a class="reference internal" href="#Uncertainty-Model">Uncertainty Model</a></li>
-<li><a class="reference internal" href="#Evaluate-Expected-Payoff">Evaluate Expected Payoff</a></li>
-<li><a class="reference internal" href="#Plot-the-probability-distribution">Plot the probability distribution</a></li>
-<li><a class="reference internal" href="#id2">Evaluate Expected Payoff</a></li>
+<li><a class="reference internal" href="#">qGANs দিয়ে বিকল্প মূল্য নির্ধারণ</a><ul>
+<li><a class="reference internal" href="#ভূমিকা">ভূমিকা</a><ul>
+<li><a class="reference internal" href="#অনিশ্চয়তা-মডেল">অনিশ্চয়তা মডেল</a></li>
+<li><a class="reference internal" href="#গড়-বেতন-মূল্য-নির্ধারণ-কর">গড় বেতন মূল্য নির্ধারণ কর</a></li>
+<li><a class="reference internal" href="#সম্ভাব্যতা-বণ্টনের-লেখচিত্র-অঙ্কন-কর">সম্ভাব্যতা বণ্টনের লেখচিত্র অঙ্কন কর</a></li>
+<li><a class="reference internal" href="#id2">গড় বেতন মূল্য নির্ধারণ কর</a></li>
 </ul>
 </li>
 </ul>
