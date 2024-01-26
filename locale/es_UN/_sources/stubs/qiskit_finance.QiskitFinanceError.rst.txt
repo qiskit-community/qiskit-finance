@@ -1,0 +1,8 @@
+﻿
+
+QiskitFinanceError
+=================================
+
+.. currentmodule:: qiskit_finance
+
+.. autoexception:: QiskitFinanceError

@@ -1,0 +1,34 @@
+﻿
+
+NormalDistribution
+=================================================
+
+.. currentmodule:: qiskit_finance.circuit.library
+
+.. autoclass:: NormalDistribution
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+
+   .. rubric:: Attributes
+
+   
+   .. autoattribute:: NormalDistribution.bounds
+   .. autoattribute:: NormalDistribution.probabilities
+   .. autoattribute:: NormalDistribution.values
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+
+   
+   

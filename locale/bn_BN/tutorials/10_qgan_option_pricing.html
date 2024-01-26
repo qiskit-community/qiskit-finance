@@ -1,0 +1,718 @@
+<!doctype html>
+<html class="no-js" lang="bn-BN">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="ইনডেক্স" href="../genindex.html" /><link rel="search" title="অনুসন্ধান" href="../search.html" /><link rel="next" title="পুঁজিবাজার কালীন-সারি (টাইম-সিরিজ) সংক্রান্ত তথ্য লোডিং এবং প্রক্রিয়াকরণ" href="11_time_series.html" /><link rel="prev" title="ক্রেডিট ঝুঁকি বিশ্লেষণ" href="09_credit_risk_analysis.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
+        <title>qGANs দিয়ে বিকল্প মূল্য নির্ধারণ - Qiskit Finance 0.4.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-sphinx-theme.css?v=fe84956c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-ecosystem.css?v=745c5aa7" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #ffffff;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<script src="../_static/js/web-components/top-nav-bar.js"></script>
+<script>
+  (function () {
+    window._analytics = {
+      segment_key: 'ffdYLviQze3kzomaINXNk6NwpY9LlXcw',
+      coremetrics: false,
+      optimizely: false,
+      googleAddServices: false,
+      fullStory: false,
+      autoPageEventSpa: false,
+      autoFormEvents: false,
+      autoPageView: false
+    }
+
+    window.digitalData = {
+      page: {
+        pageInfo: {
+          productTitle: 'IBM Q Experience',
+          analytics: {
+            category: 'Qiskit.org'
+          }
+        }
+      }
+    }
+  }());
+</script>
+<script src="https://cloud.ibm.com/analytics/build/bluemix-analytics.min.js"></script>
+<script>
+  (function () {
+    'use strict'
+
+    if (!window.bluemixAnalytics || !window.digitalData) { return }
+
+    const category = window.digitalData.page.pageInfo.analytics.category
+    const productTitle = window.digitalData.page.pageInfo.productTitle
+    const routeName = 'documentation'
+
+    window.bluemixAnalytics.pageEvent(category, routeName, {
+      navigationType: 'pushState',
+      productTitle: productTitle,
+      title: document.title
+    })
+
+    window.trackCta = (action) => {
+      if (!window.bluemixAnalytics || !window.digitalData) { return }
+
+      const category = window.digitalData.page.pageInfo.analytics.category
+      const productTitle = window.digitalData.page.pageInfo.productTitle
+
+      window.bluemixAnalytics.trackEvent('CTA Clicked', {
+        productTitle,
+        category,
+        CTA: action
+      })
+    }
+
+  }());
+</script></head>
+  <body>
+    
+    <script>document.body.dataset.theme = "light";</script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <defs><style>.cls-1{fill:none;}</style></defs>
+      <path d="M28,4H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V6A2,2,0,0,0,28,4ZM4,6H20V26H4ZM28,26H22V6h6Z"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <defs><style>.cls-1{fill:none;}</style></defs>
+      <rect x="4" y="6" width="24" height="2"/>
+      <rect x="4" y="24" width="24" height="2"/>
+      <rect x="4" y="12" width="24" height="2"/>
+      <rect x="4" y="18" width="24" height="2"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg version="1.1" id="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+         viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve"><polygon points="22,16 12,26 10.6,24.6 19.2,16 10.6,7.4 12,6 " stroke="currentColor"/>
+      <rect id="_x3C_Transparent_Rectangle_x3E_" fill="none" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-new-tab" viewBox="0 0 32 32">
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+      <defs>
+        <style>
+          .cls-1 {
+            fill: none;
+          }
+        </style>
+      </defs>
+      <path fill="#6929C4" d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"/>
+      <polygon fill="#6929C4" points="20 2 20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     This project's translations are no longer maintained. See the <a href=https://github.com/qiskit-community/qiskit-translations/tree/main#readme>announcement</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Qiskit Finance 0.4.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><div class="sidebar-brand">
+  <a href="https://www.qiskit.org/ecosystem">
+    <div class="sidebar-logo-container">
+      <img class="sidebar-logo" src="../_static/images/ecosystem-logo.svg" alt="Qiskit Ecosystem logo"/>
+    </div>
+  </a>
+  
+  <span class="sidebar-brand-text">Qiskit Finance 0.4.0</span>
+</div><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="অনুসন্ধান">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">শুরুর নির্দেশনা</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">পাঠসমূহ</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of পাঠসমূহ</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">কোয়ান্টাম বিস্তার অনুমান</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">পোর্টফোলিও অপটিমাইজেশন</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_portfolio_diversification.html">পোর্টফোলিও ডাইভারসিফিকেশন বা দপ্তর বৈচিত্র্যকরণ।</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">ইউরোপীয় কল বিকল্পগুলির মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">ইউরোপীয় পুট বিকল্পের মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_bull_spread_pricing.html">বুল স্প্রেডের মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">প্রাইসিং বাস্কেট অপশন</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">এশিয়ান ব্যারিয়ার স্প্রেডের মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html"><em>Pricing Fixed-Income Assets</em> (<em>নির্দিষ্ট আয় সম্পদ মূল্য নির্ধারণ</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09_credit_risk_analysis.html">ক্রেডিট ঝুঁকি বিশ্লেষণ</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">qGANs দিয়ে বিকল্প মূল্য নির্ধারণ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_time_series.html">পুঁজিবাজার কালীন-সারি (টাইম-সিরিজ) সংক্রান্ত তথ্য লোডিং এবং প্রক্রিয়াকরণ</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">এপিআই (এপ্লিকেশন প্রোগ্রামিং ইন্টারফেস) এর তথ্যসূত্র</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of এপিআই (এপ্লিকেশন প্রোগ্রামিং ইন্টারফেস) এর তথ্যসূত্র</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../stubs/qiskit_finance.QiskitFinanceError.html">QiskitFinanceError</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.html">Circuit (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Circuit (qiskit_finance.circuit)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.library.html">Circuit Library (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit.library</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Circuit Library (qiskit_finance.circuit.library)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.EuropeanCallDeltaObjective.html">EuropeanCallDeltaObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.EuropeanCallPricingObjective.html">EuropeanCallPricingObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.FixedIncomePricingObjective.html">FixedIncomePricingObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.GaussianConditionalIndependenceModel.html">GaussianConditionalIndependenceModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.LogNormalDistribution.html">LogNormalDistribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.NormalDistribution.html">NormalDistribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.UniformDistribution.html">UniformDistribution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">অব্যাহতি পত্র</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/qiskit-community/qiskit-finance">GitHub</a></li>
+</ul>
+
+</div></div><div class="qiskit-translations-container" aria-label="languages">
+  <input id="translations-checkbox" name="translations-checkbox" role="switch" type="checkbox">
+  <div class="qiskit-translations-header-container"><label for="translations-checkbox">
+      <p role="note">Bengali</p>
+      <div class="qiskit-translations-toggle-container">
+        <div class="visually-hidden">Toggle translations list</div>
+        <i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i>
+      </div>
+    </label>
+  </div>
+  <div class="qiskit-translations-list-container">
+    <ul>
+      
+        <li><a href="/qiskit-finance/tutorials/10_qgan_option_pricing.html">English</a></li>
+      
+        <li><a href="/qiskit-finance/locale/bn_BN/tutorials/10_qgan_option_pricing.html">Bengali</a></li>
+      
+        <li><a href="/qiskit-finance/locale/ja_JP/tutorials/10_qgan_option_pricing.html">Japanese</a></li>
+      
+        <li><a href="/qiskit-finance/locale/es_UN/tutorials/10_qgan_option_pricing.html">Spanish</a></li>
+      
+    </ul>
+  </div>
+  <script>
+    document.querySelectorAll('.version').forEach((element) => {
+      element.addEventListener('click', (evt) => {
+        const hash = window.location.hash;
+        const complete_url = evt.target.href + hash;
+        window.location = complete_url;
+        evt.preventDefault();
+      });
+    });
+  </script>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <div class="admonition note">
+<p class="admonition-title">নোট</p>
+<p>এই পৃষ্ঠাটি <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/10_qgan_option_pricing.ipynb">docs/tutorials/10_qgan_option_pricing.ipynb</a> থেকে নেয়া হয়েছে।</p>
+</div>
+<section id="qGANs-দিয়ে-বিকল্প-মূল্য-নির্ধারণ">
+<h1>qGANs দিয়ে বিকল্প মূল্য নির্ধারণ<a class="headerlink" href="#qGANs-দিয়ে-বিকল্প-মূল্য-নির্ধারণ" title="Permalink to this heading">#</a></h1>
+<section id="ভূমিকা">
+<h2>ভূমিকা<a class="headerlink" href="#ভূমিকা" title="Permalink to this heading">#</a></h2>
+<p>এখন আমরা আলোচনা করব কোয়ান্টাম জেনারেটিভ অ্যাডভারসারিয়াল নেটওয়ার্ক (qGAN) নামে একটি কোয়ান্টাম মেশিন লার্নিং ধারাক্রম (অ্যালগরিদম)। এর একটি ব্যবহারিক প্রয়োগ দেখানো হবে যেখানে qGAN ব্যবহার করে একটি কোয়ান্টাম সার্কিট মডেল করা হবে যা ইউরোপিয়ান কল অপশনের মূল্য নির্ধারন করতে পারবে। এই মডেলটিকে কোয়ান্টাম বিস্তার এস্টিমেশন এলগোরিদম দ্বারা যাচাই করা যাবে, যা থেকে গড় মূল্যের মান নির্ণয় করা যাবে। বিস্তারিত জানতে <a class="reference internal" href="03_european_call_option_pricing.html"><span class="doc">European Call Option Pricing</span></a> এই নোটবুক ফাইল ব্যবহারের অনুরোধ রইল। একটি qGAN প্রশিক্ষণ দিয়ে দৈব বণ্টন শেখার এবং লোড করার বিষয়ে আরও বিস্তারিত জানার জন্য অনুগ্রহ করে এই সহায়িকা গবেষণাপত্রটি পড়ুন <a class="reference external" href="https://www.nature.com/articles/s41534-019-0223-2">Quantum Generative Adversarial Networks for Learning and Loading Random Distributions. Zoufal, Lucchi, Woerner. 2019.</a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">ParameterVector</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">TwoLocal</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">Statevector</span>
+
+<span class="kn">from</span> <span class="nn">qiskit_algorithms</span> <span class="kn">import</span> <span class="n">IterativeAmplitudeEstimation</span><span class="p">,</span> <span class="n">EstimationProblem</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer.primitives</span> <span class="kn">import</span> <span class="n">Sampler</span>
+<span class="kn">from</span> <span class="nn">qiskit_finance.applications.estimation</span> <span class="kn">import</span> <span class="n">EuropeanCallPricing</span>
+<span class="kn">from</span> <span class="nn">qiskit_finance.circuit.library</span> <span class="kn">import</span> <span class="n">NormalDistribution</span>
+</pre></div>
+</div>
+</div>
+<section id="অনিশ্চয়তা-মডেল">
+<h3>অনিশ্চয়তা মডেল<a class="headerlink" href="#অনিশ্চয়তা-মডেল" title="Permalink to this heading">#</a></h3>
+<p>ব্ল্যাক-স্কোলস মডেল অনুমান করে যে পরিপক্কতার সময় স্পট মূল্য <span class="math notranslate nohighlight">\(S_T\)</span> একটি ইউরোপীয় কল বিকল্পের জন্য log-normally distributed হয়। এইভাবে, আমরা একটি লগ-নরমাল ডিস্ট্রিবিউশন থেকে নমুনার উপর একটি qGAN প্রশিক্ষণ দিতে পারি এবং ফলাফলটিকে একটি অনিশ্চয়তা মডেল হিসেবে ব্যবহার করতে পারি। নিম্নলিখিতগুলিতে, আমরা একটি কোয়ান্টাম সার্কিট তৈরি করি যা অনিশ্চয়তা মডেল লোড করে। সার্কিট আউটপুটটি এইটা পড়ে</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\big| g_{\theta}\rangle = \sum_{j=0}^{2^n-1}\sqrt{p_{\theta}^{j}} \big| j \rangle ,\]</div>
+</div>
+<p>যেখানে সম্ভাব্যতা <span class="math notranslate nohighlight">\(p_{\theta}^{j}\)</span>, for <span class="math notranslate nohighlight">\(j\in \left\{0, \ldots, {2^n-1} \right\}\)</span>, একটি লক্ষ্য বণ্টনের (টার্গেট ডিস্ট্রিবিউশন) মডেল প্রতিনিধিত্ব করে।</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set upper and lower data values</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">])</span>
+<span class="c1"># Set number of qubits used in the uncertainty model</span>
+<span class="n">num_qubits</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># Load the trained circuit parameters</span>
+<span class="n">g_params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.29399714</span><span class="p">,</span> <span class="mf">0.38853322</span><span class="p">,</span> <span class="mf">0.9557694</span><span class="p">,</span> <span class="mf">0.07245791</span><span class="p">,</span> <span class="mf">6.02626428</span><span class="p">,</span> <span class="mf">0.13537225</span><span class="p">]</span>
+
+<span class="c1"># Set an initial state for the generator circuit</span>
+<span class="n">init_dist</span> <span class="o">=</span> <span class="n">NormalDistribution</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+
+<span class="c1"># construct the variational form</span>
+<span class="n">var_form</span> <span class="o">=</span> <span class="n">TwoLocal</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="s2">&quot;cz&quot;</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s2">&quot;circular&quot;</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># keep a list of the parameters so we can associate them to the list of numerical values</span>
+<span class="c1"># (otherwise we need a dictionary)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">var_form</span><span class="o">.</span><span class="n">ordered_parameters</span>
+
+<span class="c1"># compose the generator circuit, this is the circuit loading the uncertainty model</span>
+<span class="n">g_circuit</span> <span class="o">=</span> <span class="n">init_dist</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">var_form</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="গড়-বেতন-মূল্য-নির্ধারণ-কর">
+<h3>গড় বেতন মূল্য নির্ধারণ কর<a class="headerlink" href="#গড়-বেতন-মূল্য-নির্ধারণ-কর" title="Permalink to this heading">#</a></h3>
+<p>Now, the trained uncertainty model can be used to evaluate the expectation value of the option’s payoff function with Quantum Amplitude Estimation.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the strike price (should be within the low and the high value of the uncertainty)</span>
+<span class="n">strike_price</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># set the approximation scaling for the payoff function</span>
+<span class="n">c_approx</span> <span class="o">=</span> <span class="mf">0.25</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="সম্ভাব্যতা-বণ্টনের-লেখচিত্র-অঙ্কন-কর">
+<h3>সম্ভাব্যতা বণ্টনের লেখচিত্র অঙ্কন কর<a class="headerlink" href="#সম্ভাব্যতা-বণ্টনের-লেখচিত্র-অঙ্কন-কর" title="Permalink to this heading">#</a></h3>
+<p>তারপর, আমরা প্রশিক্ষিত (ট্রেইনড) সম্ভাব্যতা বিস্তারের লেখচিত্র এবং তুলনা করার জন্য লক্ষ্য (টার্গেট) সম্ভাব্যতা বিস্তারের লেখচিত্রটিও অঙ্কন করি।</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate trained probability distribution</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">num_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">num_qubits</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">uncertainty_model</span> <span class="o">=</span> <span class="n">g_circuit</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">g_params</span><span class="p">)))</span>
+<span class="n">amplitudes</span> <span class="o">=</span> <span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">uncertainty_model</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">amplitudes</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="c1"># Sample from target probability distribution</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100000</span>
+<span class="n">log_normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">lognormal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+<span class="n">log_normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">log_normal</span><span class="p">)</span>
+<span class="n">log_normal</span> <span class="o">=</span> <span class="n">log_normal</span><span class="p">[</span><span class="n">log_normal</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">log_normal_samples</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">log_normal_samples</span> <span class="o">+=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">log_normal</span> <span class="o">==</span> <span class="n">i</span><span class="p">)]</span>
+<span class="n">log_normal_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">log_normal_samples</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">log_normal_samples</span><span class="p">))</span>
+
+<span class="c1"># Plot distributions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;trained distribution&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Spot Price at Maturity $S_T$ (\$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability ($\%$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">log_normal_samples</span><span class="p">,</span>
+    <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;deepskyblue&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;target distribution&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_10_qgan_option_pricing_7_0.png" src="../_images/tutorials_10_qgan_option_pricing_7_0.png" />
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>গড় বেতন মূল্য নির্ধারণ কর<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Now, the trained uncertainty model can be used to evaluate the expectation value of the option’s payoff function analytically and with Quantum Amplitude Estimation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate payoff for different distributions</span>
+<span class="n">payoff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">ep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">log_normal_samples</span><span class="p">,</span> <span class="n">payoff</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analytically calculated expected payoff w.r.t. the target distribution:  </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ep</span><span class="p">)</span>
+<span class="n">ep_trained</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">payoff</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analytically calculated expected payoff w.r.t. the trained distribution: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ep_trained</span><span class="p">)</span>
+
+<span class="c1"># Plot exact payoff function (evaluated on the grid of the trained uncertainty model)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="n">y_strike</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">strike_price</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_strike</span><span class="p">,</span> <span class="s2">&quot;ro-&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Payoff Function&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Spot Price&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Payoff&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Analytically calculated expected payoff w.r.t. the target distribution:  1.0611
+Analytically calculated expected payoff w.r.t. the trained distribution: 0.9805
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_10_qgan_option_pricing_9_1.png" src="../_images/tutorials_10_qgan_option_pricing_9_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># construct circuit for payoff function</span>
+<span class="n">european_call_pricing</span> <span class="o">=</span> <span class="n">EuropeanCallPricing</span><span class="p">(</span>
+    <span class="n">num_qubits</span><span class="p">,</span>
+    <span class="n">strike_price</span><span class="o">=</span><span class="n">strike_price</span><span class="p">,</span>
+    <span class="n">rescaling_factor</span><span class="o">=</span><span class="n">c_approx</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+    <span class="n">uncertainty_model</span><span class="o">=</span><span class="n">uncertainty_model</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set target precision and confidence level</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">european_call_pricing</span><span class="o">.</span><span class="n">to_estimation_problem</span><span class="p">()</span>
+<span class="c1"># construct amplitude estimation</span>
+<span class="n">ae</span> <span class="o">=</span> <span class="n">IterativeAmplitudeEstimation</span><span class="p">(</span>
+    <span class="n">epsilon_target</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">Sampler</span><span class="p">(</span><span class="n">run_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">})</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conf_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">confidence_interval_processed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact value:        </span><span class="se">\t</span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ep_trained</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated value:    </span><span class="se">\t</span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">estimation_processed</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Confidence interval:</span><span class="se">\t</span><span class="s2">[</span><span class="si">%.4f</span><span class="s2">, </span><span class="si">%.4f</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">conf_int</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Exact value:            0.9805
+Estimated value:        1.0138
+Confidence interval:    [0.9883, 1.0394]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+<span class="o">%</span><span class="k">qiskit_copyright</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<h3>Version Information</h3><table><tr><th>Software</th><th>Version</th></tr><tr><td><code>qiskit</code></td><td>None</td></tr><tr><td><code>qiskit-terra</code></td><td>0.45.0.dev0+c626be7</td></tr><tr><td><code>qiskit_algorithms</code></td><td>0.2.0</td></tr><tr><td><code>qiskit_aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit_optimization</code></td><td>0.6.0</td></tr><tr><td><code>qiskit_finance</code></td><td>0.4.0</td></tr><tr><td><code>qiskit_ibm_provider</code></td><td>0.6.1</td></tr><tr><th colspan='2'>System information</th></tr><tr><td>Python version</td><td>3.9.7</td></tr><tr><td>Python compiler</td><td>GCC 7.5.0</td></tr><tr><td>Python build</td><td>default, Sep 16 2021 13:09:58</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td>CPUs</td><td>2</td></tr><tr><td>Memory (Gb)</td><td>5.778430938720703</td></tr><tr><td colspan='2'>Fri Aug 18 16:26:01 2023 EDT</td></tr></table></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div style='width: 100%; background-color:#d5d9e0;padding-left: 10px; padding-bottom: 10px; padding-right: 10px; padding-top: 5px'><h3>This code is a part of Qiskit</h3><p>&copy; Copyright IBM 2017, 2023.</p><p>This code is licensed under the Apache License, Version 2.0. You may<br>obtain a copy of this license in the LICENSE.txt file in the root directory<br> of this source tree or at http://www.apache.org/licenses/LICENSE-2.0.<p>Any modifications or derivative works of this code must retain this<br>copyright notice, and modified files need to carry a notice indicating<br>that they have been altered from the originals.</p></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+  <script>
+    function userFeedbackClicked(ctaType) {
+      document.getElementById('qiskit-analytics-thank-you').style.visibility = 'visible';
+      window.trackCta(`Helpful - ${ctaType}`);
+    }
+  </script>
+    <div class="qiskit-analytics-container">
+      <div>Was this page helpful?</div>
+      <a onclick="userFeedbackClicked('yes')">Yes</a>
+      <a onclick="userFeedbackClicked('no')">No</a>
+      <div id="qiskit-analytics-thank-you">Thank you!</div>
+    </div>
+<div class="related-pages">
+          <a class="next-page" href="11_time_series.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">পুঁজিবাজার কালীন-সারি (টাইম-সিরিজ) সংক্রান্ত তথ্য লোডিং এবং প্রক্রিয়াকরণ</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="09_credit_risk_analysis.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">ক্রেডিট ঝুঁকি বিশ্লেষণ</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2018, 2024, Qiskit Finance Development Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">qGANs দিয়ে বিকল্প মূল্য নির্ধারণ</a><ul>
+<li><a class="reference internal" href="#ভূমিকা">ভূমিকা</a><ul>
+<li><a class="reference internal" href="#অনিশ্চয়তা-মডেল">অনিশ্চয়তা মডেল</a></li>
+<li><a class="reference internal" href="#গড়-বেতন-মূল্য-নির্ধারণ-কর">গড় বেতন মূল্য নির্ধারণ কর</a></li>
+<li><a class="reference internal" href="#সম্ভাব্যতা-বণ্টনের-লেখচিত্র-অঙ্কন-কর">সম্ভাব্যতা বণ্টনের লেখচিত্র অঙ্কন কর</a></li>
+<li><a class="reference internal" href="#id2">গড় বেতন মূল্য নির্ধারণ কর</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=83134ce8"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/scripts/qiskit-sphinx-theme.js?v=4d77b8ca"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

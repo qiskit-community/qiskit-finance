@@ -1,0 +1,1057 @@
+<!doctype html>
+<html class="no-js" lang="es-UN">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Índice" href="../genindex.html" /><link rel="search" title="Búsqueda" href="../search.html" /><link rel="next" title="Fijación de Precios de Opciones de Compra Europeas" href="03_european_call_option_pricing.html" /><link rel="prev" title="Optimización de Cartera" href="01_portfolio_optimization.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
+        <title>Diversificación de Cartera - Qiskit Finance 0.4.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-sphinx-theme.css?v=fe84956c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-ecosystem.css?v=745c5aa7" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #ffffff;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<script src="../_static/js/web-components/top-nav-bar.js"></script>
+<script>
+  (function () {
+    window._analytics = {
+      segment_key: 'ffdYLviQze3kzomaINXNk6NwpY9LlXcw',
+      coremetrics: false,
+      optimizely: false,
+      googleAddServices: false,
+      fullStory: false,
+      autoPageEventSpa: false,
+      autoFormEvents: false,
+      autoPageView: false
+    }
+
+    window.digitalData = {
+      page: {
+        pageInfo: {
+          productTitle: 'IBM Q Experience',
+          analytics: {
+            category: 'Qiskit.org'
+          }
+        }
+      }
+    }
+  }());
+</script>
+<script src="https://cloud.ibm.com/analytics/build/bluemix-analytics.min.js"></script>
+<script>
+  (function () {
+    'use strict'
+
+    if (!window.bluemixAnalytics || !window.digitalData) { return }
+
+    const category = window.digitalData.page.pageInfo.analytics.category
+    const productTitle = window.digitalData.page.pageInfo.productTitle
+    const routeName = 'documentation'
+
+    window.bluemixAnalytics.pageEvent(category, routeName, {
+      navigationType: 'pushState',
+      productTitle: productTitle,
+      title: document.title
+    })
+
+    window.trackCta = (action) => {
+      if (!window.bluemixAnalytics || !window.digitalData) { return }
+
+      const category = window.digitalData.page.pageInfo.analytics.category
+      const productTitle = window.digitalData.page.pageInfo.productTitle
+
+      window.bluemixAnalytics.trackEvent('CTA Clicked', {
+        productTitle,
+        category,
+        CTA: action
+      })
+    }
+
+  }());
+</script></head>
+  <body>
+    
+    <script>document.body.dataset.theme = "light";</script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <defs><style>.cls-1{fill:none;}</style></defs>
+      <path d="M28,4H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V6A2,2,0,0,0,28,4ZM4,6H20V26H4ZM28,26H22V6h6Z"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <defs><style>.cls-1{fill:none;}</style></defs>
+      <rect x="4" y="6" width="24" height="2"/>
+      <rect x="4" y="24" width="24" height="2"/>
+      <rect x="4" y="12" width="24" height="2"/>
+      <rect x="4" y="18" width="24" height="2"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg version="1.1" id="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+         viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve"><polygon points="22,16 12,26 10.6,24.6 19.2,16 10.6,7.4 12,6 " stroke="currentColor"/>
+      <rect id="_x3C_Transparent_Rectangle_x3E_" fill="none" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-new-tab" viewBox="0 0 32 32">
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+      <defs>
+        <style>
+          .cls-1 {
+            fill: none;
+          }
+        </style>
+      </defs>
+      <path fill="#6929C4" d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"/>
+      <polygon fill="#6929C4" points="20 2 20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     This project's translations are no longer maintained. See the <a href=https://github.com/qiskit-community/qiskit-translations/tree/main#readme>announcement</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Qiskit Finance 0.4.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><div class="sidebar-brand">
+  <a href="https://www.qiskit.org/ecosystem">
+    <div class="sidebar-logo-container">
+      <img class="sidebar-logo" src="../_static/images/ecosystem-logo.svg" alt="Qiskit Ecosystem logo"/>
+    </div>
+  </a>
+  
+  <span class="sidebar-brand-text">Qiskit Finance 0.4.0</span>
+</div><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Búsqueda">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Descripción General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Primeros Pasos</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutoriales</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutoriales</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">Estimación de Amplitud Cuántica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">Optimización de Cartera</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Diversificación de Cartera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">Fijación de Precios de Opciones de Compra Europeas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">Fijación de Precios de Opciones de Venta Europeas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_bull_spread_pricing.html">Fijación de Precios de Márgenes Alcistas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">Fijación de Precios de Opciones de Canasta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">Fijación de Precios de Márgenes de Barrera Asiáticos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html">Fijación de Precios de Activos de Renta Fija</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09_credit_risk_analysis.html">Análisis de Riesgo Crediticio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_qgan_option_pricing.html">Fijación de Precios de Opciones con qGANs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_time_series.html">Carga y Procesamiento de Datos de Series Temporales del Mercado de Valores</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">Referencia de la API</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Referencia de la API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../stubs/qiskit_finance.QiskitFinanceError.html">QiskitFinanceError</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.html">Circuit (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Circuit (qiskit_finance.circuit)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.library.html">Circuit Library (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit.library</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Circuit Library (qiskit_finance.circuit.library)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.EuropeanCallDeltaObjective.html">EuropeanCallDeltaObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.EuropeanCallPricingObjective.html">EuropeanCallPricingObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.FixedIncomePricingObjective.html">FixedIncomePricingObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.GaussianConditionalIndependenceModel.html">GaussianConditionalIndependenceModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.LogNormalDistribution.html">LogNormalDistribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.NormalDistribution.html">NormalDistribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.UniformDistribution.html">UniformDistribution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Notas de la Versión</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/qiskit-community/qiskit-finance">GitHub</a></li>
+</ul>
+
+</div></div><div class="qiskit-translations-container" aria-label="languages">
+  <input id="translations-checkbox" name="translations-checkbox" role="switch" type="checkbox">
+  <div class="qiskit-translations-header-container"><label for="translations-checkbox">
+      <p role="note">Spanish</p>
+      <div class="qiskit-translations-toggle-container">
+        <div class="visually-hidden">Toggle translations list</div>
+        <i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i>
+      </div>
+    </label>
+  </div>
+  <div class="qiskit-translations-list-container">
+    <ul>
+      
+        <li><a href="/qiskit-finance/tutorials/02_portfolio_diversification.html">English</a></li>
+      
+        <li><a href="/qiskit-finance/locale/bn_BN/tutorials/02_portfolio_diversification.html">Bengali</a></li>
+      
+        <li><a href="/qiskit-finance/locale/ja_JP/tutorials/02_portfolio_diversification.html">Japanese</a></li>
+      
+        <li><a href="/qiskit-finance/locale/es_UN/tutorials/02_portfolio_diversification.html">Spanish</a></li>
+      
+    </ul>
+  </div>
+  <script>
+    document.querySelectorAll('.version').forEach((element) => {
+      element.addEventListener('click', (evt) => {
+        const hash = window.location.hash;
+        const complete_url = evt.target.href + hash;
+        window.location = complete_url;
+        evt.preventDefault();
+      });
+    });
+  </script>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Esta página fue generada a partir de <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/02_portfolio_diversification.ipynb">docs/tutorials/02_portfolio_diversification.ipynb</a>.</p>
+</div>
+<section id="Diversificación-de-Cartera">
+<h1>Diversificación de Cartera<a class="headerlink" href="#Diversificación-de-Cartera" title="Enlace permanente a este encabezado">#</a></h1>
+<section id="Introducción">
+<h2>Introducción<a class="headerlink" href="#Introducción" title="Enlace permanente a este encabezado">#</a></h2>
+<p>En la gestión de activos, existen en general dos enfoques: gestión de inversiones activas y pasivas. Dentro de la gestión de inversiones pasivas, existen fondos de seguimiento de índices y existen enfoques basados ​​en la diversificación de cartera, que tienen como objetivo representar una cartera con una gran cantidad de activos por una menor cantidad de acciones representativas. Este cuaderno ilustra un problema de diversificación de cartera, que recientemente se ha popularizado por dos razones: 1. Hace posible imitar el rendimiento de un índice (o un conjunto de activos igualmente grande) con un presupuesto limitado, con costos de transacción limitados. Es decir: el seguimiento de índices tradicional puede comprar todos los activos del índice, idealmente con las mismas ponderaciones que en el índice. Esto puede resultar poco práctico por varias razones: el total de incluso un solo lote de ronda por activo puede ascender a más que los activos bajo gestión, la gran escala del problema de seguimiento de índices con restricciones de integralidad puede dificultar el problema de optimización, y los costos de transacción del reequilibrio frecuente para ajustar las posiciones a las ponderaciones del índice pueden hacer que el enfoque sea costoso. Por lo tanto, un enfoque popular es seleccionar una cartera de <span class="math notranslate nohighlight">\(q\)</span> activos que representen el mercado con <span class="math notranslate nohighlight">\(n\)</span> activos, donde <span class="math notranslate nohighlight">\(q\)</span> es significativamente menor que <span class="math notranslate nohighlight">\(n\)</span>, pero donde la cartera replica el comportamiento del mercado subyacente. Determinar cómo agrupar los activos en <span class="math notranslate nohighlight">\(q\)</span> conjuntos y cómo determinar cuáles <span class="math notranslate nohighlight">\(q\)</span> activos deben representar los <span class="math notranslate nohighlight">\(q\)</span> conjuntos equivale a resolver un problema de optimización a gran escala. A continuación, describimos el modelo matemático para el problema de la diversificación de cartera, tal como se presentó en [Cornuejols &amp; Tutuncu, 2006] 2. Permite medidas de similitud entre series de tiempo más allá de la matriz de covarianza. Ten en cuenta que, tradicionalmente, la teoría de cartera moderna considera la matriz de covarianza como una medida de similitud entre los activos. Sin embargo, como tal, la matriz de covarianza es imperfecta. Considera, por ejemplo, una empresa que cotiza tanto en Londres como en Nueva York. Aunque ambos listados deberían ser muy similares, solo se superpondrán partes de la serie temporal de los precios de los dos listados, debido a la superposición parcial de las horas de apertura de los mercados. En lugar de la covarianza, se puede considerar, por ejemplo, la deformación dinámica temporal de [Berndt y Clifford, 1994] como una medida de similitud entre dos series de tiempo, lo que permite el hecho de que durante algunos períodos de tiempo, los datos son capturados por solo una serie de tiempo, mientras que para otras, ambas series de tiempo exhiben la similitud debido a la evolución paralela del precio de la acción.</p>
+<p>El flujo de trabajo general que demostramos comprende:</p>
+<ol class="arabic simple">
+<li><p>elegir el conjunto básico de activos. En nuestro caso, se trata de una pequeña cantidad de acciones estadounidenses.</p></li>
+<li><p>cargar la serie temporal que captura la evolución de los precios de los activos. En nuestro caso, se trata de una carga simplista de datos de precios de cierre diarios ajustados de Wikipedia o Nasdaq o LSE o EuroNext, mientras que en una gestión de activos real, se puede considerar una frecuencia mucho mayor.</p></li>
+<li><p>calcular la similitud por pares entre las series temporales. En nuestro caso, ejecutamos una aproximación de tiempo lineal de la deformación dinámica temporal, todavía en la computadora clásica.</p></li>
+<li><p>calcular la cartera real de <span class="math notranslate nohighlight">\(q\)</span> activos representativos, basándose en la medida de similitud. Este paso se ejecuta dos veces, en realidad. Primero, obtenemos un valor de referencia mediante la ejecución de un solucionador de IBM (el IBM ILOG CPLEX o el Exact Eigensolver) en la computadora clásica. En segundo lugar, ejecutamos un algoritmo híbrido alternativo parcialmente en la computadora cuántica.</p></li>
+<li><p>visualización de los resultados. En nuestro caso, esta es nuevamente una gráfica simplista.</p></li>
+</ol>
+<p>A continuación, explicamos primero el modelo utilizado en (4) arriba, antes de proceder con la instalación de los prerrequisitos previos y la carga de datos.</p>
+</section>
+<section id="El-Modelo">
+<h2>El Modelo<a class="headerlink" href="#El-Modelo" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Como se analiza en [Cornuejols &amp; Tutuncu, 2006], describimos un modelo matemático que junta los activos en grupos similares y selecciona un activo representativo de cada grupo para incluirlo en la cartera de fondos indexados. El modelo se basa en los siguientes datos, que analizaremos con más detalle más adelante:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\rho_{ij} = \textrm{similitud}\, \textrm{entre}\, \textrm{acción}\, i \, \textrm{y}\, \textrm{acción}\, j.\]</div>
+</div>
+<p>Por ejemplo, <span class="math notranslate nohighlight">\(\rho_{ii} = 1\)</span>, <span class="math notranslate nohighlight">\(\rho_{ij} \leq 1\)</span> para <span class="math notranslate nohighlight">\(i \neq j\)</span> y <span class="math notranslate nohighlight">\(\rho_{ij}\)</span> es más grande para acciones más similares. Un ejemplo de esto es la correlación entre los rendimientos de las acciones <span class="math notranslate nohighlight">\(i\)</span> y <span class="math notranslate nohighlight">\(j\)</span>. Pero se pueden elegir otros índices similares <span class="math notranslate nohighlight">\(\rho_{ij}\)</span>.</p>
+<p>El problema que nos interesa resolver es:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[(M) \quad  f = \max_{x_{ij}, y_{j}} \,\, \sum_{i=1}^n \sum_{j=1}^n \rho_{ij} x_{ij}\]</div>
+</div>
+<p>sujeto a la restricción de agrupamiento:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\sum_{j=1}^n y_j = q,\]</div>
+</div>
+<p>a las restricciones de consistencia:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\sum_{j=1}^n x_{ij} = 1, \,\textrm{ para }\,  i = 1,\ldots, n,
+\quad x_{ij} \leq y_j,\,\textrm{ para }\,  i = 1,\ldots, n; \, j = 1,\ldots, n,
+\quad x_{jj} = y_j,\,\textrm{ para }\,  j = 1,\ldots, n,\]</div>
+</div>
+<p>y restricciones integrales:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\quad  x_{ij}, y_j \in\{0,1\}, \,\textrm{ for }\,  i = 1,\ldots, n; \, j = 1,\ldots, n.\]</div>
+</div>
+<p>Las variables <span class="math notranslate nohighlight">\(y_j\)</span> describen qué acciones <span class="math notranslate nohighlight">\(j\)</span> están en el fondo indexado (<span class="math notranslate nohighlight">\(y_j = 1\)</span> si <span class="math notranslate nohighlight">\(j\)</span> está seleccionado en el fondo, <span class="math notranslate nohighlight">\(0\)</span> de lo contrario). Para cada acción <span class="math notranslate nohighlight">\(i = 1,\dots,n\)</span>, la variable <span class="math notranslate nohighlight">\(x_{ij}\)</span> indica qué acción <span class="math notranslate nohighlight">\(j\)</span> en el fondo indexado es más similar a <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(x_{ij} = 1\)</span> si <span class="math notranslate nohighlight">\(j\)</span> es la acción más similar en el fondo indexado, <span class="math notranslate nohighlight">\(0\)</span> en caso contrario).</p>
+<p>La primera restricción selecciona <span class="math notranslate nohighlight">\(q\)</span> acciones en el fondo. La segunda restricción impone que cada acción <span class="math notranslate nohighlight">\(i\)</span> tiene exactamente una acción representativa <span class="math notranslate nohighlight">\(j\)</span> en el fondo. Las restricciones tercera y cuarta garantizan que la acción <span class="math notranslate nohighlight">\(i\)</span> puede ser representada por la acción <span class="math notranslate nohighlight">\(j\)</span> solo si <span class="math notranslate nohighlight">\(j\)</span> está en el fondo. El objetivo del modelo maximiza la similitud entre las <span class="math notranslate nohighlight">\(n\)</span> acciones y sus representantes en el fondo. También se pueden considerar diferentes funciones de costo.</p>
+<p>Concatenamos las variables de decisión en un vector</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[{\bf z} = [x_{11},x_{12},\ldots,x_{1n}, x_{22},\ldots,x_{nn}, y_{1},\ldots,y_{n}],\]</div>
+</div>
+<p>cuya dimensión es <span class="math notranslate nohighlight">\({\bf z} \in \{0,1\}^N\)</span>, con <span class="math notranslate nohighlight">\(N = n (n+1)\)</span> y denotamos la solución óptima con <span class="math notranslate nohighlight">\({\bf z}^*\)</span>, y el costo óptimo <span class="math notranslate nohighlight">\(f^*\)</span>.</p>
+</section>
+<section id="Un-Enfoque-Híbrido">
+<h2>Un Enfoque Híbrido<a class="headerlink" href="#Un-Enfoque-Híbrido" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Aquí, demostramos un enfoque que combina los pasos de la computación clásica y cuántica, siguiendo el enfoque de optimización aproximada cuántica de Farhi, Goldstone, y Gutmann (2014).</p>
+<section id="Construir-una-optimización-polinomial-binaria">
+<h3>Construir una optimización polinomial binaria<a class="headerlink" href="#Construir-una-optimización-polinomial-binaria" title="Enlace permanente a este encabezado">#</a></h3>
+<p>De <span class="math notranslate nohighlight">\((M)\)</span> se puede construir una optimización polinomial binaria con solamente restricciones de igualdad, sustituyendo las restricciones de desigualdad <span class="math notranslate nohighlight">\(x_{ij} \leq y_j\)</span> con las restricciones de igualdad equivalentes <span class="math notranslate nohighlight">\(x_{ij} (1- y_j) = 0\)</span>. Entonces el problema se convierte en:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[(BPO) \quad  f = \max_{x_{ij}, y_{j}} \,\, \sum_{i=1}^n \sum_{j=1}^n \rho_{ij} x_{ij}\]</div>
+</div>
+<p>sujeto a la restricción de agrupamiento, las restricciones integrales y las siguientes restricciones de coherencia modificadas:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\sum_{j=1}^n x_{ij} = 1, \,\textrm{ para }\,  i = 1,\ldots, n,\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\quad x_{ij} (1- y_j) = 0,\,\textrm{ para }\,  i = 1,\ldots, n; \, j = 1,\ldots, n,\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\quad x_{jj} = y_j,\,\textrm{ para }\,  j = 1,\ldots, n.\]</div>
+</div>
+</section>
+<section id="Construir-el-Hamiltoniano-de-Ising">
+<h3>Construir el Hamiltoniano de Ising<a class="headerlink" href="#Construir-el-Hamiltoniano-de-Ising" title="Enlace permanente a este encabezado">#</a></h3>
+<p>Ahora podemos construir el Hamiltoniano Ising (QUBO) mediante métodos de penalización (introduciendo un coeficiente de penalización <span class="math notranslate nohighlight">\(A\)</span> para cada restricción de igualdad) como</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[(IH) \quad H = \sum_{i=1}^n \sum_{j=1}^n \rho_{ij} x_{ij} + A\Big( \sum_{j=1}^n y_j - q\Big)^2 + \sum_{i=1}^n A\Big( \sum_{j=1}^n x_{ij} - 1\Big)^2 + \sum_{j=1}^n A (x_{jj}-y_j)^2 +\sum_{i=1}^n \sum_{j=1}^n A \left(x_{ij} (1- y_j)\right).\]</div>
+</div>
+</section>
+<section id="De-la-formulación-Hamiltoniana-a-la-Programación-Cuadrática-(QP)">
+<h3>De la formulación Hamiltoniana a la Programación Cuadrática (QP)<a class="headerlink" href="#De-la-formulación-Hamiltoniana-a-la-Programación-Cuadrática-(QP)" title="Enlace permanente a este encabezado">#</a></h3>
+<p>En el vector <span class="math notranslate nohighlight">\({\bf z}\)</span>, los elementos Hamiltonianos de Ising se pueden reescribir de la siguiente manera,</p>
+<p>Primer témino:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^n \sum_{j=1}^n \rho_{ij} x_{ij} = [\rho_{11},\rho_{12},\ldots,\rho_{1n}, \rho_{22},\ldots,\rho_{nn}|{\bf 0}_n ]{\bf z} =: {\bf c}_0^T {\bf z}\]</div>
+</div>
+<p>Segundo término:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}A\Big( \sum_{j=1}^n y_j - q\Big)^2 = A \Big(\sum_{j=1}^n y_j\Big)^2 - 2 Aq \sum_{j=1}^n y_j + A q^2 = A {\bf z}^T \left[\begin{array}{c}{\bf 0}_{n^2} \\ \hline  {\bf 1}_n  \end{array}\right]\left[\begin{array}{cc}{\bf 0}_{n^2} | {\bf 1}_n  \end{array}\right]{\bf z} - 2 A q [{\bf 0}_{n^2}|{\bf 1}_n]{\bf z} + A q^2 =: {\bf z}^T {\bf Q}_0 {\bf z} + {\bf c}_1^T {\bf z} + r_0\end{split}\]</div>
+</div>
+<p>Tercer término:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^n A\Big( \sum_{j=1}^n x_{ij} - 1\Big)^2 = A\sum_{i=1}^n \Big(\sum_{j=1}^n x_{ij}\Big)^2 - 2 A \sum_{i=1}^n\sum_{j=1}^n x_{ij} + n A = \qquad\qquad\qquad\qquad\qquad\qquad\qquad\]</div>
+</div>
+<p>que es equivalente a:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}\qquad\qquad\qquad\qquad\qquad\qquad\qquad = A {\bf z}^T \left(\sum_{i=1}^n \left[\begin{array}{c}{\bf 0}_{n(i-1)}  \\ {\bf 1}_n  \\ {\bf 0}_{n(n-i)} \\ \hline {\bf 0}_{n} \end{array}\right]\left[\begin{array}{cccc}{\bf 0}_{n(i-1)} &amp; {\bf 1}_n  &amp; {\bf 0}_{n(n-i)} &amp; | {\bf 0}_{n} \end{array}\right]\right){\bf z} - 2 A [{\bf 1}_{n^2}|{\bf 0}_n]{\bf z} + n A =: {\bf z}^T {\bf Q}_1 {\bf z} + {\bf c}_2^T {\bf z} + r_1\end{split}\]</div>
+</div>
+<p>Cuarto término:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}A \sum_{j=1}^n  (x_{jj}-y_j)^2 = A {\bf z}^T  \left(\sum_{j=0}^{n-1} \left[\begin{array}{c}{\bf 0}_{nj + j}  \\ 1  \\ {\bf 0}_{n^2-(nj+j+1)} \\ \hline {\bf 0}_{j} \\ -1 \\ {\bf 0}_{n-j-1} \end{array}\right]\left[\begin{array}{cccccc}{\bf 0}_{nj + j} &amp; 1  &amp; {\bf 0}_{n^2-(nj+j+1)} &amp; | {\bf 0}_{j} &amp; -1 &amp; {\bf 0}_{n-j-1}  \end{array}\right]\right){\bf z} = A {\bf z}^T {\bf Q}_2 {\bf z}\end{split}\]</div>
+</div>
+<p>Quinto término:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}\sum_{i=1}^n \sum_{j=1}^n A \left(x_{ij} (1- y_j)\right) = A [{\bf 1}_{n^2}|{\bf 0}_n]{\bf z} + A {\bf z}^T \left( \sum_{i=1}^n \sum_{j=1}^n \left[\begin{array}{ccc|c}  &amp;  &amp; &amp; \\ &amp; {\bf 0}_{n^2\times n^2} &amp; &amp; -1/2_{(ij,j)}  \\ &amp; &amp; &amp; \\ \hline &amp; -1/2_{(j, ij)} &amp;  &amp; {\bf 0}_{n} \end{array}\right] \right) {\bf z} =:  {\bf z}^T {\bf Q}_3 {\bf z} + {\bf c}_3^T {\bf z}\end{split}\]</div>
+</div>
+<p>Por lo tanto, la formulación se convierte en,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[(IH-QP)\quad \max_{{\bf z}\in\{0,1\}^{n(n+1)}} \, {\bf z}^T ({\bf Q}_0+{\bf Q}_1+ {\bf Q}_2 + {\bf Q}_3 ){\bf z} + ({\bf c}_0+{\bf c}_1+{\bf c}_2+{\bf c}_3)^T {\bf z} +r_0+r_1+r_2\]</div>
+</div>
+<p>que se puede pasar al solucionador propio variacional cuántico (variational quantum eigensolver).</p>
+</section>
+</section>
+<section id="Referencias">
+<h2>Referencias<a class="headerlink" href="#Referencias" title="Enlace permanente a este encabezado">#</a></h2>
+<p>[1] G. Cornuejols, M. L. Fisher, and G. L. Nemhauser, <em>Location of bank accounts to optimize float: an analytical study of exact and approximate algorithms</em>, Management Science, vol. 23(8), 1997</p>
+<p>[2] E. Farhi, J. Goldstone, S. Gutmann e-print <a class="reference external" href="https://arxiv.org/abs/1411.4028">arXiv 1411.4028, 2014</a></p>
+<p>[3] G. Cornuejols and R. Tutuncu, <a class="reference external" href="http://web.math.ku.dk/~rolf/CT_FinOpt.pdf">Optimization methods in finance</a>, 2006</p>
+<p>[4] DJ. Berndt and J. Clifford, <em>Using dynamic time warping to find patterns in time series</em>. In KDD workshop 1994 (Vol. 10, No. 16, pp. 359-370).</p>
+<p>[5] <a class="reference external" href="https://qiskit.org/ecosystem/optimization/tutorials/06_examples_max_cut_and_tsp.html">Max-Cut y Problema del Vendedor Viajero</a></p>
+</section>
+<section id="La-implementación">
+<h2>La implementación<a class="headerlink" href="#La-implementación" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Primero, importamos los módulos necesarios.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import requisite modules</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="c1"># Import Qiskit packages</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">TwoLocal</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer.primitives</span> <span class="kn">import</span> <span class="n">Sampler</span>
+<span class="kn">from</span> <span class="nn">qiskit_algorithms</span> <span class="kn">import</span> <span class="n">NumPyMinimumEigensolver</span><span class="p">,</span> <span class="n">QAOA</span><span class="p">,</span> <span class="n">SamplingVQE</span>
+<span class="kn">from</span> <span class="nn">qiskit_algorithms.optimizers</span> <span class="kn">import</span> <span class="n">COBYLA</span>
+<span class="kn">from</span> <span class="nn">qiskit_optimization.algorithms</span> <span class="kn">import</span> <span class="n">MinimumEigenOptimizer</span>
+
+<span class="c1"># The data providers of stock-market data</span>
+<span class="kn">from</span> <span class="nn">qiskit_finance.data_providers</span> <span class="kn">import</span> <span class="n">RandomDataProvider</span>
+<span class="kn">from</span> <span class="nn">qiskit_finance.applications.optimization</span> <span class="kn">import</span> <span class="n">PortfolioDiversification</span>
+</pre></div>
+</div>
+</div>
+<p>A continuación, descargamos los datos de precios de dos acciones y calculamos su matriz de similitud por pares (distancia <a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_time_warping">deformación dinámica temporal</a> normalizada a (0,1] al tomar el recíproco). Si esto falla, por ejemplo, debido a que está fuera de línea o excede el límite diario de acceso a los datos del mercado de valores, consideramos una matriz constante en su lugar.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a pairwise time-series similarity matrix</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">123</span>
+
+<span class="n">stocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TICKER1&quot;</span><span class="p">,</span> <span class="s2">&quot;TICKER2&quot;</span><span class="p">]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stocks</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">RandomDataProvider</span><span class="p">(</span>
+    <span class="n">tickers</span><span class="o">=</span><span class="n">stocks</span><span class="p">,</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">end</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+    <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_similarity_matrix</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Ahora decidimos el número de grupos. Tiene que ser menor que la cantidad de acciones que hemos cargado.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># q less or equal than n</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Solución-clásica-usando-IBM-ILOG-CPLEX">
+<h2>Solución clásica usando IBM ILOG CPLEX<a class="headerlink" href="#Solución-clásica-usando-IBM-ILOG-CPLEX" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Para una solución clásica, utilizamos IBM CPLEX. CPLEX puede encontrar la solución exacta de este problema. Primero definimos una clase ClassicalOptimizer que codifica el problema de una manera que CPLEX pueda resolver, y luego instanciamos la clase y la resolvemos.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClassicalOptimizer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">rho</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>  <span class="c1"># number of inner variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">q</span>  <span class="c1"># number of required selection</span>
+
+    <span class="k">def</span> <span class="nf">compute_allowed_combinations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">)</span> <span class="o">/</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">cplex_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># refactoring</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span>
+
+        <span class="n">my_obj</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
+        <span class="n">my_ub</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">n</span><span class="p">)]</span>
+        <span class="n">my_lb</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">n</span><span class="p">)]</span>
+        <span class="n">my_ctype</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;I&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">n</span><span class="p">)])</span>
+
+        <span class="n">my_rhs</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">[</span><span class="n">q</span><span class="p">]</span>
+            <span class="o">+</span> <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
+            <span class="o">+</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
+            <span class="o">+</span> <span class="p">[</span><span class="mf">0.1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="n">my_sense</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;E&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">n</span><span class="p">)])</span>
+            <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;E&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)])</span>
+            <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;L&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">)])</span>
+        <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">my_prob</span> <span class="o">=</span> <span class="n">cplex</span><span class="o">.</span><span class="n">Cplex</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">populatebyrow</span><span class="p">(</span><span class="n">my_prob</span><span class="p">,</span> <span class="n">my_obj</span><span class="p">,</span> <span class="n">my_ub</span><span class="p">,</span> <span class="n">my_lb</span><span class="p">,</span> <span class="n">my_ctype</span><span class="p">,</span> <span class="n">my_sense</span><span class="p">,</span> <span class="n">my_rhs</span><span class="p">)</span>
+
+            <span class="n">my_prob</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="n">CplexError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">my_prob</span><span class="o">.</span><span class="n">solution</span><span class="o">.</span><span class="n">get_values</span><span class="p">()</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">my_prob</span><span class="o">.</span><span class="n">solution</span><span class="o">.</span><span class="n">get_objective_value</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">cost</span>
+
+    <span class="k">def</span> <span class="nf">populatebyrow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">my_obj</span><span class="p">,</span> <span class="n">my_ub</span><span class="p">,</span> <span class="n">my_lb</span><span class="p">,</span> <span class="n">my_ctype</span><span class="p">,</span> <span class="n">my_sense</span><span class="p">,</span> <span class="n">my_rhs</span><span class="p">):</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span>
+
+        <span class="n">prob</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">set_sense</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">sense</span><span class="o">.</span><span class="n">minimize</span><span class="p">)</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">my_obj</span><span class="p">,</span> <span class="n">lb</span><span class="o">=</span><span class="n">my_lb</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="n">my_ub</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="n">my_ctype</span><span class="p">)</span>
+
+        <span class="n">prob</span><span class="o">.</span><span class="n">set_log_stream</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">set_error_stream</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">set_warning_stream</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">prob</span><span class="o">.</span><span class="n">set_results_stream</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">n</span><span class="p">)]</span>
+        <span class="n">coef</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">col</span><span class="p">,</span> <span class="n">coef</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span> <span class="o">+</span> <span class="n">n</span> <span class="o">*</span> <span class="n">ii</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="n">n</span> <span class="o">*</span> <span class="n">ii</span><span class="p">)]</span>
+            <span class="n">coef</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
+
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">col</span><span class="p">,</span> <span class="n">coef</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">ii</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="n">ii</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">ii</span><span class="p">]</span>
+            <span class="n">coef</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">col</span><span class="p">,</span> <span class="n">coef</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+                <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">ii</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="n">jj</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">jj</span><span class="p">]</span>
+                <span class="n">coef</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">col</span><span class="p">,</span> <span class="n">coef</span><span class="p">])</span>
+
+        <span class="n">prob</span><span class="o">.</span><span class="n">linear_constraints</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">lin_expr</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">senses</span><span class="o">=</span><span class="n">my_sense</span><span class="p">,</span> <span class="n">rhs</span><span class="o">=</span><span class="n">my_rhs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instantiate the classical optimizer class</span>
+<span class="n">classical_optimizer</span> <span class="o">=</span> <span class="n">ClassicalOptimizer</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+
+<span class="c1"># Compute the number of feasible solutions:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of feasible combinations= &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">classical_optimizer</span><span class="o">.</span><span class="n">compute_allowed_combinations</span><span class="p">()))</span>
+
+<span class="c1"># Compute the total number of possible combinations (feasible + unfeasible)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of combinations= &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of feasible combinations= 2
+Total number of combinations= 64
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize the solution</span>
+<span class="k">def</span> <span class="nf">visualize_solution</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">title_str</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xc</span><span class="p">)):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">xc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.015</span><span class="p">,</span> <span class="n">yc</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">n</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xc</span><span class="p">[</span><span class="n">ii</span> <span class="o">-</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="n">yc</span><span class="p">[</span><span class="n">ii</span> <span class="o">-</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;r*&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">iy</span> <span class="o">=</span> <span class="n">ii</span> <span class="o">//</span> <span class="n">n</span>
+            <span class="n">ix</span> <span class="o">=</span> <span class="n">ii</span> <span class="o">%</span> <span class="n">n</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xc</span><span class="p">[</span><span class="n">ix</span><span class="p">],</span> <span class="n">xc</span><span class="p">[</span><span class="n">iy</span><span class="p">]],</span> <span class="p">[</span><span class="n">yc</span><span class="p">[</span><span class="n">ix</span><span class="p">],</span> <span class="n">yc</span><span class="p">[</span><span class="n">iy</span><span class="p">]],</span> <span class="s2">&quot;C2&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title_str</span> <span class="o">+</span> <span class="s2">&quot; cost = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">C</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>La solución muestra las acciones seleccionadas a través de las estrellas y en verde los enlaces (a través de similitudes) con otras acciones que están representadas en el fondo por las acciones vinculadas.</p>
+</section>
+<section id="Solución-con-Computación-Cuántica-usando-Qiskit">
+<h2>Solución con Computación Cuántica usando Qiskit<a class="headerlink" href="#Solución-con-Computación-Cuántica-usando-Qiskit" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Para la solución cuántica, usamos Qiskit. Primero definimos una clase QuantumOptimizer que codifica el enfoque cuántico para resolver el problema y luego la instanciamos y la resolvemos. Definimos los siguientes métodos dentro de la clase:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">exact_solution</span></code> : para asegurarnos de que el Hamiltoniano de Ising está codificado correctamente en la base <span class="math notranslate nohighlight">\(Z\)</span>, podemos calcular su descomposición propia de forma clásica, es decir, considerando una matriz simétrica de dimensión <span class="math notranslate nohighlight">\(2^N \times 2^N\)</span>. Para el problema en cuestión <span class="math notranslate nohighlight">\(n=3\)</span>, esto es <span class="math notranslate nohighlight">\(N = 12\)</span>, parece ser el límite para muchas computadoras portátiles;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sampling_vqe_solution</span></code> : resuelve el problema <span class="math notranslate nohighlight">\((M)\)</span> a través del Solucionador Propio Variacional Cuántico de Muestreo (Sampling Variational Quantum Eigensolver, <code class="docutils literal notranslate"><span class="pre">SamplingVQE</span></code>);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qaoa_solution</span></code> : resuelve el problema <span class="math notranslate nohighlight">\((M)\)</span> a través de un Algoritmo Cuántico de Optimización Aproximada (Quantum Approximate Optimization Algorithm, <code class="docutils literal notranslate"><span class="pre">QAOA</span></code>).</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_algorithms.utils</span> <span class="kn">import</span> <span class="n">algorithm_globals</span>
+
+
+<span class="k">class</span> <span class="nc">QuantumOptimizer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">rho</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">q</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span> <span class="o">=</span> <span class="n">PortfolioDiversification</span><span class="p">(</span><span class="n">similarity_matrix</span><span class="o">=</span><span class="n">rho</span><span class="p">,</span> <span class="n">num_assets</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">num_clusters</span><span class="o">=</span><span class="n">q</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">to_quadratic_program</span><span class="p">()</span>
+
+    <span class="c1"># Obtains the least eigenvalue of the Hamiltonian classically</span>
+    <span class="k">def</span> <span class="nf">exact_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">exact_mes</span> <span class="o">=</span> <span class="n">NumPyMinimumEigensolver</span><span class="p">()</span>
+        <span class="n">exact_eigensolver</span> <span class="o">=</span> <span class="n">MinimumEigenOptimizer</span><span class="p">(</span><span class="n">exact_mes</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">exact_eigensolver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode_result</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sampling_vqe_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">algorithm_globals</span><span class="o">.</span><span class="n">random_seed</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">cobyla</span> <span class="o">=</span> <span class="n">COBYLA</span><span class="p">()</span>
+        <span class="n">cobyla</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+        <span class="n">ry</span> <span class="o">=</span> <span class="n">TwoLocal</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="s2">&quot;cz&quot;</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">)</span>
+        <span class="n">svqe_mes</span> <span class="o">=</span> <span class="n">SamplingVQE</span><span class="p">(</span><span class="n">sampler</span><span class="o">=</span><span class="n">Sampler</span><span class="p">(),</span> <span class="n">ansatz</span><span class="o">=</span><span class="n">ry</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">cobyla</span><span class="p">)</span>
+        <span class="n">svqe</span> <span class="o">=</span> <span class="n">MinimumEigenOptimizer</span><span class="p">(</span><span class="n">svqe_mes</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">svqe</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode_result</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">qaoa_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">algorithm_globals</span><span class="o">.</span><span class="n">random_seed</span> <span class="o">=</span> <span class="mi">1234</span>
+        <span class="n">cobyla</span> <span class="o">=</span> <span class="n">COBYLA</span><span class="p">()</span>
+        <span class="n">cobyla</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+        <span class="n">qaoa_mes</span> <span class="o">=</span> <span class="n">QAOA</span><span class="p">(</span><span class="n">sampler</span><span class="o">=</span><span class="n">Sampler</span><span class="p">(),</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">cobyla</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">qaoa</span> <span class="o">=</span> <span class="n">MinimumEigenOptimizer</span><span class="p">(</span><span class="n">qaoa_mes</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">qaoa</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode_result</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">decode_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">quantum_solution</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">ground_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qp</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">quantum_solution</span><span class="p">,</span> <span class="n">ground_level</span>
+</pre></div>
+</div>
+</div>
+<section id="Paso-1">
+<h3>Paso 1<a class="headerlink" href="#Paso-1" title="Enlace permanente a este encabezado">#</a></h3>
+<p>Crea una instancia de la clase del optimizador cuántico con los parámetros: - la matriz de similitud <code class="docutils literal notranslate"><span class="pre">rho</span></code>; - el número de activos y agrupaciones <code class="docutils literal notranslate"><span class="pre">n</span></code> y <code class="docutils literal notranslate"><span class="pre">q</span></code>;</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instantiate the quantum optimizer class with parameters:</span>
+<span class="n">quantum_optimizer</span> <span class="o">=</span> <span class="n">QuantumOptimizer</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Paso-2">
+<h3>Paso 2<a class="headerlink" href="#Paso-2" title="Enlace permanente a este encabezado">#</a></h3>
+<p>Codifica el problema como una formulación binaria (IH-QP).</p>
+<p>Comprobación: asegúrate de que la formulación binaria en el optimizador cuántico sea correcta (es decir, que produzca el mismo costo dada la misma solución).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check if the binary representation is correct. This requires CPLEX</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cplex</span>
+
+    <span class="c1"># warnings.filterwarnings(&#39;ignore&#39;)</span>
+    <span class="n">quantum_solution</span><span class="p">,</span> <span class="n">quantum_cost</span> <span class="o">=</span> <span class="n">quantum_optimizer</span><span class="o">.</span><span class="n">exact_solution</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">quantum_solution</span><span class="p">,</span> <span class="n">quantum_cost</span><span class="p">)</span>
+    <span class="n">classical_solution</span><span class="p">,</span> <span class="n">classical_cost</span> <span class="o">=</span> <span class="n">classical_optimizer</span><span class="o">.</span><span class="n">cplex_solution</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">classical_solution</span><span class="p">,</span> <span class="n">classical_cost</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">quantum_cost</span> <span class="o">-</span> <span class="n">classical_cost</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Binary formulation is correct&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in the formulation of the Hamiltonian&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0. 1. 0. 1. 0. 1.] 1.000779571614484
+[1. 0. 1. 0. 1. 0.] 1.000779571614484
+Binary formulation is correct
+</pre></div></div>
+</div>
+</section>
+<section id="Paso-3">
+<h3>Paso 3<a class="headerlink" href="#Paso-3" title="Enlace permanente a este encabezado">#</a></h3>
+<p>Codifica el problema como un Hamiltoniano Ising en la base Z.</p>
+<p>Comprobación: asegúrate de que la formulación sea correcta (es decir, que rinda el mismo costo con la misma solución)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ground_state</span><span class="p">,</span> <span class="n">ground_level</span> <span class="o">=</span> <span class="n">quantum_optimizer</span><span class="o">.</span><span class="n">exact_solution</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ground_state</span><span class="p">)</span>
+<span class="n">classical_cost</span> <span class="o">=</span> <span class="mf">1.000779571614484</span>  <span class="c1"># obtained from the CPLEX solution</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ground_level</span> <span class="o">-</span> <span class="n">classical_cost</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ising Hamiltonian in Z basis is correct&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error in the Ising Hamiltonian formulation&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0. 1. 0. 1. 0. 1.]
+Ising Hamiltonian in Z basis is correct
+</pre></div></div>
+</div>
+</section>
+<section id="Paso-4">
+<h3>Paso 4<a class="headerlink" href="#Paso-4" title="Enlace permanente a este encabezado">#</a></h3>
+<p>Resolver el problema a través de <code class="docutils literal notranslate"><span class="pre">SamplingVQE</span></code>. Ten en cuenta que, dependiendo de la cantidad de qubits, esto puede llevar un tiempo: para 6 qubits se necesitan 15 minutos en una Macbook Pro 2015, para 12 qubits se necesitan más de 12 horas. Para ejecuciones más largas, el log puede ser útil para observar el funcionamiento; de lo contrario, solo tendrás que esperar hasta que se imprima la solución.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svqe_state</span><span class="p">,</span> <span class="n">svqe_level</span> <span class="o">=</span> <span class="n">quantum_optimizer</span><span class="o">.</span><span class="n">sampling_vqe_solution</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">svqe_state</span><span class="p">,</span> <span class="n">svqe_level</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ground_state</span> <span class="o">-</span> <span class="n">svqe_state</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SamplingVQE produces the same solution as the exact eigensolver.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;SamplingVQE does not produce the same solution as the exact eigensolver, but that is to be expected.&quot;</span>
+        <span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0. 1. 0. 1. 0. 1.] 1.000779571614484
+SamplingVQE produces the same solution as the exact eigensolver.
+</pre></div></div>
+</div>
+</section>
+<section id="Paso-5">
+<h3>Paso 5<a class="headerlink" href="#Paso-5" title="Enlace permanente a este encabezado">#</a></h3>
+<p>Visualiza la solución</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_solution</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">ground_state</span><span class="p">,</span> <span class="n">ground_level</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;Classical&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_02_portfolio_diversification_24_0.png" src="../_images/tutorials_02_portfolio_diversification_24_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_solution</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">svqe_state</span><span class="p">,</span> <span class="n">svqe_level</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;SamplingVQE&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_02_portfolio_diversification_25_0.png" src="../_images/tutorials_02_portfolio_diversification_25_0.png" />
+</div>
+</div>
+<p>La solución muestra las acciones seleccionadas usando estrellas y en verde los enlaces (a través de similitudes) con otras acciones que están representadas en el fondo por la acción vinculada. Sin embargo, toma en cuenta que SamplingVQE es un trabajo heurístico sobre la formulación QP del Hamiltoniano de Ising. Para las elecciones viables de A, los óptimos locales de la formulación del QP van a ser soluciones factibles para el ILP (integer linear program, o programación lineal en enteros). Mientras que para algunas pequeñas instancias, como se muestra arriba, podemos encontrar soluciones óptimas para la formulación QP que coinciden con los óptimos del ILP; en general, encontrar soluciones del ILP es más difícil que encontrar óptimos locales de la solución del QP. Aún dentro del SamplingVQE, uno puede proporcionar garantías más fuertes para formas variacionales específicas (funciones de onda de prueba).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+<span class="o">%</span><span class="k">qiskit_copyright</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<h3>Version Information</h3><table><tr><th>Software</th><th>Version</th></tr><tr><td><code>qiskit</code></td><td>0.45.0.dev0+ea871e0</td></tr><tr><td><code>qiskit_optimization</code></td><td>0.6.0</td></tr><tr><td><code>qiskit_finance</code></td><td>0.4.0</td></tr><tr><td><code>qiskit_algorithms</code></td><td>0.3.0</td></tr><tr><td><code>qiskit_aer</code></td><td>0.12.2</td></tr><tr><td><code>qiskit_ibm_provider</code></td><td>0.7.0</td></tr><tr><th colspan='2'>System information</th></tr><tr><td>Python version</td><td>3.9.7</td></tr><tr><td>Python compiler</td><td>GCC 7.5.0</td></tr><tr><td>Python build</td><td>default, Sep 16 2021 13:09:58</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td>CPUs</td><td>2</td></tr><tr><td>Memory (Gb)</td><td>5.7784271240234375</td></tr><tr><td colspan='2'>Tue Sep 05 15:08:55 2023 EDT</td></tr></table></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div style='width: 100%; background-color:#d5d9e0;padding-left: 10px; padding-bottom: 10px; padding-right: 10px; padding-top: 5px'><h3>This code is a part of Qiskit</h3><p>&copy; Copyright IBM 2017, 2023.</p><p>This code is licensed under the Apache License, Version 2.0. You may<br>obtain a copy of this license in the LICENSE.txt file in the root directory<br> of this source tree or at http://www.apache.org/licenses/LICENSE-2.0.<p>Any modifications or derivative works of this code must retain this<br>copyright notice, and modified files need to carry a notice indicating<br>that they have been altered from the originals.</p></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+  <script>
+    function userFeedbackClicked(ctaType) {
+      document.getElementById('qiskit-analytics-thank-you').style.visibility = 'visible';
+      window.trackCta(`Helpful - ${ctaType}`);
+    }
+  </script>
+    <div class="qiskit-analytics-container">
+      <div>Was this page helpful?</div>
+      <a onclick="userFeedbackClicked('yes')">Yes</a>
+      <a onclick="userFeedbackClicked('no')">No</a>
+      <div id="qiskit-analytics-thank-you">Thank you!</div>
+    </div>
+<div class="related-pages">
+          <a class="next-page" href="03_european_call_option_pricing.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Fijación de Precios de Opciones de Compra Europeas</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="01_portfolio_optimization.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Optimización de Cartera</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2018, 2024, Qiskit Finance Development Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Diversificación de Cartera</a><ul>
+<li><a class="reference internal" href="#Introducción">Introducción</a></li>
+<li><a class="reference internal" href="#El-Modelo">El Modelo</a></li>
+<li><a class="reference internal" href="#Un-Enfoque-Híbrido">Un Enfoque Híbrido</a><ul>
+<li><a class="reference internal" href="#Construir-una-optimización-polinomial-binaria">Construir una optimización polinomial binaria</a></li>
+<li><a class="reference internal" href="#Construir-el-Hamiltoniano-de-Ising">Construir el Hamiltoniano de Ising</a></li>
+<li><a class="reference internal" href="#De-la-formulación-Hamiltoniana-a-la-Programación-Cuadrática-(QP)">De la formulación Hamiltoniana a la Programación Cuadrática (QP)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Referencias">Referencias</a></li>
+<li><a class="reference internal" href="#La-implementación">La implementación</a></li>
+<li><a class="reference internal" href="#Solución-clásica-usando-IBM-ILOG-CPLEX">Solución clásica usando IBM ILOG CPLEX</a></li>
+<li><a class="reference internal" href="#Solución-con-Computación-Cuántica-usando-Qiskit">Solución con Computación Cuántica usando Qiskit</a><ul>
+<li><a class="reference internal" href="#Paso-1">Paso 1</a></li>
+<li><a class="reference internal" href="#Paso-2">Paso 2</a></li>
+<li><a class="reference internal" href="#Paso-3">Paso 3</a></li>
+<li><a class="reference internal" href="#Paso-4">Paso 4</a></li>
+<li><a class="reference internal" href="#Paso-5">Paso 5</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=f1d6cca2"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/scripts/qiskit-sphinx-theme.js?v=4d77b8ca"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>
