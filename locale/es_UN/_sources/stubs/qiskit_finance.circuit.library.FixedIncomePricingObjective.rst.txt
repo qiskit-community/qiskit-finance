@@ -1,0 +1,32 @@
+﻿
+
+FixedIncomePricingObjective
+==========================================================
+
+.. currentmodule:: qiskit_finance.circuit.library
+
+.. autoclass:: FixedIncomePricingObjective
+   :show-inheritance:
+   :no-members:
+   :no-inherited-members:
+   :no-special-members:
+
+   
+   
+
+   .. rubric:: Attributes
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods
+
+   
+   .. automethod:: FixedIncomePricingObjective.post_processing
+
+   
+   

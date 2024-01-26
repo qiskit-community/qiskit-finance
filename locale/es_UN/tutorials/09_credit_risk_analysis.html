@@ -1,0 +1,1477 @@
+<!doctype html>
+<html class="no-js" lang="es-UN">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Índice" href="../genindex.html" /><link rel="search" title="Búsqueda" href="../search.html" /><link rel="next" title="Option Pricing with qGANs" href="10_qgan_option_pricing.html" /><link rel="prev" title="Pricing Fixed-Income Assets" href="08_fixed_income_pricing.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
+        <title>Credit Risk Analysis - Qiskit Finance 0.4.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fd506691" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-sphinx-theme.css?v=fe84956c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-ecosystem.css?v=745c5aa7" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #ffffff;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<script src="../_static/js/web-components/top-nav-bar.js"></script>
+<script>
+  (function () {
+    window._analytics = {
+      segment_key: 'ffdYLviQze3kzomaINXNk6NwpY9LlXcw',
+      coremetrics: false,
+      optimizely: false,
+      googleAddServices: false,
+      fullStory: false,
+      autoPageEventSpa: false,
+      autoFormEvents: false,
+      autoPageView: false
+    }
+
+    window.digitalData = {
+      page: {
+        pageInfo: {
+          productTitle: 'IBM Q Experience',
+          analytics: {
+            category: 'Qiskit.org'
+          }
+        }
+      }
+    }
+  }());
+</script>
+<script src="https://cloud.ibm.com/analytics/build/bluemix-analytics.min.js"></script>
+<script>
+  (function () {
+    'use strict'
+
+    if (!window.bluemixAnalytics || !window.digitalData) { return }
+
+    const category = window.digitalData.page.pageInfo.analytics.category
+    const productTitle = window.digitalData.page.pageInfo.productTitle
+    const routeName = 'documentation'
+
+    window.bluemixAnalytics.pageEvent(category, routeName, {
+      navigationType: 'pushState',
+      productTitle: productTitle,
+      title: document.title
+    })
+
+    window.trackCta = (action) => {
+      if (!window.bluemixAnalytics || !window.digitalData) { return }
+
+      const category = window.digitalData.page.pageInfo.analytics.category
+      const productTitle = window.digitalData.page.pageInfo.productTitle
+
+      window.bluemixAnalytics.trackEvent('CTA Clicked', {
+        productTitle,
+        category,
+        CTA: action
+      })
+    }
+
+  }());
+</script></head>
+  <body>
+    
+    <script>document.body.dataset.theme = "light";</script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <defs><style>.cls-1{fill:none;}</style></defs>
+      <path d="M28,4H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V6A2,2,0,0,0,28,4ZM4,6H20V26H4ZM28,26H22V6h6Z"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <defs><style>.cls-1{fill:none;}</style></defs>
+      <rect x="4" y="6" width="24" height="2"/>
+      <rect x="4" y="24" width="24" height="2"/>
+      <rect x="4" y="12" width="24" height="2"/>
+      <rect x="4" y="18" width="24" height="2"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg version="1.1" id="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+         viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve"><polygon points="22,16 12,26 10.6,24.6 19.2,16 10.6,7.4 12,6 " stroke="currentColor"/>
+      <rect id="_x3C_Transparent_Rectangle_x3E_" fill="none" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-new-tab" viewBox="0 0 32 32">
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+      <defs>
+        <style>
+          .cls-1 {
+            fill: none;
+          }
+        </style>
+      </defs>
+      <path fill="#6929C4" d="M26,28H6a2.0027,2.0027,0,0,1-2-2V6A2.0027,2.0027,0,0,1,6,4H16V6H6V26H26V16h2V26A2.0027,2.0027,0,0,1,26,28Z"/>
+      <polygon fill="#6929C4" points="20 2 20 4 26.586 4 18 12.586 19.414 14 28 5.414 28 12 30 12 30 2 20 2"/>
+      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     This project's translations are no longer maintained. See the <a href=https://github.com/qiskit-community/qiskit-translations/tree/main#readme>announcement</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Qiskit Finance 0.4.0</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><div class="sidebar-brand">
+  <a href="https://www.qiskit.org/ecosystem">
+    <div class="sidebar-logo-container">
+      <img class="sidebar-logo" src="../_static/images/ecosystem-logo.svg" alt="Qiskit Ecosystem logo"/>
+    </div>
+  </a>
+  
+  <span class="sidebar-brand-text">Qiskit Finance 0.4.0</span>
+</div><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Búsqueda">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_amplitude_estimation.html">Quantum Amplitude Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_portfolio_optimization.html">Portfolio Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_portfolio_diversification.html">Portfolio Diversification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_european_call_option_pricing.html">Pricing European Call Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_european_put_option_pricing.html">Pricing European Put Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_bull_spread_pricing.html">Pricing Bull Spreads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_basket_option_pricing.html">Pricing Basket Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_asian_barrier_spread_pricing.html">Pricing Asian Barrier Spreads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_fixed_income_pricing.html">Pricing Fixed-Income Assets</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Credit Risk Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_qgan_option_pricing.html">Option Pricing with qGANs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_time_series.html">Loading and Processing Stock-Market Time-Series Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../stubs/qiskit_finance.QiskitFinanceError.html">QiskitFinanceError</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.html">Circuit (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Circuit (qiskit_finance.circuit)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../apidocs/qiskit_finance.circuit.library.html">Circuit Library (<code class="xref py py-mod docutils literal notranslate"><span class="pre">qiskit_finance.circuit.library</span></code>)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Circuit Library (qiskit_finance.circuit.library)</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.EuropeanCallDeltaObjective.html">EuropeanCallDeltaObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.EuropeanCallPricingObjective.html">EuropeanCallPricingObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.FixedIncomePricingObjective.html">FixedIncomePricingObjective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.GaussianConditionalIndependenceModel.html">GaussianConditionalIndependenceModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.LogNormalDistribution.html">LogNormalDistribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.NormalDistribution.html">NormalDistribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stubs/qiskit_finance.circuit.library.UniformDistribution.html">UniformDistribution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/qiskit-community/qiskit-finance">GitHub</a></li>
+</ul>
+
+</div></div><div class="qiskit-translations-container" aria-label="languages">
+  <input id="translations-checkbox" name="translations-checkbox" role="switch" type="checkbox">
+  <div class="qiskit-translations-header-container"><label for="translations-checkbox">
+      <p role="note">Spanish</p>
+      <div class="qiskit-translations-toggle-container">
+        <div class="visually-hidden">Toggle translations list</div>
+        <i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i>
+      </div>
+    </label>
+  </div>
+  <div class="qiskit-translations-list-container">
+    <ul>
+      
+        <li><a href="/qiskit-finance/tutorials/09_credit_risk_analysis.html">English</a></li>
+      
+        <li><a href="/qiskit-finance/locale/bn_BN/tutorials/09_credit_risk_analysis.html">Bengali</a></li>
+      
+        <li><a href="/qiskit-finance/locale/ja_JP/tutorials/09_credit_risk_analysis.html">Japanese</a></li>
+      
+        <li><a href="/qiskit-finance/locale/es_UN/tutorials/09_credit_risk_analysis.html">Spanish</a></li>
+      
+    </ul>
+  </div>
+  <script>
+    document.querySelectorAll('.version').forEach((element) => {
+      element.addEventListener('click', (evt) => {
+        const hash = window.location.hash;
+        const complete_url = evt.target.href + hash;
+        window.location = complete_url;
+        evt.preventDefault();
+      });
+    });
+  </script>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>This page was generated from <a class="reference external" href="https://github.com/qiskit-community/qiskit-finance/blob/stable/0.4/docs/tutorials/09_credit_risk_analysis.ipynb">docs/tutorials/09_credit_risk_analysis.ipynb</a>.</p>
+</div>
+<section id="Credit-Risk-Analysis">
+<h1>Credit Risk Analysis<a class="headerlink" href="#Credit-Risk-Analysis" title="Enlace permanente a este encabezado">#</a></h1>
+<section id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Enlace permanente a este encabezado">#</a></h2>
+<p>This tutorial shows how quantum algorithms can be used for credit risk analysis. More precisely, how Quantum Amplitude Estimation (QAE) can be used to estimate risk measures with a quadratic speed-up over classical Monte Carlo simulation. The tutorial is based on the following papers:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.nature.com/articles/s41534-019-0130-6">Quantum Risk Analysis. Stefan Woerner, Daniel J. Egger.</a> [Woerner2019]</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/1907.03044">Credit Risk Analysis using Quantum Computers. Egger et al. (2019)</a> [Egger2019]</p></li>
+</ul>
+<p>A general introduction to QAE can be found in the following paper:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://arxiv.org/abs/quant-ph/0005055">Quantum Amplitude Amplification and Estimation. Gilles Brassard et al.</a></p></li>
+</ul>
+<p>The structure of the tutorial is as follows:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Problem-Definition"><span class="std std-ref">Problem Definition</span></a></p></li>
+<li><p><a class="reference internal" href="#Uncertainty-Model"><span class="std std-ref">Uncertainty Model</span></a></p></li>
+<li><p><a class="reference internal" href="#Expected-Loss"><span class="std std-ref">Expected Loss</span></a></p></li>
+<li><p><a class="reference internal" href="#Cumulative-Distribution-Function"><span class="std std-ref">Cumulative Distribution Function</span></a></p></li>
+<li><p><a class="reference internal" href="#Value-at-Risk"><span class="std std-ref">Value at Risk</span></a></p></li>
+<li><p><a class="reference internal" href="#Conditional-Value-at-Risk"><span class="std std-ref">Conditional Value at Risk</span></a></p></li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumRegister</span><span class="p">,</span> <span class="n">QuantumCircuit</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">IntegerComparator</span>
+<span class="kn">from</span> <span class="nn">qiskit_algorithms</span> <span class="kn">import</span> <span class="n">IterativeAmplitudeEstimation</span><span class="p">,</span> <span class="n">EstimationProblem</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer.primitives</span> <span class="kn">import</span> <span class="n">Sampler</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Problem-Definition">
+<h2>Problem Definition<a class="headerlink" href="#Problem-Definition" title="Enlace permanente a este encabezado">#</a></h2>
+<p>In this tutorial we want to analyze the credit risk of a portfolio of <span class="math notranslate nohighlight">\(K\)</span> assets. The default probability of every asset <span class="math notranslate nohighlight">\(k\)</span> follows a <em>Gaussian Conditional Independence</em> model, i.e., given a value <span class="math notranslate nohighlight">\(z\)</span> sampled from a latent random variable <span class="math notranslate nohighlight">\(Z\)</span> following a standard normal distribution, the default probability of asset <span class="math notranslate nohighlight">\(k\)</span> is given by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[p_k(z) = F\left( \frac{F^{-1}(p_k^0) - \sqrt{\rho_k}z}{\sqrt{1 - \rho_k}} \right)\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(F\)</span> denotes the cumulative distribution function of <span class="math notranslate nohighlight">\(Z\)</span>, <span class="math notranslate nohighlight">\(p_k^0\)</span> is the default probability of asset <span class="math notranslate nohighlight">\(k\)</span> for <span class="math notranslate nohighlight">\(z=0\)</span> and <span class="math notranslate nohighlight">\(\rho_k\)</span> is the sensitivity of the default probability of asset <span class="math notranslate nohighlight">\(k\)</span> with respect to <span class="math notranslate nohighlight">\(Z\)</span>. Thus, given a concrete realization of <span class="math notranslate nohighlight">\(Z\)</span> the individual default events are assumed to be independent from each other.</p>
+<p>We are interested in analyzing risk measures of the total loss</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[L = \sum_{k=1}^K \lambda_k X_k(Z)\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_k\)</span> denotes the <em>loss given default</em> of asset <span class="math notranslate nohighlight">\(k\)</span>, and given <span class="math notranslate nohighlight">\(Z\)</span>, <span class="math notranslate nohighlight">\(X_k(Z)\)</span> denotes a Bernoulli variable representing the default event of asset <span class="math notranslate nohighlight">\(k\)</span>. More precisely, we are interested in the expected value <span class="math notranslate nohighlight">\(\mathbb{E}[L]\)</span>, the Value at Risk (VaR) of <span class="math notranslate nohighlight">\(L\)</span> and the Conditional Value at Risk of <span class="math notranslate nohighlight">\(L\)</span> (also called Expected Shortfall). Where VaR and CVaR are defined as</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\text{VaR}_{\alpha}(L) = \inf \{ x \mid \mathbb{P}[L &lt;= x] \geq 1 - \alpha \}\]</div>
+</div>
+<p>with confidence level <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>, and</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\text{CVaR}_{\alpha}(L) = \mathbb{E}[ L \mid L \geq \text{VaR}_{\alpha}(L) ].\]</div>
+</div>
+<p>For more details on the considered model, see, e.g., <a class="reference external" href="https://arxiv.org/abs/1412.1183">Regulatory Capital Modeling for Credit Risk. Marek Rutkowski, Silvio Tarca</a></p>
+<p>The problem is defined by the following parameters:</p>
+<ul class="simple">
+<li><p>number of qubits used to represent <span class="math notranslate nohighlight">\(Z\)</span>, denoted by <span class="math notranslate nohighlight">\(n_z\)</span></p></li>
+<li><p>truncation value for <span class="math notranslate nohighlight">\(Z\)</span>, denoted by <span class="math notranslate nohighlight">\(z_{\text{max}}\)</span>, i.e., Z is assumed to take <span class="math notranslate nohighlight">\(2^{n_z}\)</span> equidistant values in <span class="math notranslate nohighlight">\(\{-z_{max}, ..., +z_{max}\}\)</span></p></li>
+<li><p>the base default probabilities for each asset <span class="math notranslate nohighlight">\(p_0^k \in (0, 1)\)</span>, <span class="math notranslate nohighlight">\(k=1, ..., K\)</span></p></li>
+<li><p>sensitivities of the default probabilities with respect to <span class="math notranslate nohighlight">\(Z\)</span>, denoted by <span class="math notranslate nohighlight">\(\rho_k \in [0, 1)\)</span></p></li>
+<li><p>loss given default for asset <span class="math notranslate nohighlight">\(k\)</span>, denoted by <span class="math notranslate nohighlight">\(\lambda_k\)</span></p></li>
+<li><p>confidence level for VaR / CVaR <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set problem parameters</span>
+<span class="n">n_z</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">z_max</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">z_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">z_max</span><span class="p">,</span> <span class="n">z_max</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="n">n_z</span><span class="p">)</span>
+<span class="n">p_zeros</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>
+<span class="n">rhos</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+<span class="n">lgd</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p_zeros</span><span class="p">)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Uncertainty-Model">
+<h2>Uncertainty Model<a class="headerlink" href="#Uncertainty-Model" title="Enlace permanente a este encabezado">#</a></h2>
+<p>We now construct a circuit that loads the uncertainty model. This can be achieved by creating a quantum state in a register of <span class="math notranslate nohighlight">\(n_z\)</span> qubits that represents <span class="math notranslate nohighlight">\(Z\)</span> following a standard normal distribution. This state is then used to control single qubit Y-rotations on a second qubit register of <span class="math notranslate nohighlight">\(K\)</span> qubits, where a <span class="math notranslate nohighlight">\(|1\rangle\)</span> state of qubit <span class="math notranslate nohighlight">\(k\)</span> represents the default event of asset <span class="math notranslate nohighlight">\(k\)</span>. The resulting quantum state can be written as</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[ |\Psi\rangle = \sum_{i=0}^{2^{n_z}-1} \sqrt{p_z^i} |z_i \rangle \bigotimes_{k=1}^K
+\left( \sqrt{1 - p_k(z_i)}|0\rangle + \sqrt{p_k(z_i)}|1\rangle\right),\]</div>
+</div>
+<p>where we denote by <span class="math notranslate nohighlight">\(z_i\)</span> the <span class="math notranslate nohighlight">\(i\)</span>-th value of the discretized and truncated <span class="math notranslate nohighlight">\(Z\)</span> [Egger2019].</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_finance.circuit.library</span> <span class="kn">import</span> <span class="n">GaussianConditionalIndependenceModel</span> <span class="k">as</span> <span class="n">GCI</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">GCI</span><span class="p">(</span><span class="n">n_z</span><span class="p">,</span> <span class="n">z_max</span><span class="p">,</span> <span class="n">p_zeros</span><span class="p">,</span> <span class="n">rhos</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="word-wrap: normal;white-space: pre;background: #fff0;line-height: 1.1;font-family: &quot;Courier New&quot;,Courier,monospace">     ┌───────┐
+q_0: ┤0      ├
+     │       │
+q_1: ┤1      ├
+     │  P(X) │
+q_2: ┤2      ├
+     │       │
+q_3: ┤3      ├
+     └───────┘</pre></div>
+</div>
+<p>We now use the simulator to validate the circuit that constructs <span class="math notranslate nohighlight">\(|\Psi\rangle\)</span> and compute the corresponding exact values for</p>
+<ul class="simple">
+<li><p>expected loss <span class="math notranslate nohighlight">\(\mathbb{E}[L]\)</span></p></li>
+<li><p>PDF and CDF of <span class="math notranslate nohighlight">\(L\)</span></p></li>
+<li><p>value at risk <span class="math notranslate nohighlight">\(VaR(L)\)</span> and corresponding probability</p></li>
+<li><p>conditional value at risk <span class="math notranslate nohighlight">\(CVaR(L)\)</span></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_measure</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">measure_all</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">u_measure</span><span class="p">)</span>
+<span class="n">binary_probabilities</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># analyze uncertainty circuit and determine exact solutions</span>
+<span class="n">p_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">n_z</span><span class="p">)</span>
+<span class="n">p_default</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">num_qubits</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">num_qubits</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">binary_probabilities</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c1"># extract value of Z and corresponding probability</span>
+    <span class="n">i_normal</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="n">n_z</span><span class="p">:],</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">p_z</span><span class="p">[</span><span class="n">i_normal</span><span class="p">]</span> <span class="o">+=</span> <span class="n">prob</span>
+
+    <span class="c1"># determine overall default probability for k</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="n">K</span> <span class="o">-</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+            <span class="n">p_default</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">prob</span>
+            <span class="n">loss</span> <span class="o">+=</span> <span class="n">lgd</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="n">values</span> <span class="o">+=</span> <span class="p">[</span><span class="n">loss</span><span class="p">]</span>
+    <span class="n">probabilities</span> <span class="o">+=</span> <span class="p">[</span><span class="n">prob</span><span class="p">]</span>
+
+
+<span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
+
+<span class="n">expected_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">)</span>
+<span class="n">losses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+<span class="n">pdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">losses</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">losses</span><span class="p">):</span>
+    <span class="n">pdf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">probabilities</span><span class="p">[</span><span class="n">values</span> <span class="o">==</span> <span class="n">v</span><span class="p">])</span>
+<span class="n">cdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+
+<span class="n">i_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">cdf</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span>
+<span class="n">exact_var</span> <span class="o">=</span> <span class="n">losses</span><span class="p">[</span><span class="n">i_var</span><span class="p">]</span>
+<span class="n">exact_cvar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pdf</span><span class="p">[(</span><span class="n">i_var</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:],</span> <span class="n">losses</span><span class="p">[(</span><span class="n">i_var</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:])</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pdf</span><span class="p">[(</span><span class="n">i_var</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Expected Loss E[L]:                </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">expected_loss</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value at Risk VaR[L]:              </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">exact_var</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P[L &lt;= VaR[L]]:                    </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cdf</span><span class="p">[</span><span class="n">exact_var</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conditional Value at Risk CVaR[L]: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">exact_cvar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Expected Loss E[L]:                0.6641
+Value at Risk VaR[L]:              2.0000
+P[L &lt;= VaR[L]]:                    0.9521
+Conditional Value at Risk CVaR[L]: 3.0000
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot loss PDF, expected loss, var, and cvar</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">losses</span><span class="p">,</span> <span class="n">pdf</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">expected_loss</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;E[L]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">exact_var</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;VaR(L)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">exact_cvar</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;CVaR(L)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Loss L ($)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;probability (%)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Loss Distribution&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_09_credit_risk_analysis_12_0.png" src="../_images/tutorials_09_credit_risk_analysis_12_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot results for Z</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z_values</span><span class="p">,</span> <span class="n">p_z</span><span class="p">,</span> <span class="s2">&quot;o-&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Z value&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;probability (%)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Z Distribution&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_09_credit_risk_analysis_13_0.png" src="../_images/tutorials_09_credit_risk_analysis_13_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot results for default probabilities</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">),</span> <span class="n">p_default</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;probability (%)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Individual Default Probabilities&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_09_credit_risk_analysis_14_0.png" src="../_images/tutorials_09_credit_risk_analysis_14_0.png" />
+</div>
+</div>
+</section>
+<section id="Expected-Loss">
+<h2>Expected Loss<a class="headerlink" href="#Expected-Loss" title="Enlace permanente a este encabezado">#</a></h2>
+<p>To estimate the expected loss, we first apply a weighted sum operator to sum up individual losses to total loss:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\mathcal{S}: |x_1, ..., x_K \rangle_K |0\rangle_{n_S} \mapsto |x_1, ..., x_K \rangle_K |\lambda_1x_1 + ... + \lambda_K x_K\rangle_{n_S}.\]</div>
+</div>
+<p>The required number of qubits to represent the result is given by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[n_s = \lfloor \log_2( \lambda_1 + ... + \lambda_K ) \rfloor + 1.\]</div>
+</div>
+<p>Once we have the total loss distribution in a quantum register, we can use the techniques described in [Woerner2019] to map a total loss <span class="math notranslate nohighlight">\(L \in \{0, ..., 2^{n_s}-1\}\)</span> to the amplitude of an objective qubit by an operator</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[ | L \rangle_{n_s}|0\rangle \mapsto
+| L \rangle_{n_s} \left( \sqrt{1 - L/(2^{n_s}-1)}|0\rangle + \sqrt{L/(2^{n_s}-1)}|1\rangle \right),\]</div>
+</div>
+<p>which allows to run amplitude estimation to evaluate the expected loss.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add Z qubits with weight/loss 0</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">WeightedAdder</span>
+
+<span class="n">agg</span> <span class="o">=</span> <span class="n">WeightedAdder</span><span class="p">(</span><span class="n">n_z</span> <span class="o">+</span> <span class="n">K</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_z</span> <span class="o">+</span> <span class="n">lgd</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">LinearAmplitudeFunction</span>
+
+<span class="c1"># define linear objective function</span>
+<span class="n">breakpoints</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">slopes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">offsets</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">f_min</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">f_max</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lgd</span><span class="p">)</span>
+<span class="n">c_approx</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="n">objective</span> <span class="o">=</span> <span class="n">LinearAmplitudeFunction</span><span class="p">(</span>
+    <span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span><span class="p">,</span>
+    <span class="n">slope</span><span class="o">=</span><span class="n">slopes</span><span class="p">,</span>
+    <span class="n">offset</span><span class="o">=</span><span class="n">offsets</span><span class="p">,</span>
+    <span class="c1"># max value that can be reached by the qubit register (will not always be reached)</span>
+    <span class="n">domain</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">image</span><span class="o">=</span><span class="p">(</span><span class="n">f_min</span><span class="p">,</span> <span class="n">f_max</span><span class="p">),</span>
+    <span class="n">rescaling_factor</span><span class="o">=</span><span class="n">c_approx</span><span class="p">,</span>
+    <span class="n">breakpoints</span><span class="o">=</span><span class="n">breakpoints</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Create the state preparation circuit:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the registers for convenience and readability</span>
+<span class="n">qr_state</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">)</span>
+<span class="n">qr_sum</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">)</span>
+<span class="n">qr_carry</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">num_carry_qubits</span><span class="p">,</span> <span class="s2">&quot;carry&quot;</span><span class="p">)</span>
+<span class="n">qr_obj</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;objective&quot;</span><span class="p">)</span>
+
+<span class="c1"># define the circuit</span>
+<span class="n">state_preparation</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">qr_state</span><span class="p">,</span> <span class="n">qr_obj</span><span class="p">,</span> <span class="n">qr_sum</span><span class="p">,</span> <span class="n">qr_carry</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+
+<span class="c1"># load the random variable</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">to_gate</span><span class="p">(),</span> <span class="n">qr_state</span><span class="p">)</span>
+
+<span class="c1"># aggregate</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">to_gate</span><span class="p">(),</span> <span class="n">qr_state</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_carry</span><span class="p">[:])</span>
+
+<span class="c1"># linear objective function</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">objective</span><span class="o">.</span><span class="n">to_gate</span><span class="p">(),</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_obj</span><span class="p">[:])</span>
+
+<span class="c1"># uncompute aggregation</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">to_gate</span><span class="p">()</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span> <span class="n">qr_state</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_carry</span><span class="p">[:])</span>
+
+<span class="c1"># draw the circuit</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="word-wrap: normal;white-space: pre;background: #fff0;line-height: 1.1;font-family: &quot;Courier New&quot;,Courier,monospace">           ┌───────┐┌────────┐      ┌───────────┐
+  state_0: ┤0      ├┤0       ├──────┤0          ├
+           │       ││        │      │           │
+  state_1: ┤1      ├┤1       ├──────┤1          ├
+           │  P(X) ││        │      │           │
+  state_2: ┤2      ├┤2       ├──────┤2          ├
+           │       ││        │      │           │
+  state_3: ┤3      ├┤3       ├──────┤3          ├
+           └───────┘│  adder │┌────┐│  adder_dg │
+objective: ─────────┤        ├┤2   ├┤           ├
+                    │        ││    ││           │
+    sum_0: ─────────┤4       ├┤0 F ├┤4          ├
+                    │        ││    ││           │
+    sum_1: ─────────┤5       ├┤1   ├┤5          ├
+                    │        │└────┘│           │
+    carry: ─────────┤6       ├──────┤6          ├
+                    └────────┘      └───────────┘</pre></div>
+</div>
+<p>Before we use QAE to estimate the expected loss, we validate the quantum circuit representing the objective function by just simulating it directly and analyzing the probability of the objective qubit being in the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state, i.e., the value QAE will eventually approximate.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state_preparation_measure</span> <span class="o">=</span> <span class="n">state_preparation</span><span class="o">.</span><span class="n">measure_all</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">state_preparation_measure</span><span class="p">)</span>
+<span class="n">binary_probabilities</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># evaluate the result</span>
+<span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">binary_probabilities</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">prob</span> <span class="o">&gt;</span> <span class="mf">1e-6</span> <span class="ow">and</span> <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qr_state</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">+=</span> <span class="n">prob</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact Expected Loss:   </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">expected_loss</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact Operator Value:  </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mapped Operator value: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Exact Expected Loss:   0.6641
+Exact Operator Value:  0.3789
+Mapped Operator value: 0.5749
+</pre></div></div>
+</div>
+<p>Next we run QAE to estimate the expected loss with a quadratic speed-up over classical Monte Carlo simulation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set target precision and confidence level</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">EstimationProblem</span><span class="p">(</span>
+    <span class="n">state_preparation</span><span class="o">=</span><span class="n">state_preparation</span><span class="p">,</span>
+    <span class="n">objective_qubits</span><span class="o">=</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">qr_state</span><span class="p">)],</span>
+    <span class="n">post_processing</span><span class="o">=</span><span class="n">objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># construct amplitude estimation</span>
+<span class="n">ae</span> <span class="o">=</span> <span class="n">IterativeAmplitudeEstimation</span><span class="p">(</span>
+    <span class="n">epsilon_target</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">Sampler</span><span class="p">(</span><span class="n">run_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">})</span>
+<span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
+
+<span class="c1"># print results</span>
+<span class="n">conf_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">confidence_interval_processed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact value:    </span><span class="se">\t</span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">expected_loss</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated value:</span><span class="se">\t</span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">result</span><span class="o">.</span><span class="n">estimation_processed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Confidence interval: </span><span class="se">\t</span><span class="s2">[</span><span class="si">%.4f</span><span class="s2">, </span><span class="si">%.4f</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">conf_int</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Exact value:            0.6641
+Estimated value:        0.6863
+Confidence interval:    [0.6175, 0.7552]
+</pre></div></div>
+</div>
+</section>
+<section id="Cumulative-Distribution-Function">
+<h2>Cumulative Distribution Function<a class="headerlink" href="#Cumulative-Distribution-Function" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Instead of the expected loss (which could also be estimated efficiently using classical techniques) we now estimate the cumulative distribution function (CDF) of the loss. Classically, this either involves evaluating all the possible combinations of defaulting assets, or many classical samples in a Monte Carlo simulation. Algorithms based on QAE have the potential to significantly speed up this analysis in the future.</p>
+<p>To estimate the CDF, i.e., the probability <span class="math notranslate nohighlight">\(\mathbb{P}[L \leq x]\)</span>, we again apply <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> to compute the total loss, and then apply a comparator that for a given value <span class="math notranslate nohighlight">\(x\)</span> acts as</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split} \mathcal{C}: |L\rangle_n|0&gt; \mapsto
+\begin{cases}
+|L\rangle_n|1&gt; &amp; \text{if}\quad L \leq x \\
+|L\rangle_n|0&gt; &amp; \text{if}\quad L &gt; x.
+\end{cases}\end{split}\]</div>
+</div>
+<p>The resulting quantum state can be written as</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[ \sum_{L = 0}^{x} \sqrt{p_{L}}|L\rangle_{n_s}|1\rangle +
+\sum_{L = x+1}^{2^{n_s}-1} \sqrt{p_{L}}|L\rangle_{n_s}|0\rangle,\]</div>
+</div>
+<p>where we directly assume the summed up loss values and corresponding probabilities instead of presenting the details of the uncertainty model.</p>
+<p>The CDF(<span class="math notranslate nohighlight">\(x\)</span>) equals the probability of measuring <span class="math notranslate nohighlight">\(|1\rangle\)</span> in the objective qubit and QAE can be directly used to estimate it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set x value to estimate the CDF</span>
+<span class="n">x_eval</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">comparator</span> <span class="o">=</span> <span class="n">IntegerComparator</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span><span class="p">,</span> <span class="n">x_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">geq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">comparator</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="word-wrap: normal;white-space: pre;background: #fff0;line-height: 1.1;font-family: &quot;Courier New&quot;,Courier,monospace">         ┌──────┐
+state_0: ┤0     ├
+         │      │
+state_1: ┤1     ├
+         │  cmp │
+compare: ┤2     ├
+         │      │
+    a15: ┤3     ├
+         └──────┘</pre></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_cdf_circuit</span><span class="p">(</span><span class="n">x_eval</span><span class="p">):</span>
+    <span class="c1"># define the registers for convenience and readability</span>
+    <span class="n">qr_state</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">)</span>
+    <span class="n">qr_sum</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">)</span>
+    <span class="n">qr_carry</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">num_carry_qubits</span><span class="p">,</span> <span class="s2">&quot;carry&quot;</span><span class="p">)</span>
+    <span class="n">qr_obj</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;objective&quot;</span><span class="p">)</span>
+    <span class="n">qr_compare</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;compare&quot;</span><span class="p">)</span>
+
+    <span class="c1"># define the circuit</span>
+    <span class="n">state_preparation</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">qr_state</span><span class="p">,</span> <span class="n">qr_obj</span><span class="p">,</span> <span class="n">qr_sum</span><span class="p">,</span> <span class="n">qr_carry</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+
+    <span class="c1"># load the random variable</span>
+    <span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">qr_state</span><span class="p">)</span>
+
+    <span class="c1"># aggregate</span>
+    <span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="n">qr_state</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_carry</span><span class="p">[:])</span>
+
+    <span class="c1"># comparator objective function</span>
+    <span class="n">comparator</span> <span class="o">=</span> <span class="n">IntegerComparator</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span><span class="p">,</span> <span class="n">x_eval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">geq</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_obj</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_carry</span><span class="p">[:])</span>
+
+    <span class="c1"># uncompute aggregation</span>
+    <span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span> <span class="n">qr_state</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_carry</span><span class="p">[:])</span>
+
+    <span class="k">return</span> <span class="n">state_preparation</span>
+
+
+<span class="n">state_preparation</span> <span class="o">=</span> <span class="n">get_cdf_circuit</span><span class="p">(</span><span class="n">x_eval</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Again, we first use quantum simulation to validate the quantum circuit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state_preparation</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="word-wrap: normal;white-space: pre;background: #fff0;line-height: 1.1;font-family: &quot;Courier New&quot;,Courier,monospace">           ┌───────┐┌────────┐        ┌───────────┐
+  state_0: ┤0      ├┤0       ├────────┤0          ├
+           │       ││        │        │           │
+  state_1: ┤1      ├┤1       ├────────┤1          ├
+           │  P(X) ││        │        │           │
+  state_2: ┤2      ├┤2       ├────────┤2          ├
+           │       ││        │        │           │
+  state_3: ┤3      ├┤3       ├────────┤3          ├
+           └───────┘│  adder │┌──────┐│  adder_dg │
+objective: ─────────┤        ├┤2     ├┤           ├
+                    │        ││      ││           │
+    sum_0: ─────────┤4       ├┤0     ├┤4          ├
+                    │        ││  cmp ││           │
+    sum_1: ─────────┤5       ├┤1     ├┤5          ├
+                    │        ││      ││           │
+    carry: ─────────┤6       ├┤3     ├┤6          ├
+                    └────────┘└──────┘└───────────┘</pre></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state_preparation_measure</span> <span class="o">=</span> <span class="n">state_preparation</span><span class="o">.</span><span class="n">measure_all</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">state_preparation_measure</span><span class="p">)</span>
+<span class="n">binary_probabilities</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># evaluate the result</span>
+<span class="n">var_prob</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">binary_probabilities</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">prob</span> <span class="o">&gt;</span> <span class="mf">1e-6</span> <span class="ow">and</span> <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qr_state</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+        <span class="n">var_prob</span> <span class="o">+=</span> <span class="n">prob</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Operator CDF(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">x_eval</span> <span class="o">+</span> <span class="s2">&quot; = </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">var_prob</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact    CDF(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">x_eval</span> <span class="o">+</span> <span class="s2">&quot; = </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cdf</span><span class="p">[</span><span class="n">x_eval</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Operator CDF(2) = 0.9551
+Exact    CDF(2) = 0.9521
+</pre></div></div>
+</div>
+<p>Next we run QAE to estimate the CDF for a given <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set target precision and confidence level</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">EstimationProblem</span><span class="p">(</span><span class="n">state_preparation</span><span class="o">=</span><span class="n">state_preparation</span><span class="p">,</span> <span class="n">objective_qubits</span><span class="o">=</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">qr_state</span><span class="p">)])</span>
+<span class="c1"># construct amplitude estimation</span>
+<span class="n">ae_cdf</span> <span class="o">=</span> <span class="n">IterativeAmplitudeEstimation</span><span class="p">(</span>
+    <span class="n">epsilon_target</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">Sampler</span><span class="p">(</span><span class="n">run_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">})</span>
+<span class="p">)</span>
+<span class="n">result_cdf</span> <span class="o">=</span> <span class="n">ae_cdf</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
+
+<span class="c1"># print results</span>
+<span class="n">conf_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result_cdf</span><span class="o">.</span><span class="n">confidence_interval</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact value:    </span><span class="se">\t</span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cdf</span><span class="p">[</span><span class="n">x_eval</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated value:</span><span class="se">\t</span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">result_cdf</span><span class="o">.</span><span class="n">estimation</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Confidence interval: </span><span class="se">\t</span><span class="s2">[</span><span class="si">%.4f</span><span class="s2">, </span><span class="si">%.4f</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">conf_int</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Exact value:            0.9521
+Estimated value:        0.9590
+Confidence interval:    [0.9577, 0.9603]
+</pre></div></div>
+</div>
+</section>
+<section id="Value-at-Risk">
+<h2>Value at Risk<a class="headerlink" href="#Value-at-Risk" title="Enlace permanente a este encabezado">#</a></h2>
+<p>In the following we use a bisection search and QAE to efficiently evaluate the CDF to estimate the value at risk.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_ae_for_cdf</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+
+    <span class="c1"># construct amplitude estimation</span>
+    <span class="n">state_preparation</span> <span class="o">=</span> <span class="n">get_cdf_circuit</span><span class="p">(</span><span class="n">x_eval</span><span class="p">)</span>
+    <span class="n">problem</span> <span class="o">=</span> <span class="n">EstimationProblem</span><span class="p">(</span>
+        <span class="n">state_preparation</span><span class="o">=</span><span class="n">state_preparation</span><span class="p">,</span> <span class="n">objective_qubits</span><span class="o">=</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">qr_state</span><span class="p">)]</span>
+    <span class="p">)</span>
+    <span class="n">ae_var</span> <span class="o">=</span> <span class="n">IterativeAmplitudeEstimation</span><span class="p">(</span>
+        <span class="n">epsilon_target</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">Sampler</span><span class="p">(</span><span class="n">run_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">})</span>
+    <span class="p">)</span>
+    <span class="n">result_var</span> <span class="o">=</span> <span class="n">ae_var</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result_var</span><span class="o">.</span><span class="n">estimation</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bisection_search</span><span class="p">(</span>
+    <span class="n">objective</span><span class="p">,</span> <span class="n">target_value</span><span class="p">,</span> <span class="n">low_level</span><span class="p">,</span> <span class="n">high_level</span><span class="p">,</span> <span class="n">low_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">high_value</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determines the smallest level such that the objective value is still larger than the target</span>
+<span class="sd">    :param objective: objective function</span>
+<span class="sd">    :param target: target value</span>
+<span class="sd">    :param low_level: lowest level to be considered</span>
+<span class="sd">    :param high_level: highest level to be considered</span>
+<span class="sd">    :param low_value: value of lowest level (will be evaluated if set to None)</span>
+<span class="sd">    :param high_value: value of highest level (will be evaluated if set to None)</span>
+<span class="sd">    :return: dictionary with level, value, num_eval</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># check whether low and high values are given and evaluated them otherwise</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------------------------------------&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start bisection search for target value </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">target_value</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------------------------------------&quot;</span><span class="p">)</span>
+    <span class="n">num_eval</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">low_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">low_value</span> <span class="o">=</span> <span class="n">objective</span><span class="p">(</span><span class="n">low_level</span><span class="p">)</span>
+        <span class="n">num_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">high_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">high_value</span> <span class="o">=</span> <span class="n">objective</span><span class="p">(</span><span class="n">high_level</span><span class="p">)</span>
+        <span class="n">num_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># check if low_value already satisfies the condition</span>
+    <span class="k">if</span> <span class="n">low_value</span> <span class="o">&gt;</span> <span class="n">target_value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">low_level</span><span class="p">,</span>
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">low_value</span><span class="p">,</span>
+            <span class="s2">&quot;num_eval&quot;</span><span class="p">:</span> <span class="n">num_eval</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;returned low value&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">low_value</span> <span class="o">==</span> <span class="n">target_value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">low_level</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">low_value</span><span class="p">,</span> <span class="s2">&quot;num_eval&quot;</span><span class="p">:</span> <span class="n">num_eval</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">}</span>
+
+    <span class="c1"># check if high_value is above target</span>
+    <span class="k">if</span> <span class="n">high_value</span> <span class="o">&lt;</span> <span class="n">target_value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">high_level</span><span class="p">,</span>
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">high_value</span><span class="p">,</span>
+            <span class="s2">&quot;num_eval&quot;</span><span class="p">:</span> <span class="n">num_eval</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;returned low value&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">high_value</span> <span class="o">==</span> <span class="n">target_value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">high_level</span><span class="p">,</span>
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">high_value</span><span class="p">,</span>
+            <span class="s2">&quot;num_eval&quot;</span><span class="p">:</span> <span class="n">num_eval</span><span class="p">,</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="c1"># perform bisection search until</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;low_level    low_value    level    value    high_level    high_value&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------------------------------------&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">high_level</span> <span class="o">-</span> <span class="n">low_level</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">high_level</span> <span class="o">+</span> <span class="n">low_level</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">))</span>
+        <span class="n">num_eval</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">objective</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%2d</span><span class="s2">           </span><span class="si">%.3f</span><span class="s2">        </span><span class="si">%2d</span><span class="s2">       </span><span class="si">%.3f</span><span class="s2">    </span><span class="si">%2d</span><span class="s2">            </span><span class="si">%.3f</span><span class="s2">&quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="n">low_level</span><span class="p">,</span> <span class="n">low_value</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">high_level</span><span class="p">,</span> <span class="n">high_value</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="n">target_value</span><span class="p">:</span>
+            <span class="n">high_level</span> <span class="o">=</span> <span class="n">level</span>
+            <span class="n">high_value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">low_level</span> <span class="o">=</span> <span class="n">level</span>
+            <span class="n">low_value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># return high value after bisection search</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------------------------------------&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;finished bisection search&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--------------------------------------------------------------------&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">high_level</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">high_value</span><span class="p">,</span> <span class="s2">&quot;num_eval&quot;</span><span class="p">:</span> <span class="n">num_eval</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># run bisection search to determine VaR</span>
+<span class="n">objective</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">run_ae_for_cdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">bisection_result</span> <span class="o">=</span> <span class="n">bisection_search</span><span class="p">(</span>
+    <span class="n">objective</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">losses</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">losses</span><span class="p">),</span> <span class="n">low_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high_value</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">var</span> <span class="o">=</span> <span class="n">bisection_result</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+--------------------------------------------------------------------
+start bisection search for target value 0.950
+--------------------------------------------------------------------
+low_level    low_value    level    value    high_level    high_value
+--------------------------------------------------------------------
+-1           0.000         1       0.752     3            1.000
+ 1           0.752         2       0.959     3            1.000
+--------------------------------------------------------------------
+finished bisection search
+--------------------------------------------------------------------
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated Value at Risk: </span><span class="si">%2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">var</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact Value at Risk:     </span><span class="si">%2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">exact_var</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated Probability:    </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">bisection_result</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact Probability:        </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cdf</span><span class="p">[</span><span class="n">exact_var</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Estimated Value at Risk:  2
+Exact Value at Risk:      2
+Estimated Probability:    0.959
+Exact Probability:        0.952
+</pre></div></div>
+</div>
+</section>
+<section id="Conditional-Value-at-Risk">
+<h2>Conditional Value at Risk<a class="headerlink" href="#Conditional-Value-at-Risk" title="Enlace permanente a este encabezado">#</a></h2>
+<p>Last, we compute the CVaR, i.e. the expected value of the loss conditional to it being larger than or equal to the VaR. To do so, we evaluate a piecewise linear objective function <span class="math notranslate nohighlight">\(f(L)\)</span>, dependent on the total loss <span class="math notranslate nohighlight">\(L\)</span>, that is given by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}f(L) = \begin{cases}
+0 &amp; \text{if}\quad L \leq VaR \\
+L &amp; \text{if}\quad L &gt; VaR.
+\end{cases}\end{split}\]</div>
+</div>
+<p>To normalize, we have to divide the resulting expected value by the VaR-probability, i.e. <span class="math notranslate nohighlight">\(\mathbb{P}[L \leq VaR]\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define linear objective</span>
+<span class="n">breakpoints</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">var</span><span class="p">]</span>
+<span class="n">slopes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">offsets</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># subtract VaR and add it later to the estimate</span>
+<span class="n">f_min</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">f_max</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">var</span>
+<span class="n">c_approx</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="n">cvar_objective</span> <span class="o">=</span> <span class="n">LinearAmplitudeFunction</span><span class="p">(</span>
+    <span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span><span class="p">,</span>
+    <span class="n">slopes</span><span class="p">,</span>
+    <span class="n">offsets</span><span class="p">,</span>
+    <span class="n">domain</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">image</span><span class="o">=</span><span class="p">(</span><span class="n">f_min</span><span class="p">,</span> <span class="n">f_max</span><span class="p">),</span>
+    <span class="n">rescaling_factor</span><span class="o">=</span><span class="n">c_approx</span><span class="p">,</span>
+    <span class="n">breakpoints</span><span class="o">=</span><span class="n">breakpoints</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">cvar_objective</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="word-wrap: normal;white-space: pre;background: #fff0;line-height: 1.1;font-family: &quot;Courier New&quot;,Courier,monospace">        ┌────┐
+q158_0: ┤0   ├
+        │    │
+q158_1: ┤1   ├
+        │    │
+  q159: ┤2 F ├
+        │    │
+ a83_0: ┤3   ├
+        │    │
+ a83_1: ┤4   ├
+        └────┘</pre></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the registers for convenience and readability</span>
+<span class="n">qr_state</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">)</span>
+<span class="n">qr_sum</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">num_sum_qubits</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">)</span>
+<span class="n">qr_carry</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">num_carry_qubits</span><span class="p">,</span> <span class="s2">&quot;carry&quot;</span><span class="p">)</span>
+<span class="n">qr_obj</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;objective&quot;</span><span class="p">)</span>
+<span class="n">qr_work</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="n">cvar_objective</span><span class="o">.</span><span class="n">num_ancillas</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">qr_carry</span><span class="p">),</span> <span class="s2">&quot;work&quot;</span><span class="p">)</span>
+
+<span class="c1"># define the circuit</span>
+<span class="n">state_preparation</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">qr_state</span><span class="p">,</span> <span class="n">qr_obj</span><span class="p">,</span> <span class="n">qr_sum</span><span class="p">,</span> <span class="n">qr_carry</span><span class="p">,</span> <span class="n">qr_work</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+
+<span class="c1"># load the random variable</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">qr_state</span><span class="p">)</span>
+
+<span class="c1"># aggregate</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agg</span><span class="p">,</span> <span class="n">qr_state</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_carry</span><span class="p">[:])</span>
+
+<span class="c1"># linear objective function</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cvar_objective</span><span class="p">,</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_obj</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_carry</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_work</span><span class="p">[:])</span>
+
+<span class="c1"># uncompute aggregation</span>
+<span class="n">state_preparation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">inverse</span><span class="p">(),</span> <span class="n">qr_state</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_sum</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">qr_carry</span><span class="p">[:])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;qiskit.circuit.instructionset.InstructionSet at 0x7fdfa88db7f0&gt;
+</pre></div></div>
+</div>
+<p>Again, we first use quantum simulation to validate the quantum circuit.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state_preparation_measure</span> <span class="o">=</span> <span class="n">state_preparation</span><span class="o">.</span><span class="n">measure_all</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">state_preparation_measure</span><span class="p">)</span>
+<span class="n">binary_probabilities</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># evaluate the result</span>
+<span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">binary_probabilities</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">prob</span> <span class="o">&gt;</span> <span class="mf">1e-6</span> <span class="ow">and</span> <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qr_state</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">+=</span> <span class="n">prob</span>
+
+<span class="c1"># normalize and add VaR to estimate</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">cvar_objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">bisection_result</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="n">d</span> <span class="k">if</span> <span class="n">d</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+<span class="n">normalized_value</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">var</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated CVaR: </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">normalized_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact CVaR:     </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">exact_cvar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Estimated CVaR: 3.5799
+Exact CVaR:     3.0000
+</pre></div></div>
+</div>
+<p>Next we run QAE to estimate the CVaR.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set target precision and confidence level</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">EstimationProblem</span><span class="p">(</span>
+    <span class="n">state_preparation</span><span class="o">=</span><span class="n">state_preparation</span><span class="p">,</span>
+    <span class="n">objective_qubits</span><span class="o">=</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">qr_state</span><span class="p">)],</span>
+    <span class="n">post_processing</span><span class="o">=</span><span class="n">cvar_objective</span><span class="o">.</span><span class="n">post_processing</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># construct amplitude estimation</span>
+<span class="n">ae_cvar</span> <span class="o">=</span> <span class="n">IterativeAmplitudeEstimation</span><span class="p">(</span>
+    <span class="n">epsilon_target</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">Sampler</span><span class="p">(</span><span class="n">run_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shots&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">})</span>
+<span class="p">)</span>
+<span class="n">result_cvar</span> <span class="o">=</span> <span class="n">ae_cvar</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># print results</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">bisection_result</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">result_cvar</span><span class="o">.</span><span class="n">estimation_processed</span> <span class="o">/</span> <span class="n">d</span> <span class="k">if</span> <span class="n">d</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exact CVaR:    </span><span class="se">\t</span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">exact_cvar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated CVaR:</span><span class="se">\t</span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="n">var</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Exact CVaR:     3.0000
+Estimated CVaR: 3.3316
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+<span class="o">%</span><span class="k">qiskit_copyright</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<h3>Version Information</h3><table><tr><th>Software</th><th>Version</th></tr><tr><td><code>qiskit</code></td><td>None</td></tr><tr><td><code>qiskit-terra</code></td><td>0.45.0.dev0+c626be7</td></tr><tr><td><code>qiskit_ibm_provider</code></td><td>0.6.1</td></tr><tr><td><code>qiskit_aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit_algorithms</code></td><td>0.2.0</td></tr><tr><td><code>qiskit_finance</code></td><td>0.4.0</td></tr><tr><th colspan='2'>System information</th></tr><tr><td>Python version</td><td>3.9.7</td></tr><tr><td>Python compiler</td><td>GCC 7.5.0</td></tr><tr><td>Python build</td><td>default, Sep 16 2021 13:09:58</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td>CPUs</td><td>2</td></tr><tr><td>Memory (Gb)</td><td>5.778430938720703</td></tr><tr><td colspan='2'>Fri Aug 18 16:24:38 2023 EDT</td></tr></table></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div style='width: 100%; background-color:#d5d9e0;padding-left: 10px; padding-bottom: 10px; padding-right: 10px; padding-top: 5px'><h3>This code is a part of Qiskit</h3><p>&copy; Copyright IBM 2017, 2023.</p><p>This code is licensed under the Apache License, Version 2.0. You may<br>obtain a copy of this license in the LICENSE.txt file in the root directory<br> of this source tree or at http://www.apache.org/licenses/LICENSE-2.0.<p>Any modifications or derivative works of this code must retain this<br>copyright notice, and modified files need to carry a notice indicating<br>that they have been altered from the originals.</p></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+  <script>
+    function userFeedbackClicked(ctaType) {
+      document.getElementById('qiskit-analytics-thank-you').style.visibility = 'visible';
+      window.trackCta(`Helpful - ${ctaType}`);
+    }
+  </script>
+    <div class="qiskit-analytics-container">
+      <div>Was this page helpful?</div>
+      <a onclick="userFeedbackClicked('yes')">Yes</a>
+      <a onclick="userFeedbackClicked('no')">No</a>
+      <div id="qiskit-analytics-thank-you">Thank you!</div>
+    </div>
+<div class="related-pages">
+          <a class="next-page" href="10_qgan_option_pricing.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Option Pricing with qGANs</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="08_fixed_income_pricing.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Pricing Fixed-Income Assets</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2018, 2024, Qiskit Finance Development Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Credit Risk Analysis</a><ul>
+<li><a class="reference internal" href="#Introduction">Introduction</a></li>
+<li><a class="reference internal" href="#Problem-Definition">Problem Definition</a></li>
+<li><a class="reference internal" href="#Uncertainty-Model">Uncertainty Model</a></li>
+<li><a class="reference internal" href="#Expected-Loss">Expected Loss</a></li>
+<li><a class="reference internal" href="#Cumulative-Distribution-Function">Cumulative Distribution Function</a></li>
+<li><a class="reference internal" href="#Value-at-Risk">Value at Risk</a></li>
+<li><a class="reference internal" href="#Conditional-Value-at-Risk">Conditional Value at Risk</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=f1d6cca2"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/scripts/qiskit-sphinx-theme.js?v=4d77b8ca"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>
