@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2017, 2023.
+# (C) Copyright IBM 2017, 2024.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -14,7 +14,10 @@
 
 from typing import Tuple, List, Union, Optional
 import numpy as np
+
 from qiskit.circuit import QuantumCircuit
+from qiskit.circuit.library import Initialize, Isometry
+
 from .normal import _check_bounds_valid, _check_dimensions_match
 
 
@@ -162,13 +165,10 @@ class LogNormalDistribution(QuantumCircuit):
         super().__init__(*inner.qregs, name=name)
 
         # use default the isometry (or initialize w/o resets) algorithm to construct the circuit
-        # pylint: disable=no-member
         if upto_diag:
-            inner.isometry(np.sqrt(normalized_probabilities), inner.qubits, None)
+            inner.append(Isometry(np.sqrt(normalized_probabilities), 0, 0), inner.qubits)
             self.append(inner.to_instruction(), inner.qubits)  # Isometry is not a Gate
         else:
-            from qiskit.extensions import Initialize  # pylint: disable=cyclic-import
-
             initialize = Initialize(np.sqrt(normalized_probabilities))
             circuit = initialize.gates_to_uncompute().inverse()
             inner.compose(circuit, inplace=True)

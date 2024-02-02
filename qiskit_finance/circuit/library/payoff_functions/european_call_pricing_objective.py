@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2018, 2023.
+# (C) Copyright IBM 2018, 2024.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -54,7 +54,7 @@ class EuropeanCallPricingObjective(QuantumCircuit):
         )
 
         super().__init__(*european_call.qregs, name="ECEV")
-        self._data = european_call.data
+        self.data = european_call.data
         self._european_call = european_call
 
     def post_processing(self, scaled_value: float) -> float:
