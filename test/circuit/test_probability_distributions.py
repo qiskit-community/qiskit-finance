@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2017, 2023.
+# (C) Copyright IBM 2017, 2024.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -13,12 +13,12 @@
 """Test library of probability distribution circuits."""
 
 import unittest
-from ddt import ddt, data, unpack
+from test import QiskitFinanceTestCase
 
+from ddt import ddt, data, unpack
 import numpy as np
 from scipy.stats import multivariate_normal
 
-from qiskit.test.base import QiskitTestCase
 from qiskit.circuit import QuantumCircuit
 from qiskit.quantum_info import Statevector
 from qiskit_finance.circuit.library import (
@@ -28,7 +28,7 @@ from qiskit_finance.circuit.library import (
 )
 
 
-class TestUniformDistribution(QiskitTestCase):
+class TestUniformDistribution(QiskitFinanceTestCase):
     """Test the uniform distribution circuit."""
 
     def test_uniform(self):
@@ -41,7 +41,7 @@ class TestUniformDistribution(QiskitTestCase):
 
 
 @ddt
-class TestNormalDistribution(QiskitTestCase):
+class TestNormalDistribution(QiskitFinanceTestCase):
     """Test the normal distribution circuit."""
 
     def assertDistributionIsCorrect(self, circuit, num_qubits, mu, sigma, bounds, upto_diag):
@@ -146,7 +146,7 @@ class TestNormalDistribution(QiskitTestCase):
 
 
 @ddt
-class TestLogNormalDistribution(QiskitTestCase):
+class TestLogNormalDistribution(QiskitFinanceTestCase):
     """Test the normal distribution circuit."""
 
     def assertDistributionIsCorrect(self, circuit, num_qubits, mu, sigma, bounds, upto_diag):
