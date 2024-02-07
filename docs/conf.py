@@ -177,9 +177,9 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "numpy": ("https://numpy.org/doc/stable", None),
     "scipy": ("https://docs.scipy.org/doc/scipy", None),
-    "qiskit_algorithms": ("https://qiskit.org/ecosystem/algorithms", None),
-    "qiskit_optimization": ("https://qiskit.org/ecosystem/optimization", None),
-    "qiskit": ("https://qiskit.org/documentation", None),
+    "qiskit_algorithms": ("https://qiskit-community.github.io/qiskit-algorithms", None),
+    "qiskit_optimization": ("https://qiskit-community.github.io/qiskit-optimization", None),
+    "qiskit": ("https://docs.quantum.ibm.com/api/qiskit", None),
 }
 
 html_context = {"analytics_enabled": True}
