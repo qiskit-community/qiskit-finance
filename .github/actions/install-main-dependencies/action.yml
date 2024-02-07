@@ -34,7 +34,7 @@ runs:
       env:
         CACHE_VERSION: v1
       id: qiskit-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: qiskit-cache
         key: qiskit-cache-${{ inputs.os }}-${{ inputs.python-version }}-${{ env.QISKIT_HASH }}-${{ env.CACHE_VERSION }}
@@ -42,7 +42,7 @@ runs:
       env:
         CACHE_VERSION: v1
       id: optimization-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: optimization-cache
         key: optimization-cache-${{ inputs.os }}-${{ inputs.python-version }}-${{ env.OPTIMIZATION_HASH }}-${{ env.CACHE_VERSION }}
