@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2021, 2023.
+# (C) Copyright IBM 2021, 2024.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -70,7 +70,7 @@ setuptools.setup(
     python_requires=">=3.8",
     project_urls={
         "Bug Tracker": "https://github.com/qiskit-community/qiskit-finance/issues",
-        "Documentation": "https://qiskit.org/ecosystem/finance/",
+        "Documentation": "https://qiskit-community.github.io/qiskit-finance/",
         "Source Code": "https://github.com/qiskit-community/qiskit-finance",
     },
     zip_safe=False

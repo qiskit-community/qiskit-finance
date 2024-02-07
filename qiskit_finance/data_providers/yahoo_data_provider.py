@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2020, 2023.
+# (C) Copyright IBM 2020, 2024.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -36,7 +36,7 @@ class YahooDataProvider(BaseDataProvider):
     """Yahoo data provider.
 
     Please see:
-    https://qiskit.org/ecosystem/finance/tutorials/11_time_series.html
+    https://qiskit-community.github.io/qiskit-finance/tutorials/11_time_series.html
     for instructions on use.
     """
 
