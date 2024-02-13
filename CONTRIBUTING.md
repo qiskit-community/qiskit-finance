@@ -3,9 +3,9 @@
 **We appreciate all kinds of help, so thank you!**
 
 First please read the overall project contributing guidelines. These are
-included in the Qiskit documentation here:
+included in the Qiskit project here:
 
-https://qiskit.org/documentation/contributing_to_qiskit.html
+https://github.com/Qiskit/qiskit/blob/main/CONTRIBUTING.md
 
 ## Contributing to Qiskit Finance
 
@@ -61,8 +61,7 @@ please ensure that:
    to see the changes formatted output is as expected. You will find an index.html
    file in docs\_build\html and you can navigate from there.
    
-   Please note that a spell check is run in CI, on the docstrings, since the text
-   becomes part of the online [API Documentation](https://qiskit.org/documentation/).
+   Please note that a spell check is run in CI, on the docstrings.
    
    You can run `make spell` locally to check spelling though you would need to
    [install pyenchant](https://pyenchant.github.io/pyenchant/install.html) and be using
