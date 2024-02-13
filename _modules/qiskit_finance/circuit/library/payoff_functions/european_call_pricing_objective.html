@@ -359,7 +359,7 @@
           <h1>Source code for qiskit_finance.circuit.library.payoff_functions.european_call_pricing_objective</h1><div class="highlight"><pre>
 <span></span><span class="c1"># This code is part of a Qiskit project.</span>
 <span class="c1">#</span>
-<span class="c1"># (C) Copyright IBM 2018, 2023.</span>
+<span class="c1"># (C) Copyright IBM 2018, 2024.</span>
 <span class="c1">#</span>
 <span class="c1"># This code is licensed under the Apache License, Version 2.0. You may</span>
 <span class="c1"># obtain a copy of this license in the LICENSE.txt file in the root directory</span>
@@ -413,7 +413,7 @@
         <span class="p">)</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">european_call</span><span class="o">.</span><span class="n">qregs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ECEV&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">european_call</span><span class="o">.</span><span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">european_call</span><span class="o">.</span><span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_european_call</span> <span class="o">=</span> <span class="n">european_call</span>
 
 <div class="viewcode-block" id="EuropeanCallPricingObjective.post_processing"><a class="viewcode-back" href="../../../../../stubs/qiskit_finance.circuit.library.EuropeanCallPricingObjective.html#qiskit_finance.circuit.library.EuropeanCallPricingObjective.post_processing">[docs]</a>    <span class="k">def</span> <span class="nf">post_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scaled_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>

@@ -372,7 +372,7 @@ The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike pri
 <li><p><strong>num_state_qubits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of qubits used to encode the random variable.</p></li>
 <li><p><strong>strike_price</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – strike price of the European option</p></li>
 <li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><em>Tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>]</em>) – The tuple of the bounds, (min, max), of the discretized random variable.</p></li>
-<li><p><strong>uncertainty_model</strong> (<a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.html#qiskit.circuit.QuantumCircuit" title="(in Qiskit v0.45)"><em>QuantumCircuit</em></a>) – A circuit for encoding a problem distribution</p></li>
+<li><p><strong>uncertainty_model</strong> (<a class="reference external" href="https://docs.quantum.ibm.com/api/qiskit/qiskit.circuit.QuantumCircuit" title="(in Qiskit v0.46)"><em>QuantumCircuit</em></a>) – A circuit for encoding a problem distribution</p></li>
 </ul>
 </dd>
 </dl>
@@ -381,11 +381,11 @@ The payoff function is f(S, K) = max(0, S - K) for a spot price S and strike pri
 <dt class="sig sig-object py" id="qiskit_finance.applications.EuropeanCallDelta.interpret">
 <span class="sig-name descname"><span class="pre">interpret</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qiskit_finance/applications/estimation/european_call_delta.html#EuropeanCallDelta.interpret"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qiskit_finance.applications.EuropeanCallDelta.interpret" title="Permalink to this definition">#</a></dt>
 <dd><p>Convert the calculation result of the problem
-(<a class="reference external" href="https://qiskit.org/ecosystem/algorithms/stubs/qiskit_algorithms.AmplitudeEstimatorResult.html#qiskit_algorithms.AmplitudeEstimatorResult" title="(in Qiskit Algorithms v0.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">qiskit_algorithms.AmplitudeEstimatorResult</span></code></a>)
+(<a class="reference external" href="https://qiskit-community.github.io/qiskit-algorithms/stubs/qiskit_algorithms.AmplitudeEstimatorResult.html#qiskit_algorithms.AmplitudeEstimatorResult" title="(in Qiskit Algorithms v0.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">qiskit_algorithms.AmplitudeEstimatorResult</span></code></a>)
 to the answer of the problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>result</strong> (<a class="reference external" href="https://qiskit.org/ecosystem/algorithms/stubs/qiskit_algorithms.AmplitudeEstimatorResult.html#qiskit_algorithms.AmplitudeEstimatorResult" title="(in Qiskit Algorithms v0.2.1)"><em>AmplitudeEstimatorResult</em></a>) – The calculated result of the problem</p>
+<dd class="field-odd"><p><strong>result</strong> (<a class="reference external" href="https://qiskit-community.github.io/qiskit-algorithms/stubs/qiskit_algorithms.AmplitudeEstimatorResult.html#qiskit_algorithms.AmplitudeEstimatorResult" title="(in Qiskit Algorithms v0.2.2)"><em>AmplitudeEstimatorResult</em></a>) – The calculated result of the problem</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The estimation value after the post_processing.</p>
@@ -400,14 +400,14 @@ to the answer of the problem.</p>
 <dt class="sig sig-object py" id="qiskit_finance.applications.EuropeanCallDelta.to_estimation_problem">
 <span class="sig-name descname"><span class="pre">to_estimation_problem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qiskit_finance/applications/estimation/european_call_delta.html#EuropeanCallDelta.to_estimation_problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qiskit_finance.applications.EuropeanCallDelta.to_estimation_problem" title="Permalink to this definition">#</a></dt>
 <dd><p>Convert a problem instance into a
-<a class="reference external" href="https://qiskit.org/ecosystem/algorithms/stubs/qiskit_algorithms.EstimationProblem.html#qiskit_algorithms.EstimationProblem" title="(in Qiskit Algorithms v0.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">qiskit_algorithms.EstimationProblem</span></code></a></p>
+<a class="reference external" href="https://qiskit-community.github.io/qiskit-algorithms/stubs/qiskit_algorithms.EstimationProblem.html#qiskit_algorithms.EstimationProblem" title="(in Qiskit Algorithms v0.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">qiskit_algorithms.EstimationProblem</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The <a class="reference external" href="https://qiskit.org/ecosystem/algorithms/stubs/qiskit_algorithms.EstimationProblem.html#qiskit_algorithms.EstimationProblem" title="(in Qiskit Algorithms v0.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">qiskit_algorithms.EstimationProblem</span></code></a> created
+<dd class="field-odd"><p>The <a class="reference external" href="https://qiskit-community.github.io/qiskit-algorithms/stubs/qiskit_algorithms.EstimationProblem.html#qiskit_algorithms.EstimationProblem" title="(in Qiskit Algorithms v0.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">qiskit_algorithms.EstimationProblem</span></code></a> created
 from the European call delta problem instance.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://qiskit.org/ecosystem/algorithms/stubs/qiskit_algorithms.EstimationProblem.html#qiskit_algorithms.EstimationProblem" title="(in Qiskit Algorithms v0.2.1)"><em>EstimationProblem</em></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://qiskit-community.github.io/qiskit-algorithms/stubs/qiskit_algorithms.EstimationProblem.html#qiskit_algorithms.EstimationProblem" title="(in Qiskit Algorithms v0.2.2)"><em>EstimationProblem</em></a></p>
 </dd>
 </dl>
 </dd></dl>

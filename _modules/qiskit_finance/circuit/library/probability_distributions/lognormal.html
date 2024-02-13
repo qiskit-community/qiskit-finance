@@ -359,7 +359,7 @@
           <h1>Source code for qiskit_finance.circuit.library.probability_distributions.lognormal</h1><div class="highlight"><pre>
 <span></span><span class="c1"># This code is part of a Qiskit project.</span>
 <span class="c1">#</span>
-<span class="c1"># (C) Copyright IBM 2017, 2023.</span>
+<span class="c1"># (C) Copyright IBM 2017, 2024.</span>
 <span class="c1">#</span>
 <span class="c1"># This code is licensed under the Apache License, Version 2.0. You may</span>
 <span class="c1"># obtain a copy of this license in the LICENSE.txt file in the root directory</span>
@@ -373,7 +373,10 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 <span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">Initialize</span><span class="p">,</span> <span class="n">Isometry</span>
+
 <span class="kn">from</span> <span class="nn">.normal</span> <span class="kn">import</span> <span class="n">_check_bounds_valid</span><span class="p">,</span> <span class="n">_check_dimensions_match</span>
 
 
@@ -521,13 +524,10 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">inner</span><span class="o">.</span><span class="n">qregs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
         <span class="c1"># use default the isometry (or initialize w/o resets) algorithm to construct the circuit</span>
-        <span class="c1"># pylint: disable=no-member</span>
         <span class="k">if</span> <span class="n">upto_diag</span><span class="p">:</span>
-            <span class="n">inner</span><span class="o">.</span><span class="n">isometry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">normalized_probabilities</span><span class="p">),</span> <span class="n">inner</span><span class="o">.</span><span class="n">qubits</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">inner</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Isometry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">normalized_probabilities</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">inner</span><span class="o">.</span><span class="n">qubits</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inner</span><span class="o">.</span><span class="n">to_instruction</span><span class="p">(),</span> <span class="n">inner</span><span class="o">.</span><span class="n">qubits</span><span class="p">)</span>  <span class="c1"># Isometry is not a Gate</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">qiskit.extensions</span> <span class="kn">import</span> <span class="n">Initialize</span>  <span class="c1"># pylint: disable=cyclic-import</span>
-
             <span class="n">initialize</span> <span class="o">=</span> <span class="n">Initialize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">normalized_probabilities</span><span class="p">))</span>
             <span class="n">circuit</span> <span class="o">=</span> <span class="n">initialize</span><span class="o">.</span><span class="n">gates_to_uncompute</span><span class="p">()</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
             <span class="n">inner</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
