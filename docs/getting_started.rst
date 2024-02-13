@@ -40,7 +40,7 @@ specific to Qiskit Finance.
 
        Since Qiskit Finance depends on Qiskit, and its latest changes may require new or changed
        features of Qiskit, you should first follow Qiskit's `"Install from source"` instructions
-      `here <https://docs.quantum.ibm.com/start/install-qiskit-source>`__
+       `here <https://docs.quantum.ibm.com/start/install-qiskit-source>`__
 
        .. raw:: html
 
