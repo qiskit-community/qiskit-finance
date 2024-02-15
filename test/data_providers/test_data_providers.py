@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2019, 2023.
+# (C) Copyright IBM 2019, 2024.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -200,8 +200,8 @@ class TestDataProviders(QiskitFinanceTestCase):
             self.fail(f"Test of ExchangeDataProvider failed: {str(ex)}")
 
     @data(
-        [["MSFT", "AAPL"], [[1344, 474.0], [474.0, 211.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
-        ["MSFT", 1344.0, [[1.0]]],
+        [["MSFT", "AAPL"], [[1339, 473.0], [473.0, 210.0]], [[1.0, 2.99e-05], [2.99e-05, 1.0]]],
+        ["MSFT", 1339.0, [[1.0]]],
     )
     @unpack
     def test_yahoo(self, tickers, covariance, similarity):
