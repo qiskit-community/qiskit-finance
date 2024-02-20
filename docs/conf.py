@@ -139,7 +139,6 @@ numfig_format = {"table": "Table %s"}
 
 translations_list = [
     ("en", "English"),
-    ("bn_BN", "Bengali"),
     ("ja_JP", "Japanese"),
     ("es_UN", "Spanish"),
 ]
