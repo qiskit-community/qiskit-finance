@@ -74,7 +74,7 @@ class YahooDataProvider(BaseDataProvider):
         """
         Loads data from Yahoo Finance.
 
-        This method retrieves stock market data from Yahoo Finance using the `yfinance` library,
+        This method retrieves stock market data from Yahoo Finance using the :code:`yfinance` library,
         and populates the data attribute of the base class, enabling further calculations like
         similarity and covariance matrices.
 
