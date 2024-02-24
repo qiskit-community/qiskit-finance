@@ -29,6 +29,7 @@ covariances
 currentmodule
 cvar
 dataondemand
+datetime
 dicts
 discretization
 discretize
