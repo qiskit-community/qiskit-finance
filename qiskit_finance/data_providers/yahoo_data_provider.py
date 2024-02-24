@@ -81,7 +81,7 @@ class YahooDataProvider(BaseDataProvider):
         Raises:
             QiskitFinanceError: If there are missing tickers in download,
                 if accessing Yahoo Data fails, or if no data is found for
-                the specified date range, possibly due to delisted symbols.
+                the specified date range, possibly due to de-listed symbols.
 
         Returns:
             None
@@ -91,7 +91,7 @@ class YahooDataProvider(BaseDataProvider):
         self._data = []
         stocks_notfound = []
         try:
-            # download multiple tickers in single thread to avoid
+            # Download multiple tickers in single thread to avoid
             # race condition
             stock_data = yf.download(
                 self._tickers,
@@ -126,5 +126,5 @@ class YahooDataProvider(BaseDataProvider):
 
         if stocks_notfound:
             raise QiskitFinanceError(
-                f"No data found for this date range, symbols may be delisted: {stocks_notfound}."
+                f"No data found for this date range, symbols may be de-listed: {stocks_notfound}."
             )
