@@ -59,6 +59,7 @@ class YahooDataProvider(BaseDataProvider):
         super().__init__()
         self._tickers = []
         tickers = tickers if tickers is not None else []
+
         if isinstance(tickers, list):
             self._tickers = tickers
         else:
