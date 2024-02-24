@@ -12,7 +12,6 @@
 
 """ Yahoo data provider. """
 
-from typing import Optional, Union, List
 import datetime
 import logging
 import tempfile
@@ -35,22 +34,27 @@ yf.set_tz_cache_location(_temp_dir.name)
 class YahooDataProvider(BaseDataProvider):
     """Yahoo data provider.
 
-    Please see:
+    This data provider retrieves stock market data from Yahoo Finance using the yfinance library.
+    For more details on usage, please refer to the official documentation:
     https://qiskit-community.github.io/qiskit-finance/tutorials/11_time_series.html
-    for instructions on use.
     """
 
     def __init__(
         self,
-        tickers: Optional[Union[str, List[str]]] = None,
+        tickers: str | list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
+        Initialize the Yahoo Data Provider.
+
         Args:
-            tickers: tickers
-            start: start time
-            end: end time
+            tickers (str | list[str] | None): Tickers for the data provider.
+                Default is None, meaning no tickers provided.
+            start (datetime.datetime): Start date of the data.
+                Default is January 1st, 2016.
+            end (datetime.datetime): End date of the data.
+                Default is January 30th, 2016.
         """
         super().__init__()
         self._tickers = []
@@ -67,8 +71,11 @@ class YahooDataProvider(BaseDataProvider):
 
     def run(self) -> None:
         """
-        Loads data, thus enabling get_similarity_matrix and
-        get_covariance_matrix methods in the base class.
+        Loads data from Yahoo Finance.
+
+        This method retrieves stock market data from Yahoo Finance using the yfinance library,
+        and populates the data attribute of the base class, enabling further calculations like
+        similarity and covariance matrices.
         """
         if len(self._tickers) == 0:
             raise QiskitFinanceError("Missing tickers to download.")
@@ -85,18 +92,25 @@ class YahooDataProvider(BaseDataProvider):
                 threads=False,
                 progress=logger.isEnabledFor(logging.DEBUG),
             )
+
             if len(self._tickers) == 1:
                 ticker_name = self._tickers[0]
                 stock_value = stock_data["Adj Close"]
+
                 if stock_value.dropna().empty:
                     stocks_notfound.append(ticker_name)
+
                 self._data.append(stock_value)
+
             else:
                 for ticker_name in self._tickers:
                     stock_value = stock_data[ticker_name]["Adj Close"]
+
                     if stock_value.dropna().empty:
                         stocks_notfound.append(ticker_name)
+
                     self._data.append(stock_value)
+
         except Exception as ex:  # pylint: disable=broad-except
             logger.debug(ex, exc_info=True)
             raise QiskitFinanceError("Accessing Yahoo Data failed.") from ex

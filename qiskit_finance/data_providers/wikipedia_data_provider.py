@@ -12,7 +12,6 @@
 
 """ Wikipedia data provider. """
 
-from typing import Optional, Union, List
 import logging
 import datetime
 import nasdaqdatalink
@@ -26,27 +25,34 @@ logger = logging.getLogger(__name__)
 class WikipediaDataProvider(BaseDataProvider):
     """Wikipedia data provider.
 
-    Please see:
+    This data provider retrieves stock market data from the Wikipedia dataset
+    using Nasdaq Data Link API. For more details on usage, please refer to the
+    official documentation:
     https://qiskit-community.github.io/qiskit-finance/tutorials/11_time_series.html
-    for instructions on use.
     """
 
     def __init__(
         self,
-        token: Optional[str] = None,
-        tickers: Optional[Union[str, List[str]]] = None,
+        token: str | None = None,
+        tickers: str | list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
+        Initialize the Wikipedia Data Provider.
+
         Args:
-            token: Nasdaq Data Link access token, which is not needed, strictly speaking
-            tickers: tickers
-            start: start time
-            end: end time
+            token (str | None): Nasdaq Data Link access token.
+                Default is None.
+            tickers (str | list[str] | None): Tickers for the data provider.
+                Default is None, meaning no tickers provided.
+            start (datetime.datetime): Start date of the data.
+                Default is January 1st, 2016.
+            end (datetime.datetime): End date of the data.
+                Default is January 30th, 2016.
         """
         super().__init__()
-        self._tickers = None  # type: Optional[Union[str, List[str]]]
+        self._tickers = None
         tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):
             self._tickers = tickers
@@ -62,8 +68,12 @@ class WikipediaDataProvider(BaseDataProvider):
 
     def run(self) -> None:
         """
-        Loads data, thus enabling get_similarity_matrix and
-        get_covariance_matrix methods in the base class.
+        Loads data from Wikipedia using Nasdaq Data Link API.
+
+        This method retrieves stock market data from the Wikipedia dataset
+        using Nasdaq Data Link API, and populates the data attribute of the
+        base class, enabling further calculations like similarity and covariance
+        matrices.
         """
         nasdaqdatalink.ApiConfig.api_key = self._token
         self._data = []
