@@ -74,9 +74,17 @@ class YahooDataProvider(BaseDataProvider):
         """
         Loads data from Yahoo Finance.
 
-        This method retrieves stock market data from Yahoo Finance using the yfinance library,
+        This method retrieves stock market data from Yahoo Finance using the `yfinance` library,
         and populates the data attribute of the base class, enabling further calculations like
         similarity and covariance matrices.
+
+        Raises:
+            QiskitFinanceError: If there are missing tickers in download,
+                if accessing Yahoo Data fails, or if no data is found for
+                the specified date range, possibly due to delisted symbols.
+
+        Returns:
+            None
         """
         if len(self._tickers) == 0:
             raise QiskitFinanceError("Missing tickers to download.")

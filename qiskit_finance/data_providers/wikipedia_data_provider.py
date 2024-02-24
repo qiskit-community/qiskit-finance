@@ -74,6 +74,15 @@ class WikipediaDataProvider(BaseDataProvider):
         using Nasdaq Data Link API, and populates the data attribute of the
         base class, enabling further calculations like similarity and covariance
         matrices.
+
+        Raises:
+            QiskitFinanceError: If there is an invalid Nasdaq Data Link token,
+                if the Nasdaq Data Link limit is exceeded, if data is not found
+                for the specified tickers, or if there is an error accessing
+                Nasdaq Data Link.
+
+        Returns:
+            None
         """
         nasdaqdatalink.ApiConfig.api_key = self._token
         self._data = []
