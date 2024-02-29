@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Option Pricing with qGANs" href="10_qgan_option_pricing.html" /><link rel="prev" title="Pricing Fixed-Income Assets" href="08_fixed_income_pricing.html" />
 
     <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
-        <title>Credit Risk Analysis - Qiskit Finance 0.4.0</title>
+        <title>Credit Risk Analysis - Qiskit Finance 0.4.1</title>
       <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=82a976d7" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/qiskit-sphinx-theme.css?v=fe84956c" />
@@ -202,7 +202,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">Qiskit Finance 0.4.0</div></a>
+      <a href="../index.html"><div class="brand">Qiskit Finance 0.4.1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -229,7 +229,7 @@
     </div>
   </a>
   
-  <span class="sidebar-brand-text">Qiskit Finance 0.4.0</span>
+  <span class="sidebar-brand-text">Qiskit Finance 0.4.1</span>
 </div><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
@@ -507,7 +507,7 @@ q_3: ┤3      ├
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
@@ -550,6 +550,15 @@ q_3: ┤3      ├
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/tmp/ipykernel_4478/3771459203.py:36: RuntimeWarning: invalid value encountered in scalar divide
+  exact_cvar = np.dot(pdf[(i_var + 1) :], losses[(i_var + 1) :]) / sum(pdf[(i_var + 1) :])
+</pre></div></div>
+</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -566,10 +575,10 @@ q_3: ┤3      ├
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Expected Loss E[L]:                0.6289
-Value at Risk VaR[L]:              2.0000
-P[L &lt;= VaR[L]]:                    0.9512
-Conditional Value at Risk CVaR[L]: 3.0000
+Expected Loss E[L]:                0.6465
+Value at Risk VaR[L]:              3.0000
+P[L &lt;= VaR[L]]:                    1.0000
+Conditional Value at Risk CVaR[L]: nan
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -789,9 +798,9 @@ objective: ─────────┤        ├┤2   ├┤           ├
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Exact Expected Loss:   0.6289
-Exact Operator Value:  0.3789
-Mapped Operator value: 0.5749
+Exact Expected Loss:   0.6465
+Exact Operator Value:  0.3818
+Mapped Operator value: 0.5973
 </pre></div></div>
 </div>
 <p>Next we run QAE to estimate the expected loss with a quadratic speed-up over classical Monte Carlo simulation.</p>
@@ -827,7 +836,7 @@ Mapped Operator value: 0.5749
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Exact value:            0.6289
+Exact value:            0.6465
 Estimated value:        0.6863
 Confidence interval:    [0.6175, 0.7552]
 </pre></div></div>
@@ -978,8 +987,8 @@ objective: ─────────┤        ├┤2     ├┤           �
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Operator CDF(2) = 0.9541
-Exact    CDF(2) = 0.9512
+Operator CDF(2) = 0.9707
+Exact    CDF(2) = 0.9492
 </pre></div></div>
 </div>
 <p>Next we run QAE to estimate the CDF for a given <span class="math notranslate nohighlight">\(x\)</span>.</p>
@@ -1011,7 +1020,7 @@ Exact    CDF(2) = 0.9512
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Exact value:            0.9512
+Exact value:            0.9492
 Estimated value:        0.9590
 Confidence interval:    [0.9577, 0.9603]
 </pre></div></div>
@@ -1187,9 +1196,9 @@ finished bisection search
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Estimated Value at Risk:  2
-Exact Value at Risk:      2
+Exact Value at Risk:      3
 Estimated Probability:    0.959
-Exact Probability:        0.951
+Exact Probability:        1.000
 </pre></div></div>
 </div>
 </section>
@@ -1281,7 +1290,7 @@ q159_1: ┤1   ├
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f4a548c3c70&gt;
+&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f109d5ac370&gt;
 </pre></div></div>
 </div>
 <p>Again, we first use quantum simulation to validate the quantum circuit.</p>
@@ -1321,8 +1330,8 @@ q159_1: ┤1   ├
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Estimated CVaR: 4.4286
-Exact CVaR:     3.0000
+Estimated CVaR: 3.7618
+Exact CVaR:     nan
 </pre></div></div>
 </div>
 <p>Next we run QAE to estimate the CVaR.</p>
@@ -1364,7 +1373,7 @@ Exact CVaR:     3.0000
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Exact CVaR:     3.0000
+Exact CVaR:     nan
 Estimated CVaR: 3.3316
 </pre></div></div>
 </div>
@@ -1383,7 +1392,7 @@ Estimated CVaR: 3.3316
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<h3>Version Information</h3><table><tr><th>Software</th><th>Version</th></tr><tr><td><code>qiskit</code></td><td>1.0.0</td></tr><tr><td><code>qiskit_algorithms</code></td><td>0.3.0</td></tr><tr><td><code>qiskit_finance</code></td><td>0.4.0</td></tr><tr><td><code>qiskit_aer</code></td><td>0.13.3</td></tr><tr><th colspan='2'>System information</th></tr><tr><td>Python version</td><td>3.8.18</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td colspan='2'>Tue Feb 20 19:01:57 2024 UTC</td></tr></table></div>
+<h3>Version Information</h3><table><tr><th>Software</th><th>Version</th></tr><tr><td><code>qiskit</code></td><td>1.0.1</td></tr><tr><td><code>qiskit_aer</code></td><td>0.13.3</td></tr><tr><td><code>qiskit_finance</code></td><td>0.4.1</td></tr><tr><td><code>qiskit_algorithms</code></td><td>0.3.0</td></tr><tr><th colspan='2'>System information</th></tr><tr><td>Python version</td><td>3.8.18</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td colspan='2'>Thu Feb 29 03:07:31 2024 UTC</td></tr></table></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -1490,7 +1499,7 @@ Estimated CVaR: 3.3316
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=4e78f113"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ea00750a"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/scripts/qiskit-sphinx-theme.js?v=4d77b8ca"></script>
