@@ -127,6 +127,7 @@ runs:
         if [ "$build_from_main" == "true" ]; then
           echo 'Create wheel file from main'
           pip install -U wheel
+          pip install -U setuptools
           git clone --depth 1 --branch main https://github.com/qiskit-community/qiskit-optimization.git /tmp/qiskit-optimization
           pushd /tmp/qiskit-optimization
           python setup.py bdist_wheel
