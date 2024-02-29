@@ -29,10 +29,12 @@ covariances
 currentmodule
 cvar
 dataondemand
+datetime
 dicts
 discretization
 discretize
 discretized
+DTW
 egger
 eigendecomposition
 eigensolver
