@@ -62,11 +62,6 @@ class RandomDataProvider(BaseDataProvider):
 
         Generates pseudo-random stock market data using normal distribution
         and truncates values to zero after the first occurrence of zero.
-
-        Raises:
-            None
-        Returns:
-            None
         """
         length = (self._end - self._start).days
         generator = np.random.default_rng(self._seed)

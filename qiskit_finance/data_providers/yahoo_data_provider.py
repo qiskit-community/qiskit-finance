@@ -82,9 +82,6 @@ class YahooDataProvider(BaseDataProvider):
             QiskitFinanceError: If there are missing tickers in download,
                 if accessing Yahoo Data fails, or if no data is found for
                 the specified date range, possibly due to de-listed symbols.
-
-        Returns:
-            None
         """
         if len(self._tickers) == 0:
             raise QiskitFinanceError("Missing tickers to download.")

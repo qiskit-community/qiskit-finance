@@ -42,7 +42,6 @@ class BaseDataProvider(ABC):
 
     To use the subclasses, please see
     https://qiskit-community.github.io/qiskit-finance/tutorials/11_time_series.html
-
     """
 
     @abstractmethod
@@ -228,7 +227,6 @@ class BaseDataProvider(ABC):
         Note:
             The generated coordinates are random and may not reflect any meaningful relationship
             between assets.
-
         """
         x_c = np.zeros([self._n, 1])
         y_c = np.zeros([self._n, 1])

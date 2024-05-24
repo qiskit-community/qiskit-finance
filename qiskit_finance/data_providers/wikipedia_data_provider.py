@@ -80,9 +80,6 @@ class WikipediaDataProvider(BaseDataProvider):
                 if the Nasdaq Data Link limit is exceeded, if data is not found
                 for the specified tickers, or if there is an error accessing
                 Nasdaq Data Link.
-
-        Returns:
-            None
         """
         nasdaqdatalink.ApiConfig.api_key = self._token
         self._data = []
