@@ -11,7 +11,7 @@
 # that they have been altered from the originals.
 
 """ Pseudo-randomly generated mock stock-market data provider """
-
+from __future__ import annotations
 import datetime
 import logging
 import numpy as np

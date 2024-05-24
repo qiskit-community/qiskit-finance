@@ -11,7 +11,7 @@
 # that they have been altered from the originals.
 
 """ Yahoo data provider. """
-
+from __future__ import annotations
 import datetime
 import logging
 import tempfile

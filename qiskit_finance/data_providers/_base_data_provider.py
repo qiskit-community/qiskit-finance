@@ -11,7 +11,7 @@
 # that they have been altered from the originals.
 
 """This module implements the abstract base class for data_provider modules the finance module."""
-
+from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import cast
 import logging
