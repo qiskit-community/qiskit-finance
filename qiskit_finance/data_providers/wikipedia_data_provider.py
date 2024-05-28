@@ -34,7 +34,7 @@ class WikipediaDataProvider(BaseDataProvider):
     def __init__(
         self,
         token: str | None = None,
-        tickers: str | list[str] | None = None,
+        tickers: list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
@@ -44,7 +44,7 @@ class WikipediaDataProvider(BaseDataProvider):
         Args:
             token (str | None): Nasdaq Data Link access token.
                 Default is None.
-            tickers (str | list[str] | None): Tickers for the data provider.
+            tickers (list[str] | None): Tickers for the data provider.
                 Default is None, meaning no tickers provided.
             start (datetime.datetime): Start date of the data.
                 Default is January 1st, 2016.
