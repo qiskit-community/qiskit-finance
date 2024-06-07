@@ -41,7 +41,7 @@ class YahooDataProvider(BaseDataProvider):
 
     def __init__(
         self,
-        tickers: str | list[str] | None = None,
+        tickers: list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
