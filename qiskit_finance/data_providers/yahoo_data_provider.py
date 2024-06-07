@@ -49,7 +49,7 @@ class YahooDataProvider(BaseDataProvider):
         Initialize the Yahoo Data Provider.
 
         Args:
-            tickers (str | list[str] | None): Tickers for the data provider.
+            tickers (list[str] | None): Tickers for the data provider.
                 Default is None, meaning no tickers provided.
             start (datetime.datetime): Start date of the data.
                 Default is January 1st, 2016.

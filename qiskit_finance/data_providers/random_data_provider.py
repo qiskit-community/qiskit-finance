@@ -35,7 +35,7 @@ class RandomDataProvider(BaseDataProvider):
         Initialize RandomDataProvider.
 
         Args:
-            tickers (str | list[str] | None): Tickers for the data provider.
+            tickers (list[str] | None): Tickers for the data provider.
                 Default is None, using ["TICKER1", "TICKER2"] if not provided.
             start (datetime.datetime): Start date of the data.
                 Defaults to January 1st, 2016.
