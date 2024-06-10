@@ -12,7 +12,7 @@
 
 """ Exchange data provider. """
 
-from typing import Union, List
+from __future__ import annotations
 import logging
 import datetime
 import nasdaqdatalink
@@ -34,24 +34,31 @@ class ExchangeDataProvider(BaseDataProvider):
     def __init__(
         self,
         token: str,
-        tickers: Union[str, List[str]],
+        tickers: str | list[str] | None = None,
         stockmarket: StockMarket = StockMarket.LONDON,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
         Args:
-            token: Nasdaq Data Link access token
-            tickers: tickers
-            stockmarket: LONDON, EURONEXT, or SINGAPORE
-            start: first data point
-            end: last data point precedes this date
+            token (str): Nasdaq Data Link access token.
+            tickers (str | list[str] | None): Tickers for the data provider.
+                - If a string is provided, it can be a single ticker symbol or multiple symbols
+                  separated by semicolons or newlines.
+                - If a list of strings is provided, each string should be a single ticker symbol.
+                Default is None.
+            stockmarket (StockMarket): LONDON (default), EURONEXT, or SINGAPORE
+            start (datetime.datetime): Start date of the data.
+                Defaults to January 1st, 2016.
+            end (datetime.datetime): End date of the data.
+                Defaults to January 30th, 2016.
 
         Raises:
             QiskitFinanceError: provider doesn't support given stock market
         """
         super().__init__()
-        self._tickers = []  # type: Union[str, List[str]]
+        self._tickers = None
+        tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):
             self._tickers = tickers
         else:

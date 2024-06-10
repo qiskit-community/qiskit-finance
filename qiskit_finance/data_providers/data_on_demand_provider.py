@@ -12,7 +12,7 @@
 
 """ NASDAQ Data on demand data provider. """
 
-from typing import Optional, Union, List
+from __future__ import annotations
 import datetime
 from urllib.parse import urlencode
 import logging
@@ -37,27 +37,35 @@ class DataOnDemandProvider(BaseDataProvider):
     def __init__(
         self,
         token: str,
-        tickers: Union[str, List[str]],
+        tickers: str | list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
-        verify: Optional[Union[str, bool]] = None,
+        verify: str | bool | None = None,
     ) -> None:
         """
         Args:
-            token: data on demand access token
-            tickers: tickers
-            start: first data point
-            end: last data point precedes this date
-            verify: if verify is None, certify certificates
+            token (str): Nasdaq Data Link access token.
+            tickers (str | list[str] | None): Tickers for the data provider.
+                - If a string is provided, it can be a single ticker symbol or multiple symbols
+                  separated by semicolons or newlines.
+                - If a list of strings is provided, each string should be a single ticker symbol.
+                Default is None.
+            start (datetime.datetime): Start date of the data.
+                Defaults to January 1st, 2016.
+            end (datetime.datetime): End date of the data.
+                Defaults to January 30th, 2016.
+            verify (str | bool | None): If verify is None, certify certificates
                 will be used (default);
                 if this is False, no certificates will be checked; if this is a string,
                 it should be pointing
-                to a certificate for the HTTPS connection to NASDAQ (dataondemand.nasdaq.com),
+                to a certificate for the HTTPS connection to NASDAQ (`dataondemand.nasdaq.com`),
                 either in the
                 form of a CA_BUNDLE file or a directory wherein to look.
         """
         super().__init__()
 
+        self._tickers = None
+        tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):
             self._tickers = tickers
         else:

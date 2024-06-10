@@ -11,6 +11,7 @@
 # that they have been altered from the originals.
 
 """ Yahoo data provider. """
+
 from __future__ import annotations
 import datetime
 import logging
@@ -41,7 +42,7 @@ class YahooDataProvider(BaseDataProvider):
 
     def __init__(
         self,
-        tickers: list[str] | None = None,
+        tickers: str | list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
@@ -49,7 +50,10 @@ class YahooDataProvider(BaseDataProvider):
         Initialize the Yahoo Data Provider.
 
         Args:
-            tickers (list[str] | None): Tickers for the data provider.
+            tickers (str | list[str] | None): Tickers for the data provider.
+                - If a string is provided, it can be a single ticker symbol or multiple symbols
+                  separated by semicolons or newlines.
+                - If a list of strings is provided, each string should be a single ticker symbol.
                 Default is None, meaning no tickers provided.
             start (datetime.datetime): Start date of the data.
                 Default is January 1st, 2016.
@@ -57,13 +61,14 @@ class YahooDataProvider(BaseDataProvider):
                 Default is January 30th, 2016.
         """
         super().__init__()
-        self._tickers = []
-        tickers = tickers if tickers is not None else []
 
+        self._tickers = None
+        tickers = tickers if tickers is not None else []
         if isinstance(tickers, list):
             self._tickers = tickers
         else:
             self._tickers = tickers.replace("\n", ";").split(";")
+
         self._n = len(self._tickers)
 
         self._start = start.strftime("%Y-%m-%d")
