@@ -10,8 +10,6 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-""" NASDAQ Data on demand data provider. """
-
 from __future__ import annotations
 import datetime
 from urllib.parse import urlencode
