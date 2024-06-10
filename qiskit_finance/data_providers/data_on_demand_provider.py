@@ -103,7 +103,7 @@ class DataOnDemandProvider(BaseDataProvider):
 
                 if response.status != 200:
                     error_message = response.data.decode("utf-8")
-                    logger.debug(f"Error fetching data for {ticker}: {error_message}")
+                    logger.debug("Error fetching data for %s: %s", ticker, error_message)
                     stocks_error.append(ticker)
                     continue
 
