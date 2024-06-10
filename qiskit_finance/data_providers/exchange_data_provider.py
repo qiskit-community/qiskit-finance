@@ -22,6 +22,12 @@ from ..exceptions import QiskitFinanceError
 
 logger = logging.getLogger(__name__)
 
+VALID_STOCKMARKETS = [
+    StockMarket.LONDON,
+    StockMarket.EURONEXT,
+    StockMarket.SINGAPORE,
+]
+
 
 class ExchangeDataProvider(BaseDataProvider):
     """Exchange data provider.
@@ -44,9 +50,9 @@ class ExchangeDataProvider(BaseDataProvider):
             token (str): Nasdaq Data Link access token.
             tickers (str | list[str] | None): Tickers for the data provider.
                 - If a string is provided, it can be a single ticker symbol or multiple symbols
-                  separated by semicolons or newlines.
+                  separated by semicolons or new-lines.
                 - If a list of strings is provided, each string should be a single ticker symbol.
-                Default is None.
+                Default is :code:`None`.
             stockmarket (StockMarket): LONDON (default), EURONEXT, or SINGAPORE
             start (datetime.datetime): Start date of the data.
                 Defaults to January 1st, 2016.
@@ -57,22 +63,17 @@ class ExchangeDataProvider(BaseDataProvider):
             QiskitFinanceError: provider doesn't support given stock market
         """
         super().__init__()
-        self._tickers = None
-        tickers = tickers if tickers is not None else []
-        if isinstance(tickers, list):
-            self._tickers = tickers
-        else:
-            self._tickers = tickers.replace("\n", ";").split(";")
-        self._n = len(self._tickers)
 
-        if stockmarket not in [
-            StockMarket.LONDON,
-            StockMarket.EURONEXT,
-            StockMarket.SINGAPORE,
-        ]:
-            msg = "ExchangeDataProvider does not support "
-            msg += stockmarket.value
-            msg += " as a stock market."
+        if tickers is None:
+            tickers = []
+        if isinstance(tickers, str):
+            tickers = tickers.replace("\n", ";").split(";")
+
+        self._tickers = tickers
+        self._n = len(tickers)
+
+        if stockmarket not in VALID_STOCKMARKETS:
+            msg = f"ExchangeDataProvider does not support {stockmarket.value} as a stock market."
             raise QiskitFinanceError(msg)
 
         # This is to aid serialization; string is ok to serialize

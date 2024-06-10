@@ -40,7 +40,7 @@ class RandomDataProvider(BaseDataProvider):
                 - If a string is provided, it can be a single ticker symbol or multiple symbols
                   separated by semicolons or newlines.
                 - If a list of strings is provided, each string should be a single ticker symbol.
-                Default is None, using ["TICKER1", "TICKER2"] if not provided.
+                Default is :code:`None`, using :code:`["TICKER1", "TICKER2"]` if not provided.
             start (datetime.datetime): Start date of the data.
                 Defaults to January 1st, 2016.
             end (datetime.datetime): End date of the data.
@@ -48,15 +48,14 @@ class RandomDataProvider(BaseDataProvider):
             seed (int | None): Random seed for reproducibility.
         """
         super().__init__()
-        self._tickers = None
-        tickers = tickers if tickers is not None else ["TICKER1", "TICKER2"]
 
-        if isinstance(tickers, list):
-            self._tickers = tickers
-        else:
-            self._tickers = tickers.replace("\n", ";").split(";")
+        if tickers is None:
+            tickers = ["TICKER1", "TICKER2"]
+        if isinstance(tickers, str):
+            tickers = tickers.replace("\n", ";").split(";")
 
-        self._n = len(self._tickers)
+        self._tickers = tickers
+        self._n = len(tickers)
         self._start = start
         self._end = end
         self._seed = seed

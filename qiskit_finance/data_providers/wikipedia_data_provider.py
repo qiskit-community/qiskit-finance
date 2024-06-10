@@ -55,16 +55,15 @@ class WikipediaDataProvider(BaseDataProvider):
                 Default is January 30th, 2016.
         """
         super().__init__()
-        self._tickers = None
-        tickers = tickers if tickers is not None else []
-        if isinstance(tickers, list):
-            self._tickers = tickers
-        else:
-            self._tickers = tickers.replace("\n", ";").split(";")
-        self._n = len(self._tickers)
 
-        self._token = token
+        if tickers is None:
+            tickers = []
+        if isinstance(tickers, str):
+            tickers = tickers.replace("\n", ";").split(";")
+
         self._tickers = tickers
+        self._n = len(tickers)
+        self._token = token
         self._start = start.strftime("%Y-%m-%d")
         self._end = end.strftime("%Y-%m-%d")
         self._data = []

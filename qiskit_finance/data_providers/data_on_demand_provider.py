@@ -49,29 +49,26 @@ class DataOnDemandProvider(BaseDataProvider):
                 - If a string is provided, it can be a single ticker symbol or multiple symbols
                   separated by semicolons or newlines.
                 - If a list of strings is provided, each string should be a single ticker symbol.
-                Default is None.
+                Default is :code:`None`.
             start (datetime.datetime): Start date of the data.
                 Defaults to January 1st, 2016.
             end (datetime.datetime): End date of the data.
                 Defaults to January 30th, 2016.
-            verify (str | bool | None): If verify is None, certify certificates
-                will be used (default);
-                if this is False, no certificates will be checked; if this is a string,
+            verify (str | bool | None): If verify is `None`, runs the certificate verification (default);
+                if this is :code:`False`, no certificates will be checked; if this is a :code:`str`,
                 it should be pointing
-                to a certificate for the HTTPS connection to NASDAQ (`dataondemand.nasdaq.com`),
-                either in the
-                form of a CA_BUNDLE file or a directory wherein to look.
+                to a certificate for the HTTPS connection to NASDAQ (:code:`dataondemand.nasdaq.com`),
+                either in the form of a :code:`CA_BUNDLE` file or a directory wherein to look.
         """
         super().__init__()
 
-        self._tickers = None
-        tickers = tickers if tickers is not None else []
-        if isinstance(tickers, list):
-            self._tickers = tickers
-        else:
-            self._tickers = tickers.replace("\n", ";").split(";")
-        self._n = len(self._tickers)
+        if tickers is None:
+            tickers = []
+        if isinstance(tickers, str):
+            tickers = tickers.replace("\n", ";").split(";")
 
+        self._tickers = tickers
+        self._n = len(tickers)
         self._token = token
         self._start = start
         self._end = end
@@ -79,10 +76,9 @@ class DataOnDemandProvider(BaseDataProvider):
 
     def run(self) -> None:
         """
-        Loads data, thus enabling get_similarity_matrix and get_covariance_matrix
+        Loads data, thus enabling :code:`get_similarity_matrix` and :code:`get_covariance_matrix`
         methods in the base class.
         """
-
         http = urllib3.PoolManager(cert_reqs="CERT_REQUIRED", ca_certs=certifi.where())
         url = "https://dataondemand.nasdaq.com/api/v1/quotes?"
         self._data = []
@@ -96,23 +92,23 @@ class DataOnDemandProvider(BaseDataProvider):
                     "end": self._end.strftime("%Y-%m-%d'T'%H:%M:%S.%f'Z'"),
                     "next_cursor": 0,
                 }
-                encoded = url + urlencode(values)
+                encoded_url = f"{url}{urlencode(values)}"
                 if self._verify is None:
-                    response = http.request(
-                        "POST", encoded
-                    )  # this runs certificate verification, as per the set-up of the urllib3
+                    # Runs certificate verification, as per the set-up of the urllib3
+                    response = http.request("POST", encoded_url)
                 else:
-                    # this disables certificate verification (False)
+                    # Disables certificate verification (False)
                     # or forces the certificate path (str)
-                    response = http.request("POST", encoded, verify=self._verify)
+                    response = http.request("POST", encoded_url, verify=self._verify)
+
                 if response.status != 200:
-                    logger.debug(response.data.decode("utf-8"))
+                    error_message = response.data.decode("utf-8")
+                    logger.debug(f"Error fetching data for {ticker}: {error_message}")
                     stocks_error.append(ticker)
                     continue
-                quotes = json.loads(response.data.decode("utf-8"))["quotes"]
-                price_evolution = []
-                for q in quotes:
-                    price_evolution.append(q["ask_price"])
+
+                quotes = json.loads(response.data.decode("utf-8")).get("quotes", [])
+                price_evolution = [q["ask_price"] for q in quotes]
                 self._data.append(price_evolution)
         finally:
             http.clear()
