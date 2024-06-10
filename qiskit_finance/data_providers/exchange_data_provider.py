@@ -10,6 +10,8 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
+""" Exchange data provider. """
+
 from __future__ import annotations
 import logging
 import datetime
@@ -47,10 +49,12 @@ class ExchangeDataProvider(BaseDataProvider):
         Args:
             token (str): Nasdaq Data Link access token.
             tickers (str | list[str] | None): Tickers for the data provider.
-                - If a string is provided, it can be a single ticker symbol or multiple symbols
-                  separated by semicolons or new-lines.
-                - If a list of strings is provided, each string should be a single ticker symbol.
-                Default is :code:`None`.
+
+                * If a string is provided, it can be a single ticker symbol or multiple symbols
+                  separated by semicolons or newlines.
+                * If a list of strings is provided, each string should be a single ticker symbol.
+
+                Default is :code:`None`, which corresponds to no tickers provided.
             stockmarket (StockMarket): LONDON (default), EURONEXT, or SINGAPORE
             start (datetime.datetime): Start date of the data.
                 Defaults to January 1st, 2016.

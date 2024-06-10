@@ -10,6 +10,8 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
+"""Wikipedia data provider."""
+
 from __future__ import annotations
 import logging
 import datetime
@@ -44,10 +46,12 @@ class WikipediaDataProvider(BaseDataProvider):
             token (str | None): Nasdaq Data Link access token.
                 Default is None.
             tickers (str | list[str] | None): Tickers for the data provider.
-                - If a string is provided, it can be a single ticker symbol or multiple symbols
+
+                * If a string is provided, it can be a single ticker symbol or multiple symbols
                   separated by semicolons or newlines.
-                - If a list of strings is provided, each string should be a single ticker symbol.
-                Default is None, meaning no tickers provided.
+                * If a list of strings is provided, each string should be a single ticker symbol.
+
+                Default is :code:`None`, which corresponds to no tickers provided.
             start (datetime.datetime): Start date of the data.
                 Default is January 1st, 2016.
             end (datetime.datetime): End date of the data.
@@ -70,8 +74,7 @@ class WikipediaDataProvider(BaseDataProvider):
     def run(self) -> None:
         """
         Loads data from Wikipedia using Nasdaq Data Link API.
-
-        This method retrieves stock market data from the Wikipedia dataset
+        Retrieves stock market data from the Wikipedia dataset
         using Nasdaq Data Link API, and populates the data attribute of the
         base class, enabling further calculations like similarity and covariance
         matrices.

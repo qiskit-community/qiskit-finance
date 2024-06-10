@@ -10,7 +10,13 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-"""This module implements the abstract base class for data_provider modules the finance module."""
+"""This module implements the abstract base class for data provider modules in the finance module.
+
+The module defines the :code:`BaseDataProvider` abstract class which should be inherited by any data
+provider class within the finance module. It also includes the :code:`StockMarket` :code:`Enum`
+representing supported stock markets.
+"""
+
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import cast
@@ -27,7 +33,16 @@ logger = logging.getLogger(__name__)
 
 
 class StockMarket(Enum):
-    """Enum representing various stock markets."""
+    """:code:`Enum` representing various stock markets.
+
+    This :code:`Enum` contains identifiers for the following stock markets,
+    represented by their respective codes:
+
+        * :code:`"XLON"`: The London Stock Exchange.
+        * :code:`"XPAR"`: The Euronext Paris.
+        * :code:`"XSES"`: The Singapore Exchange.
+
+    """
 
     LONDON: str = "XLON"
     EURONEXT: str = "XPAR"

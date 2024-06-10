@@ -10,6 +10,8 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
+""" Pseudo-randomly generated mock stock-market data provider """
+
 from __future__ import annotations
 import datetime
 import logging
@@ -31,13 +33,15 @@ class RandomDataProvider(BaseDataProvider):
         seed: int | None = None,
     ) -> None:
         """
-        Initialize RandomDataProvider.
+        Initialize an instance of pseudo-randomly generated mock stock-market data provider.
 
         Args:
             tickers (str | list[str] | None): Tickers for the data provider.
-                - If a string is provided, it can be a single ticker symbol or multiple symbols
+
+                * If a string is provided, it can be a single ticker symbol or multiple symbols
                   separated by semicolons or newlines.
-                - If a list of strings is provided, each string should be a single ticker symbol.
+                * If a list of strings is provided, each string should be a single ticker symbol.
+
                 Default is :code:`None`, using :code:`["TICKER1", "TICKER2"]` if not provided.
             start (datetime.datetime): Start date of the data.
                 Defaults to January 1st, 2016.
