@@ -50,9 +50,10 @@ class StockMarket(Enum):
 
 
 class BaseDataProvider(ABC):
-    """The abstract base class for data_provider modules within Qiskit Finance module.
+    """The abstract base class for :code:`data_provider` modules within Qiskit Finance.
 
-    To create add-on data_provider module subclass the BaseDataProvider class in this module.
+    Creates :code:`data_provider` module subclasses based on the :code:`BaseDataProvider`
+    abstract class in this module.
     Doing so requires that the required driver interface is implemented.
 
     To use the subclasses, please see
@@ -74,11 +75,8 @@ class BaseDataProvider(ABC):
         """
         Abstract method to load data.
 
-        Method responsible for loading data. Subclasses of `BaseDataProvider`
+        Method responsible for loading data. Subclasses of :code:`BaseDataProvider`
         must implement this method to load data from a specific data source.
-
-        Raises:
-            NotImplementedError: This method must be implemented in a subclass.
         """
         pass
 
@@ -92,7 +90,7 @@ class BaseDataProvider(ABC):
         """
         if not hasattr(self, "_data") or not self._data:
             raise QiskitFinanceError(
-                "No data loaded yet. Please run the method :code:`run()` first to load the data."
+                "No data loaded yet. Please run the method `run()` first to load the data."
             )
 
     # it does not have to be overridden in non-abstract derived classes.
@@ -230,7 +228,7 @@ class BaseDataProvider(ABC):
     # it does not have to be overridden in non-abstract derived classes.
     def get_coordinates(self) -> tuple[np.ndarray, np.ndarray]:
         """
-        Generates random coordinates for visualisation purposes.
+        Generates random coordinates for visualization purposes.
 
         Returns random coordinates for visualization purposes. These coordinates
         can be used to plot assets in a two-dimensional space, facilitating visualization
