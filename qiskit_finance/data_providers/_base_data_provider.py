@@ -181,7 +181,7 @@ class BaseDataProvider(ABC):
             np.ndarray: A covariance matrix between period returns of assets.
 
         Raises:
-            QiskitFinanceError: If no data is loaded. Please run the method :code:`run()`
+            QiskitFinanceError: If no data is loaded. Please run the method :meth:`run()`
                 first to load the data.
         """
         self._check_data_loaded()
@@ -209,7 +209,7 @@ class BaseDataProvider(ABC):
             np.ndarray: An asset-to-asset similarity matrix.
 
         Raises:
-            QiskitFinanceError: If no data is loaded. Please run the method :code:`run()`
+            QiskitFinanceError: If no data is loaded. Please run the method :meth:`run()`
                 first to load the data.
         """
         self._check_data_loaded()

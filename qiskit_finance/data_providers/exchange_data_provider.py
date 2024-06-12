@@ -88,7 +88,7 @@ class ExchangeDataProvider(BaseDataProvider):
 
     def run(self) -> None:
         """
-        Loads data, thus enabling :code:`get_similarity_matrix` and :code:`get_covariance_matrix`
+        Loads data, thus enabling :meth:`get_similarity_matrix` and :meth:`get_covariance_matrix`
         methods in the base class.
         """
         nasdaqdatalink.ApiConfig.api_key = self._token

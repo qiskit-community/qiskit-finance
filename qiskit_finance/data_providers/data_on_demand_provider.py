@@ -59,7 +59,7 @@ class DataOnDemandProvider(BaseDataProvider):
             verify (str | bool | None): If verify is `None`, runs the certificate verification (default);
                 if this is :code:`False`, no certificates will be checked; if this is a :code:`str`,
                 it should be pointing
-                to a certificate for the HTTPS connection to NASDAQ (:code:`dataondemand.nasdaq.com`),
+                to a certificate for the HTTPS connection to NASDAQ (www.dataondemand.nasdaq.com),
                 either in the form of a :code:`CA_BUNDLE` file or a directory wherein to look.
         """
         super().__init__()
