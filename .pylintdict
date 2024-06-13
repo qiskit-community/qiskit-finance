@@ -29,15 +29,18 @@ covariances
 currentmodule
 cvar
 dataondemand
+datetime
 dicts
 discretization
 discretize
 discretized
+DTW
 egger
 eigendecomposition
 eigensolver
 enum
 et
+euronext
 european
 farhi
 formatter
@@ -59,6 +62,7 @@ integrality
 ints
 ising
 isometry
+january
 kwargs
 latin
 linesep
@@ -87,6 +91,7 @@ ok
 os
 param
 parametrization
+paris
 paulis
 pca
 pdf
@@ -116,6 +121,7 @@ selectable
 scholes
 scipy
 silvio
+singapore
 stamatopoulos
 statevector
 stdout
@@ -142,6 +148,7 @@ vec
 visualisation
 wikipedia
 woerner
+www
 yamamoto
 yfinance
 york

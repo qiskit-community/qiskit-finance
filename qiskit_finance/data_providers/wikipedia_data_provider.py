@@ -10,9 +10,9 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-""" Wikipedia data provider. """
+"""Wikipedia data provider."""
 
-from typing import Optional, Union, List
+from __future__ import annotations
 import logging
 import datetime
 import nasdaqdatalink
@@ -26,44 +26,64 @@ logger = logging.getLogger(__name__)
 class WikipediaDataProvider(BaseDataProvider):
     """Wikipedia data provider.
 
-    Please see:
+    This data provider retrieves stock market data from the Wikipedia dataset
+    using Nasdaq Data Link API. For more details on usage, please refer to the
+    official documentation:
     https://qiskit-community.github.io/qiskit-finance/tutorials/11_time_series.html
-    for instructions on use.
     """
 
     def __init__(
         self,
-        token: Optional[str] = None,
-        tickers: Optional[Union[str, List[str]]] = None,
+        token: str | None = None,
+        tickers: str | list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
+        Initialize the Wikipedia Data Provider.
+
         Args:
-            token: Nasdaq Data Link access token, which is not needed, strictly speaking
-            tickers: tickers
-            start: start time
-            end: end time
+            token (str | None): Nasdaq Data Link access token.
+                Default is None.
+            tickers (str | list[str] | None): Tickers for the data provider.
+
+                * If a string is provided, it can be a single ticker symbol or multiple symbols
+                  separated by semicolons or newlines.
+                * If a list of strings is provided, each string should be a single ticker symbol.
+
+                Default is :code:`None`, which corresponds to no tickers provided.
+            start (datetime.datetime): Start date of the data.
+                Default is January 1st, 2016.
+            end (datetime.datetime): End date of the data.
+                Default is January 30th, 2016.
         """
         super().__init__()
-        self._tickers = None  # type: Optional[Union[str, List[str]]]
-        tickers = tickers if tickers is not None else []
-        if isinstance(tickers, list):
-            self._tickers = tickers
-        else:
-            self._tickers = tickers.replace("\n", ";").split(";")
-        self._n = len(self._tickers)
 
-        self._token = token
+        if tickers is None:
+            tickers = []
+        if isinstance(tickers, str):
+            tickers = tickers.replace("\n", ";").split(";")
+
         self._tickers = tickers
+        self._n = len(tickers)
+        self._token = token
         self._start = start.strftime("%Y-%m-%d")
         self._end = end.strftime("%Y-%m-%d")
         self._data = []
 
     def run(self) -> None:
         """
-        Loads data, thus enabling get_similarity_matrix and
-        get_covariance_matrix methods in the base class.
+        Loads data from Wikipedia using Nasdaq Data Link API.
+        Retrieves stock market data from the Wikipedia dataset
+        using Nasdaq Data Link API, and populates the data attribute of the
+        base class, enabling further calculations like similarity and covariance
+        matrices.
+
+        Raises:
+            QiskitFinanceError: If there is an invalid Nasdaq Data Link token,
+                if the Nasdaq Data Link limit is exceeded, if data is not found
+                for the specified tickers, or if there is an error accessing
+                Nasdaq Data Link.
         """
         nasdaqdatalink.ApiConfig.api_key = self._token
         self._data = []

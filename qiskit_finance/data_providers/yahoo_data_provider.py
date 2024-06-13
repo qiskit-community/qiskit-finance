@@ -12,7 +12,7 @@
 
 """ Yahoo data provider. """
 
-from typing import Optional, Union, List
+from __future__ import annotations
 import datetime
 import logging
 import tempfile
@@ -35,47 +35,65 @@ yf.set_tz_cache_location(_temp_dir.name)
 class YahooDataProvider(BaseDataProvider):
     """Yahoo data provider.
 
-    Please see:
+    This data provider retrieves stock market data from Yahoo Finance using the yfinance library.
+    For more details on usage, please refer to the official documentation:
     https://qiskit-community.github.io/qiskit-finance/tutorials/11_time_series.html
-    for instructions on use.
     """
 
     def __init__(
         self,
-        tickers: Optional[Union[str, List[str]]] = None,
+        tickers: str | list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
+        Initialize the Yahoo Data Provider.
+
         Args:
-            tickers: tickers
-            start: start time
-            end: end time
+            tickers (str | list[str] | None): Tickers for the data provider.
+
+                * If a string is provided, it can be a single ticker symbol or multiple symbols
+                  separated by semicolons or newlines.
+                * If a list of strings is provided, each string should be a single ticker symbol.
+
+                Default is :code:`None`, which corresponds to no tickers provided.
+            start (datetime.datetime): Start date of the data.
+                Default is January 1st, 2016.
+            end (datetime.datetime): End date of the data.
+                Default is January 30th, 2016.
         """
         super().__init__()
-        self._tickers = []
-        tickers = tickers if tickers is not None else []
-        if isinstance(tickers, list):
-            self._tickers = tickers
-        else:
-            self._tickers = tickers.replace("\n", ";").split(";")
-        self._n = len(self._tickers)
 
+        if tickers is None:
+            tickers = []
+        if isinstance(tickers, str):
+            tickers = tickers.replace("\n", ";").split(";")
+
+        self._tickers = tickers
+        self._n = len(tickers)
         self._start = start.strftime("%Y-%m-%d")
         self._end = end.strftime("%Y-%m-%d")
         self._data = []
 
     def run(self) -> None:
         """
-        Loads data, thus enabling get_similarity_matrix and
-        get_covariance_matrix methods in the base class.
+        Loads data from Yahoo Finance.
+
+        This method retrieves stock market data from Yahoo Finance using the :code:`yfinance` library,
+        and populates the data attribute of the base class, enabling further calculations like
+        similarity and covariance matrices.
+
+        Raises:
+            QiskitFinanceError: If there are missing tickers in download,
+                if accessing Yahoo Data fails, or if no data is found for
+                the specified date range, possibly due to de-listed symbols.
         """
         if len(self._tickers) == 0:
             raise QiskitFinanceError("Missing tickers to download.")
         self._data = []
         stocks_notfound = []
         try:
-            # download multiple tickers in single thread to avoid
+            # Download multiple tickers in single thread to avoid
             # race condition
             stock_data = yf.download(
                 self._tickers,
@@ -85,23 +103,30 @@ class YahooDataProvider(BaseDataProvider):
                 threads=False,
                 progress=logger.isEnabledFor(logging.DEBUG),
             )
+
             if len(self._tickers) == 1:
                 ticker_name = self._tickers[0]
                 stock_value = stock_data["Adj Close"]
+
                 if stock_value.dropna().empty:
                     stocks_notfound.append(ticker_name)
+
                 self._data.append(stock_value)
+
             else:
                 for ticker_name in self._tickers:
                     stock_value = stock_data[ticker_name]["Adj Close"]
+
                     if stock_value.dropna().empty:
                         stocks_notfound.append(ticker_name)
+
                     self._data.append(stock_value)
+
         except Exception as ex:  # pylint: disable=broad-except
             logger.debug(ex, exc_info=True)
             raise QiskitFinanceError("Accessing Yahoo Data failed.") from ex
 
         if stocks_notfound:
             raise QiskitFinanceError(
-                f"No data found for this date range, symbols may be delisted: {stocks_notfound}."
+                f"No data found for this date range, symbols may be de-listed: {stocks_notfound}."
             )

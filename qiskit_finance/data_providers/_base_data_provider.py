@@ -10,10 +10,16 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-"""This module implements the abstract base class for data_provider modules the finance module."""
+"""This module implements the abstract base class for data provider modules in the finance module.
 
+The module defines the :code:`BaseDataProvider` abstract class which should be inherited by any data
+provider class within the finance module. It also includes the :code:`StockMarket` :code:`Enum`
+representing supported stock markets.
+"""
+
+from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import Tuple, Optional, List, cast
+from typing import cast
 import logging
 from enum import Enum
 
@@ -27,57 +33,82 @@ logger = logging.getLogger(__name__)
 
 
 class StockMarket(Enum):
-    """Stock Market enum"""
+    """:code:`Enum` representing various stock markets.
 
-    LONDON = "XLON"
-    EURONEXT = "XPAR"
-    SINGAPORE = "XSES"
+    This :code:`Enum` contains identifiers for the following stock markets,
+    represented by their respective codes:
+
+        * :code:`"XLON"`: The London Stock Exchange.
+        * :code:`"XPAR"`: The Euronext Paris.
+        * :code:`"XSES"`: The Singapore Exchange.
+
+    """
+
+    LONDON: str = "XLON"
+    EURONEXT: str = "XPAR"
+    SINGAPORE: str = "XSES"
 
 
 class BaseDataProvider(ABC):
-    """The abstract base class for data_provider modules within Qiskit Finance module.
+    """The abstract base class for :code:`data_provider` modules within Qiskit Finance.
 
-    To create add-on data_provider module subclass the BaseDataProvider class in this module.
+    Creates :code:`data_provider` module subclasses based on the :code:`BaseDataProvider`
+    abstract class in this module.
     Doing so requires that the required driver interface is implemented.
 
     To use the subclasses, please see
     https://qiskit-community.github.io/qiskit-finance/tutorials/11_time_series.html
-
     """
 
     @abstractmethod
     def __init__(self) -> None:
-        self._data: Optional[List] = None
-        self._n = 0  # pylint: disable=invalid-name
-        self.period_return_mean: Optional[np.ndarray] = None
-        self.cov: Optional[np.ndarray] = None
-        self.period_return_cov: Optional[np.ndarray] = None
-        self.rho: Optional[np.ndarray] = None
-        self.mean: Optional[np.ndarray] = None
+        self._data: list | None = None
+        self._n: int = 0  # pylint: disable=invalid-name
+        self.period_return_mean: np.ndarray | None = None
+        self.cov: np.ndarray | None = None
+        self.period_return_cov: np.ndarray | None = None
+        self.rho: np.ndarray | None = None
+        self.mean: np.ndarray | None = None
 
     @abstractmethod
     def run(self) -> None:
-        """Loads data."""
+        """
+        Abstract method to load data.
+
+        Method responsible for loading data. Subclasses of :code:`BaseDataProvider`
+        must implement this method to load data from a specific data source.
+        """
         pass
+
+    def _check_data_loaded(self) -> None:
+        """
+        Checks if data is loaded.
+
+        Raises:
+            QiskitFinanceError: If no data is loaded. Please run the method :code:`run()`
+                first to load the data.
+        """
+        if not hasattr(self, "_data") or not self._data:
+            raise QiskitFinanceError(
+                "No data loaded yet. Please run the method `run()` first to load the data."
+            )
 
     # it does not have to be overridden in non-abstract derived classes.
     def get_mean_vector(self) -> np.ndarray:
-        """Returns a vector containing the mean value of each asset.
+        """Returns the mean value vector of each asset.
+
+        Calculates the mean value for each asset based on the loaded data,
+        assuming each row represents a time-series observation for an asset.
 
         Returns:
-            a per-asset mean vector.
+            np.ndarray: A vector containing the mean value of each asset.
+
         Raises:
-            QiskitFinanceError: no data loaded
+            QiskitFinanceError: If no data is loaded. Please run the method :code:`run()`
+                first to load the data.
         """
-        try:
-            if not self._data:
-                raise QiskitFinanceError(
-                    "No data loaded, yet. Please run the method run() first to load the data."
-                )
-        except AttributeError as ex:
-            raise QiskitFinanceError(
-                "No data loaded, yet. Please run the method run() first to load the data."
-            ) from ex
+        self._check_data_loaded()
+
         self.mean = cast(np.ndarray, np.mean(self._data, axis=1))
         return self.mean
 
@@ -93,22 +124,21 @@ class BaseDataProvider(ABC):
     # it does not have to be overridden in non-abstract derived classes.
     def get_period_return_mean_vector(self) -> np.ndarray:
         """
-        Returns a vector containing the mean value of each asset.
+        Calculates the mean period return vector for each asset.
+
+        Returns the mean period return value for each asset based on the loaded data.
+        Period return is calculated as the ratio of the current period's value to
+        the previous period's value minus one.
 
         Returns:
-            a per-asset mean vector.
+            np.ndarray: A vector containing the mean period return value of each asset.
+
         Raises:
-            QiskitFinanceError: no data loaded
+            QiskitFinanceError: If no data is loaded. Please run the method :code:`run()`
+                first to load the data.
         """
-        try:
-            if not self._data:
-                raise QiskitFinanceError(
-                    "No data loaded, yet. Please run the method run() first to load the data."
-                )
-        except AttributeError as ex:
-            raise QiskitFinanceError(
-                "No data loaded, yet. Please run the method run() first to load the data."
-            ) from ex
+        self._check_data_loaded()
+
         _div_func = np.vectorize(BaseDataProvider._divide)
         period_returns = _div_func(np.array(self._data)[:, 1:], np.array(self._data)[:, :-1]) - 1
         self.period_return_mean = cast(np.ndarray, np.mean(period_returns, axis=1))
@@ -117,44 +147,45 @@ class BaseDataProvider(ABC):
     # it does not have to be overridden in non-abstract derived classes.
     def get_covariance_matrix(self) -> np.ndarray:
         """
-        Returns the covariance matrix.
+        Calculates the covariance matrix of asset returns.
+
+        Returns the covariance matrix of asset returns based on the loaded data.
+        Each row in the data is assumed to represent a time-series observation for an asset.
+        Covariance measures the relationship between two assets, indicating how they move in relation
+        to each other.
 
         Returns:
-            an asset-to-asset covariance matrix.
+            np.ndarray: An asset-to-asset covariance matrix.
+
         Raises:
-            QiskitFinanceError: no data loaded
+            QiskitFinanceError: If no data is loaded. Please run the method :code:`run()`
+                first to load the data.
         """
-        try:
-            if not self._data:
-                raise QiskitFinanceError(
-                    "No data loaded, yet. Please run the method run() first to load the data."
-                )
-        except AttributeError as ex:
-            raise QiskitFinanceError(
-                "No data loaded, yet. Please run the method run() first to load the data."
-            ) from ex
+        self._check_data_loaded()
+
         self.cov = np.cov(self._data, rowvar=True)
         return self.cov
 
     # it does not have to be overridden in non-abstract derived classes.
     def get_period_return_covariance_matrix(self) -> np.ndarray:
         """
-        Returns a vector containing the mean value of each asset.
+        Calculates the covariance matrix of period returns for each asset.
+
+        Returns the covariance matrix of period returns for each asset based
+        on the loaded data. Period return is calculated as the ratio of the
+        current period's value to the previous period's value minus one.
+        Covariance measures the relationship between two assets' period
+        returns, indicating how they move in relation to each other.
 
         Returns:
-            a per-asset mean vector.
+            np.ndarray: A covariance matrix between period returns of assets.
+
         Raises:
-            QiskitFinanceError: no data loaded
+            QiskitFinanceError: If no data is loaded. Please run the method :meth:`run()`
+                first to load the data.
         """
-        try:
-            if not self._data:
-                raise QiskitFinanceError(
-                    "No data loaded, yet. Please run the method run() first to load the data."
-                )
-        except AttributeError as ex:
-            raise QiskitFinanceError(
-                "No data loaded, yet. Please run the method run() first to load the data."
-            ) from ex
+        self._check_data_loaded()
+
         _div_func = np.vectorize(BaseDataProvider._divide)
         period_returns = _div_func(np.array(self._data)[:, 1:], np.array(self._data)[:, :-1]) - 1
         self.period_return_cov = np.cov(period_returns)
@@ -163,22 +194,26 @@ class BaseDataProvider(ABC):
     # it does not have to be overridden in non-abstract derived classes.
     def get_similarity_matrix(self) -> np.ndarray:
         """
-        Returns time-series similarity matrix computed using dynamic time warping.
+        Calculates the similarity matrix based on time-series using dynamic
+        time warping.
+
+        Returns the similarity matrix based on time-series using the
+        approximate Dynamic Time Warping (DTW) algorithm that provides
+        optimal or near-optimal alignments with an :math:`O(N)` time and memory
+        complexity. DTW is a technique to measure the
+        similarity between two sequences that may vary in time or speed.
+        The resulting similarity matrix indicates the similarity between
+        different assets' time-series data.
 
         Returns:
-            an asset-to-asset similarity matrix.
+            np.ndarray: An asset-to-asset similarity matrix.
+
         Raises:
-            QiskitFinanceError: no data loaded
+            QiskitFinanceError: If no data is loaded. Please run the method :meth:`run()`
+                first to load the data.
         """
-        try:
-            if not self._data:
-                raise QiskitFinanceError(
-                    "No data loaded, yet. Please run the method run() first to load the data."
-                )
-        except AttributeError as ex:
-            raise QiskitFinanceError(
-                "No data loaded, yet. Please run the method run() first to load the data."
-            ) from ex
+        self._check_data_loaded()
+
         self.rho = np.zeros((self._n, self._n))
         for i_i in range(0, self._n):
             self.rho[i_i, i_i] = 1.0
@@ -191,9 +226,21 @@ class BaseDataProvider(ABC):
 
     # gets coordinates suitable for plotting
     # it does not have to be overridden in non-abstract derived classes.
-    def get_coordinates(self) -> Tuple[np.ndarray, np.ndarray]:
-        """Returns random coordinates for visualisation purposes."""
-        # Coordinates for visualisation purposes
+    def get_coordinates(self) -> tuple[np.ndarray, np.ndarray]:
+        """
+        Generates random coordinates for visualization purposes.
+
+        Returns random coordinates for visualization purposes. These coordinates
+        can be used to plot assets in a two-dimensional space, facilitating visualization
+        of relationships between assets.
+
+        Returns:
+            tuple[np.ndarray, np.ndarray]: :math:`x` and :math:`y` coordinates of each asset.
+
+        Note:
+            The generated coordinates are random and may not reflect any meaningful relationship
+            between assets.
+        """
         x_c = np.zeros([self._n, 1])
         y_c = np.zeros([self._n, 1])
         x_c = (algorithm_globals.random.random(self._n) - 0.5) * 1

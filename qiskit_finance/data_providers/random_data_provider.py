@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2019, 2023.
+# (C) Copyright IBM 2019, 2024.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -12,10 +12,9 @@
 
 """ Pseudo-randomly generated mock stock-market data provider """
 
-from typing import Optional, Union, List
+from __future__ import annotations
 import datetime
 import logging
-import pandas as pd
 import numpy as np
 
 from ._base_data_provider import BaseDataProvider
@@ -28,50 +27,62 @@ class RandomDataProvider(BaseDataProvider):
 
     def __init__(
         self,
-        tickers: Optional[Union[str, List[str]]] = None,
+        tickers: str | list[str] | None = None,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
-        seed: Optional[int] = None,
+        seed: int | None = None,
     ) -> None:
         """
+        Initialize an instance of pseudo-randomly generated mock stock-market data provider.
+
         Args:
-            tickers: tickers
-            start: first data point
-            end: last data point precedes this date
-            seed: optional random seed
+            tickers (str | list[str] | None): Tickers for the data provider.
+
+                * If a string is provided, it can be a single ticker symbol or multiple symbols
+                  separated by semicolons or newlines.
+                * If a list of strings is provided, each string should be a single ticker symbol.
+
+                Default is :code:`None`, using :code:`["TICKER1", "TICKER2"]` if not provided.
+            start (datetime.datetime): Start date of the data.
+                Defaults to January 1st, 2016.
+            end (datetime.datetime): End date of the data.
+                Defaults to January 30th, 2016.
+            seed (int | None): Random seed for reproducibility.
         """
         super().__init__()
-        tickers = tickers if tickers is not None else ["TICKER1", "TICKER2"]
-        if isinstance(tickers, list):
-            self._tickers = tickers
-        else:
-            self._tickers = tickers.replace("\n", ";").split(";")
-        self._n = len(self._tickers)
 
+        if tickers is None:
+            tickers = ["TICKER1", "TICKER2"]
+        if isinstance(tickers, str):
+            tickers = tickers.replace("\n", ";").split(";")
+
+        self._tickers = tickers
+        self._n = len(tickers)
         self._start = start
         self._end = end
         self._seed = seed
 
     def run(self) -> None:
         """
-        Generates data pseudo-randomly, thus enabling get_similarity_matrix
-        and get_covariance_matrix methods in the base class.
-        """
+        Generate pseudo-random stock market data.
 
+        Generates pseudo-random stock market data using normal distribution
+        and truncates values to zero after the first occurrence of zero.
+        """
         length = (self._end - self._start).days
         generator = np.random.default_rng(self._seed)
         self._data = []
+
         for _ in self._tickers:
-            d_f = pd.DataFrame(generator.standard_normal(length)).cumsum() + generator.integers(
-                1, 101
-            )
-            trimmed = np.maximum(d_f[0].values, np.zeros(len(d_f[0].values)))
-            trimmed_list = trimmed.tolist()
-            # find index of first 0 element
-            zero_idx = next((idx for idx, val in enumerate(trimmed_list) if val == 0), -1)
-            if zero_idx >= 0:
-                # set to 0 all values after first 0
-                trimmed_list = [
-                    val if idx < zero_idx else 0 for idx, val in enumerate(trimmed_list)
-                ]
-            self._data.append(trimmed_list)
+            random_numbers = generator.standard_normal(length)
+            cumsum = np.cumsum(random_numbers)
+            d_f = cumsum + generator.integers(1, 101)
+            trimmed = np.maximum(d_f, np.zeros(length))
+
+            # Set all values after the first 0 to 0
+            for idx, val in enumerate(trimmed):
+                if val == 0:
+                    trimmed[idx + 1 :] = 0
+                    break
+
+            self._data.append(trimmed.tolist())

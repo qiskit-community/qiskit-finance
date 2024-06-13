@@ -12,7 +12,7 @@
 
 """ Exchange data provider. """
 
-from typing import Union, List
+from __future__ import annotations
 import logging
 import datetime
 import nasdaqdatalink
@@ -21,6 +21,12 @@ from ._base_data_provider import BaseDataProvider, StockMarket
 from ..exceptions import QiskitFinanceError
 
 logger = logging.getLogger(__name__)
+
+VALID_STOCKMARKETS = [
+    StockMarket.LONDON,
+    StockMarket.EURONEXT,
+    StockMarket.SINGAPORE,
+]
 
 
 class ExchangeDataProvider(BaseDataProvider):
@@ -34,38 +40,42 @@ class ExchangeDataProvider(BaseDataProvider):
     def __init__(
         self,
         token: str,
-        tickers: Union[str, List[str]],
+        tickers: str | list[str] | None = None,
         stockmarket: StockMarket = StockMarket.LONDON,
         start: datetime.datetime = datetime.datetime(2016, 1, 1),
         end: datetime.datetime = datetime.datetime(2016, 1, 30),
     ) -> None:
         """
         Args:
-            token: Nasdaq Data Link access token
-            tickers: tickers
-            stockmarket: LONDON, EURONEXT, or SINGAPORE
-            start: first data point
-            end: last data point precedes this date
+            token (str): Nasdaq Data Link access token.
+            tickers (str | list[str] | None): Tickers for the data provider.
+
+                * If a string is provided, it can be a single ticker symbol or multiple symbols
+                  separated by semicolons or newlines.
+                * If a list of strings is provided, each string should be a single ticker symbol.
+
+                Default is :code:`None`, which corresponds to no tickers provided.
+            stockmarket (StockMarket): LONDON (default), EURONEXT, or SINGAPORE
+            start (datetime.datetime): Start date of the data.
+                Defaults to January 1st, 2016.
+            end (datetime.datetime): End date of the data.
+                Defaults to January 30th, 2016.
 
         Raises:
-            QiskitFinanceError: provider doesn't support given stock market
+            QiskitFinanceError: provider doesn't support given stock market.
         """
         super().__init__()
-        self._tickers = []  # type: Union[str, List[str]]
-        if isinstance(tickers, list):
-            self._tickers = tickers
-        else:
-            self._tickers = tickers.replace("\n", ";").split(";")
-        self._n = len(self._tickers)
 
-        if stockmarket not in [
-            StockMarket.LONDON,
-            StockMarket.EURONEXT,
-            StockMarket.SINGAPORE,
-        ]:
-            msg = "ExchangeDataProvider does not support "
-            msg += stockmarket.value
-            msg += " as a stock market."
+        if tickers is None:
+            tickers = []
+        if isinstance(tickers, str):
+            tickers = tickers.replace("\n", ";").split(";")
+
+        self._tickers = tickers
+        self._n = len(tickers)
+
+        if stockmarket not in VALID_STOCKMARKETS:
+            msg = f"ExchangeDataProvider does not support {stockmarket.value} as a stock market."
             raise QiskitFinanceError(msg)
 
         # This is to aid serialization; string is ok to serialize
@@ -78,7 +88,7 @@ class ExchangeDataProvider(BaseDataProvider):
 
     def run(self) -> None:
         """
-        Loads data, thus enabling get_similarity_matrix and get_covariance_matrix
+        Loads data, thus enabling :meth:`get_similarity_matrix` and :meth:`get_covariance_matrix`
         methods in the base class.
         """
         nasdaqdatalink.ApiConfig.api_key = self._token
