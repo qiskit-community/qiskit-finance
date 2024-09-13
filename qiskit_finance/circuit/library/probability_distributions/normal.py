@@ -79,20 +79,13 @@ class NormalDistribution(QuantumCircuit):
         >>> from qiskit_finance.circuit.library.probability_distributions import NormalDistribution
         >>> circuit = NormalDistribution(3, mu=1, sigma=1, bounds=(0, 2))
         >>> circuit.decompose().draw()
-                                                                »
-        q_0: ───────────────────────────────────────────────────»
-                                      ┌────────────────────────┐»
-        q_1: ─────────────────────────┤0                       ├»
-             ┌───────────────────────┐│  multiplex2_reverse_dg │»
-        q_2: ┤ multiplex1_reverse_dg ├┤1                       ├»
-             └───────────────────────┘└────────────────────────┘»
-        «     ┌────────────────────────┐
-        «q_0: ┤0                       ├
-        «     │                        │
-        «q_1: ┤1 multiplex3_reverse_dg ├
-        «     │                        │
-        «q_2: ┤2                       ├
-        «     └────────────────────────┘
+                                                  ┌─────────────────┐
+        q_0: ─────────────────────────────────────┤0                ├
+                               ┌─────────────────┐│                 │
+        q_1: ──────────────────┤0                ├┤1 multiplexer_dg ├
+             ┌────────────────┐│  multiplexer_dg ││                 │
+        q_2: ┤ multiplexer_dg ├┤1                ├┤2                ├
+             └────────────────┘└─────────────────┘└─────────────────┘
 
         >>> mu = [1, 0.9]
         >>> sigma = [[1, -0.2], [-0.2, 1]]
