@@ -147,10 +147,10 @@ class TestNormalDistribution(QiskitFinanceTestCase):
 
 @ddt
 class TestLogNormalDistribution(QiskitFinanceTestCase):
-    """Test the normal distribution circuit."""
+    """Test the log-normal distribution circuit."""
 
     def assertDistributionIsCorrect(self, circuit, num_qubits, mu, sigma, bounds, upto_diag):
-        """Assert that ``circuit`` implements the normal distribution correctly.
+        """Assert that ``circuit`` implements the log-normal distribution correctly.
 
         This test asserts that the ``circuit`` produces the desired state-vector.
         """
