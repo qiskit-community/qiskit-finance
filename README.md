@@ -33,7 +33,7 @@ evaluate a fixed income asset with uncertain interest rates.
 
 ```python
 import numpy as np
-from qiskit.primitives import Sampler
+from qiskit.primitives import StatevectorSampler as Sampler
 from qiskit_algorithms import AmplitudeEstimation
 from qiskit_finance.circuit.library import NormalDistribution
 from qiskit_finance.applications import FixedIncomePricing
@@ -65,7 +65,7 @@ problem = fixed_income.to_estimation_problem()
 num_eval_qubits = 5
 
 # Construct and run amplitude estimation
-sampler = Sampler()
+sampler = Sampler(seed=123, default_shots=10000)
 algo = AmplitudeEstimation(num_eval_qubits=num_eval_qubits, sampler=sampler)
 result = algo.estimate(problem)
 
