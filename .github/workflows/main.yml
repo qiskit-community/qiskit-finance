@@ -36,7 +36,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.8]
+        python-version: [3.9]
     steps:
       - name: Print Concurrency Group
         env:
@@ -116,16 +116,16 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.8, 3.9, '3.10', 3.11, 3.12]
+        python-version: [3.9, '3.10', 3.11, 3.12]
         include:
           - os: macos-latest
-            python-version: 3.8
+            python-version: 3.9
           - os: macos-latest
             python-version: 3.12
           - os: windows-latest
-            python-version: 3.8
+            python-version: 3.9
           - os: windows-latest
-            python-version: 3.11
+            python-version: 3.12
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
@@ -194,7 +194,7 @@ jobs:
           fi
           coverage3 combine
           mv .coverage ./ci-artifact-data/fin.dat
-        if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == 3.8 }}
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == 3.9 }}
         shell: bash
       - uses: actions/upload-artifact@v4
         with:
@@ -207,7 +207,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.8, 3.12]
+        python-version: [3.9, 3.12]
     steps:
       - uses: actions/checkout@v5
         with:
@@ -272,30 +272,26 @@ jobs:
           cd docs/_build/html
           mkdir artifacts
           tar -zcvf artifacts/tutorials.tar.gz --exclude=./artifacts .
-        if: ${{ matrix.python-version == 3.8 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
+        if: ${{ matrix.python-version == 3.9 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
         shell: bash
       - name: Run upload stable tutorials
         uses: actions/upload-artifact@v4
         with:
           name: tutorials-stable${{ matrix.python-version }}
           path: docs/_build/html/artifacts/tutorials.tar.gz
-        if: ${{ matrix.python-version == 3.8 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
+        if: ${{ matrix.python-version == 3.9 && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.base_ref, 'stable/') }}
   Deprecation_Messages_and_Coverage:
     if: github.repository_owner == 'qiskit-community'
     needs: [Checks, Finance, Tutorials]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: [3.9]
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/download-artifact@v5
-        with:
-          name: ubuntu-latest-3.8
-          path: /tmp/f38
       - uses: actions/download-artifact@v5
         with:
           name: ubuntu-latest-3.9
@@ -314,16 +310,8 @@ jobs:
           path: /tmp/f312
       - uses: actions/download-artifact@v5
         with:
-          name: macos-latest-3.8
-          path: /tmp/m38
-      - uses: actions/download-artifact@v5
-        with:
           name: macos-latest-3.12
           path: /tmp/m311
-      - uses: actions/download-artifact@v5
-        with:
-          name: windows-latest-3.8
-          path: /tmp/w38
       - uses: actions/download-artifact@v5
         with:
           name: windows-latest-3.11

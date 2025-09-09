@@ -29,6 +29,7 @@ runs:
       run: |
         echo "QISKIT_HASH=$(git ls-remote --heads https://github.com/Qiskit/qiskit.git refs/heads/main  | awk '{print $1}')" >> $GITHUB_ENV
         echo "OPTIMIZATION_HASH=$(git ls-remote --heads https://github.com/qiskit-community/qiskit-optimization.git refs/heads/main  | awk '{print $1}')" >> $GITHUB_ENV
+        echo "ALGORITHMS_HASH=$(git ls-remote --heads https://github.com/qiskit-community/qiskit-algorithms.git refs/heads/main  | awk '{print $1}')" >> $GITHUB_ENV
       shell: bash
     - name: Qiskit Cache
       env:
@@ -46,6 +47,50 @@ runs:
       with:
         path: optimization-cache
         key: optimization-cache-${{ inputs.os }}-${{ inputs.python-version }}-${{ env.OPTIMIZATION_HASH }}-${{ env.CACHE_VERSION }}
+    - name: Algorithms Cache
+      env:
+        CACHE_VERSION: v1
+      id: algorithms-cache
+      uses: actions/cache@v4
+      with:
+        path: algorithms-cache
+        key: algorithms-cache-${{ inputs.os }}-${{ inputs.python-version }}-${{ env.ALGORITHMS_HASH }}-${{ env.CACHE_VERSION }}
+    - name: Install Algorithms from Main
+      run: |
+        echo 'Install Algorithms from Main'
+        if [ "${{ inputs.os }}" == "windows-latest" ]; then
+          source "$CONDA/etc/profile.d/conda.sh"
+          conda activate scsenv
+        fi
+        BASE_DIR=algorithms-cache
+        build_from_main=true
+        cache_hit=${{ steps.algorithms-cache.outputs.cache-hit }}
+        echo "cache hit: ${cache_hit}"
+        if [ "$cache_hit" == "true" ]; then
+          pip_result=0
+          pushd "${BASE_DIR}"
+          python -m pip install *.whl && pip_result=$? || pip_result=$?
+          popd
+          if [ $pip_result == 0 ]; then
+            build_from_main=false
+          fi
+        else
+          mkdir -p ${BASE_DIR}
+        fi
+        if [ "$build_from_main" == "true" ]; then
+          echo 'Create wheel file from main'
+          pip install -U wheel
+          pip install -U setuptools
+          git clone --depth 1 --branch main https://github.com/qiskit-community/qiskit-algorithms.git /tmp/qiskit-algorithms
+          pushd /tmp/qiskit-algorithms
+          python setup.py bdist_wheel
+          popd
+          cp -rf /tmp/qiskit-algorithms/dist/*.whl "${BASE_DIR}"
+          pushd "${BASE_DIR}"
+          python -m pip install *.whl
+          popd
+        fi
+      shell: bash
     - name: Install Qiskit from Main
       env:
         MACOSX_DEPLOYMENT_TARGET: 10.15

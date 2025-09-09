@@ -33,7 +33,7 @@ evaluate a fixed income asset with uncertain interest rates.
 
 ```python
 import numpy as np
-from qiskit.primitives import Sampler
+from qiskit.primitives import StatevectorSampler as Sampler
 from qiskit_algorithms import AmplitudeEstimation
 from qiskit_finance.circuit.library import NormalDistribution
 from qiskit_finance.applications import FixedIncomePricing
