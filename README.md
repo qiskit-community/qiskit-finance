@@ -2,6 +2,10 @@
 
 [![License](https://img.shields.io/github/license/Qiskit/qiskit-finance.svg?style=popout-square)](https://opensource.org/licenses/Apache-2.0)<!--- long-description-skip-begin -->[![Build Status](https://github.com/qiskit-community/qiskit-finance/workflows/Finance%20Unit%20Tests/badge.svg?branch=main)](https://github.com/qiskit-community/qiskit-finance/actions?query=workflow%3A"Finance%20Unit%20Tests"+branch%3Amain+event%3Apush)[![](https://img.shields.io/github/release/Qiskit/qiskit-finance.svg?style=popout-square)](https://github.com/qiskit-community/qiskit-finance/releases)[![](https://img.shields.io/pypi/dm/qiskit-finance.svg?style=popout-square)](https://pypi.org/project/qiskit-finance/)[![Coverage Status](https://coveralls.io/repos/github/Qiskit/qiskit-finance/badge.svg?branch=main)](https://coveralls.io/github/Qiskit/qiskit-finance?branch=main)<!--- long-description-skip-end -->
 
+> [!WARNING]
+> **Qiskit Finance is no longer officially supported by IBM, since [Nov 2023](https://medium.com/qiskit/a-new-chapter-for-qiskit-algorithms-and-applications-5baff541e826)**.
+> While you may continue to use or extend it under the Apache 2.0 license, please note that it is provided as-is and without official support.
+
 **Qiskit Finance** is an open-source framework that contains uncertainty components for stock/securities problems,
 applications, such as portfolio optimization, and data providers to source real or random data to
 finance experiments.
