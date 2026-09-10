@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2020, 2023.
+# (C) Copyright IBM 2020, 2025.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -19,7 +19,7 @@ import numpy as np
 
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import Operator
-from qiskit.primitives import Sampler
+from qiskit.primitives import StatevectorSampler as Sampler
 from qiskit_algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit_finance.circuit.library import NormalDistribution
 from qiskit_finance.circuit.library.payoff_functions import FixedIncomePricingObjective
@@ -86,7 +86,7 @@ class TestFixedIncomePricingObjective(QiskitFinanceTestCase):
             post_processing=fixed_income.post_processing,
         )
 
-        sampler = Sampler(options={"shots": 1024, "seed": 12})
+        sampler = Sampler(seed=12, default_shots=1024)
         iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, sampler=sampler)
         result = iae.estimate(problem)
 

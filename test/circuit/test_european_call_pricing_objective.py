@@ -1,6 +1,6 @@
 # This code is part of a Qiskit project.
 #
-# (C) Copyright IBM 2020, 2023.
+# (C) Copyright IBM 2020, 2025.
 #
 # This code is licensed under the Apache License, Version 2.0. You may
 # obtain a copy of this license in the LICENSE.txt file in the root directory
@@ -18,7 +18,7 @@ from test import QiskitFinanceTestCase
 import numpy as np
 from qiskit.circuit.library import LinearAmplitudeFunction, TwoLocal
 from qiskit.quantum_info import Operator
-from qiskit.primitives import Sampler
+from qiskit.primitives import StatevectorSampler as Sampler
 from qiskit_algorithms import IterativeAmplitudeEstimation, EstimationProblem
 from qiskit_finance.circuit.library import EuropeanCallPricingObjective, NormalDistribution
 
@@ -95,7 +95,7 @@ class TestEuropeanCallExpectedValue(QiskitFinanceTestCase):
             post_processing=european_call.post_processing,
         )
 
-        sampler = Sampler(options={"shots": 1024, "seed": 12})
+        sampler = Sampler(seed=12, default_shots=1024)
         iae = IterativeAmplitudeEstimation(epsilon_target=0.01, alpha=0.05, sampler=sampler)
         result = iae.estimate(problem)
         self.assertAlmostEqual(result.estimation_processed, 1.0341976859652098)
